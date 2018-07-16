@@ -12,11 +12,16 @@ public class TrackConfig {
     public static String longitude = "";
 
     public static void init(Context context, String trackUrl, String trackApphubkey) {
-        TrackConfig.trackUrl = trackUrl;
-        TrackConfig.trackApphubkey = trackApphubkey;
-        TrackConfig.context = context;
+        try {
+            TrackConfig.trackUrl = trackUrl;
+            TrackConfig.trackApphubkey = trackApphubkey;
+            TrackConfig.context = context;
 
-        new LocationData().getLngAndLat();
+            new LocationData().getLngAndLat();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
 }

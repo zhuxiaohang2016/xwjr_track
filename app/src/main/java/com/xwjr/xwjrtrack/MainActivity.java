@@ -1,20 +1,11 @@
 package com.xwjr.xwjrtrack;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-//import com.xwjr.track.TrackConfig;
-//import com.xwjr.track.TrackData;
-//import com.xwjr.track.TrackOperate;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import com.xwjr.track.TrackConfig;
+import com.xwjr.track.TrackData;
+import com.xwjr.track.TrackOperate;
 
 import static java.lang.Thread.sleep;
 
@@ -24,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        TrackConfig.init(this, "http://p2psp.kfxfd.cn:9080/apphub/tracking/", "49dd08f0-24e6-11e7-b026-6b0b8b32be51");
+        TrackConfig.init(this, "http://p2psp.kfxfd.cn:9080/apphub/tracking/", "49dd08f0-24e6-11e7-b026-6b0b8b32be51");
         try {
             sleep(3000);
         } catch (InterruptedException e) {
@@ -41,9 +32,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 //        TrackData.getContactData("dfadf");
-//        TrackOperate.upLoadContract("1403204");
-//        TrackOperate.upLoadCall("1403204");
-//        TrackOperate.upLoadSMS("1403204");
+        TrackOperate.upLoadContract("1403204");
+        TrackOperate.upLoadCall("1403204");
+        TrackOperate.upLoadSMS("1403204");
     }
 
 }

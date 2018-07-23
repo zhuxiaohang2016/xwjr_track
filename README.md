@@ -14,6 +14,11 @@
     3.上传短信内容    TrackOperate.upLoadSMS(a)  a:用户手机号  
     4.上传通讯录   TrackOperate.upLoadContract(a) a:用户手机号
     5.上传通话记录  TrackOperate.upLoadCall(a) a:用户手机号
+    6.本地存储单个map数据  TrackLocalData.saveTrackData(a)  a: Map<String, String>
+    7.本地存储mapList数据  TrackLocalData.saveTrackData(a)  a: List<Map<String,String>> 
+    8.获取本地存储的mapLists数据  TrackLocalData.getTrackData()  返回 List<Map<String,String>> 
+    9.清楚本地存储的数据 TrackLocalData.clearTrackData()  
+    10.上传本地存储的数据 TrackOperate.upLoadLocalData(a)  a:上传后是否清楚本地数据   非必选项，默然true   
 
 ## 注意事项
     所有权限需要自行处理，目前只会校验权限是否存在，不会主动请求权限，

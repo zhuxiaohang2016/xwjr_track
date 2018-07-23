@@ -5,7 +5,12 @@ import android.os.Bundle;
 
 import com.xwjr.track.TrackConfig;
 import com.xwjr.track.TrackData;
+import com.xwjr.track.TrackLocalData;
 import com.xwjr.track.TrackOperate;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import static java.lang.Thread.sleep;
 
@@ -21,20 +26,22 @@ public class MainActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-//        List<Map<String, String>> uData = new ArrayList<>();
-//        for (int i = 0; i < 2; i++) {
-//            Map<String, String> data = TrackData.getCommonMap();
-//            data.put("love", "false" + i);
-//            uData.add(data);
-//        }
-//
-//        TrackOperate.upload(TrackData.mapList2String(uData));
 
 
-//        TrackData.getContactData("dfadf");
-        TrackOperate.upLoadContract("1403204");
-        TrackOperate.upLoadCall("1403204");
-        TrackOperate.upLoadSMS("1403204");
+        TrackLocalData.saveTrackData(TrackData.getCommonMap());
+
+        List<Map<String, String>> mapList = new ArrayList<>();
+        Map<String, String> data1 = TrackData.getCommonMap();
+        data1.put("asd", "dafa");
+        mapList.add(data1);
+
+        Map<String, String> data2 = TrackData.getCommonMap();
+        data2.put("adfawerw", "dqerqreqafa");
+        mapList.add(data2);
+        TrackLocalData.saveTrackData(mapList);
+
+        TrackOperate.upLoadLocalData();
+
     }
 
 }

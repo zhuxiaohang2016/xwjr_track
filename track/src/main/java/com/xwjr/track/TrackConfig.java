@@ -17,11 +17,13 @@ public class TrackConfig {
             TrackConfig.trackApphubkey = trackApphubkey;
             TrackConfig.context = context;
 
-            new LocationData().getLngAndLat();
+            new TrackLocationData().getLngAndLat();
         }catch (Exception e){
             e.printStackTrace();
         }
-
     }
+
+
+
 
 }

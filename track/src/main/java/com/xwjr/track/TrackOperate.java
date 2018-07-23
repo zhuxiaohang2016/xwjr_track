@@ -103,5 +103,26 @@ public class TrackOperate {
         }
     }
 
+    //上传本地存储的数据
+    public static void upLoadLocalData(boolean clearData) {
+        try {
+            upload(TrackLocalData.getTrackData());
+            if (clearData) {
+                TrackLocalData.clearTrackData();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void upLoadLocalData() {
+        try {
+            upload(TrackLocalData.getTrackData());
+            TrackLocalData.clearTrackData();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }

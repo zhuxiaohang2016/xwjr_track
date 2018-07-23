@@ -10,7 +10,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
-public class LocationData {
+public class TrackLocationData {
     /**
      * 获取经纬度
      */

@@ -3,7 +3,7 @@
 ## How To Use ?
 
 ### 导包
-    compile 'com.github.zhuxiaohang2016:xwjr_track:0.5'
+    compile 'com.github.zhuxiaohang2016:xwjr_track:0.7'
 
 ### 配置
     1.TrackConfig.init(a,b,c)  a:context  b:请求url  c:apphubkey  备注：提前调用，否则可能获取不到经纬度

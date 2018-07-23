@@ -9,12 +9,21 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class TrackOperate {
 
     //上传用户行为数据，data为List<Map<String,String>>的json字符串
+
+    public static void upload(Map<String, String> data) {
+        //开启线程来发起网络请求
+        List<Map<String, String>> mapList = new ArrayList<>();
+        mapList.add(data);
+        upload(TrackData.mapList2String(mapList));
+    }
+
     public static void upload(List<Map<String, String>> data) {
         //开启线程来发起网络请求
         upload(TrackData.mapList2String(data));

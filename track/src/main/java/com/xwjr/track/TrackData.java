@@ -45,7 +45,6 @@ public class TrackData {
         }
         try {
             map.put("platform", "Android");
-            map.put("timestamp", String.valueOf(System.currentTimeMillis()));
         } catch (Exception e) {
             e.printStackTrace();
         }

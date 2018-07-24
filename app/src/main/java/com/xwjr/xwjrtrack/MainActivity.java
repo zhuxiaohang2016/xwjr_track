@@ -2,6 +2,8 @@ package com.xwjr.xwjrtrack;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.xwjr.track.TrackConfig;
 import com.xwjr.track.TrackData;
@@ -37,11 +39,21 @@ public class MainActivity extends AppCompatActivity {
 
         Map<String, String> data2 = TrackData.getCommonMap();
         data2.put("adfawerw", "dqerqreqafa");
+        data2.put("id", "dqerqreqafa");
         mapList.add(data2);
+
         TrackLocalData.saveTrackData(mapList);
 
         TrackOperate.upLoadLocalData();
 
+
+        TrackOperate.upLoadContract("18810393844");
+        Log.i("daf","dfafa");
+        Log.i("daf","dfafa");
+        Log.i("daf","dfafa");
+        Log.i("daf","dfafa");
+        Log.i("daf","dfafa");
+        Toast.makeText(this,"dafa",Toast.LENGTH_SHORT).show();
     }
 
 }

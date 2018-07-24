@@ -10,7 +10,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -26,8 +25,25 @@ public class TrackOperate {
     }
 
     public static void upload(List<Map<String, String>> data) {
-        //开启线程来发起网络请求
-        upload(TrackData.mapList2String(data));
+        try {
+            //开启线程来发起网络请求
+            if (data.size() <= TrackConfig.singleDataLimit) {
+                upload(TrackData.mapList2String(data));
+            } else {
+                List<Map<String, String>> upData = new ArrayList<>();
+                for (int i = 0; i < data.size(); i++) {
+                    upData.add(data.get(i));
+                    if (upData.size() >= TrackConfig.singleDataLimit) {
+                        upload(TrackData.mapList2String(upData));
+                        upData.clear();
+                    }
+                }
+                upload(TrackData.mapList2String(upData));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     public static void upload(final String data) {

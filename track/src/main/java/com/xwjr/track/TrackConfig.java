@@ -10,13 +10,25 @@ public class TrackConfig {
     public static String trackApphubkey = "49dd08f0-24e6-11e7-b026-6b0b8b32be51";
     public static String latitude = "";
     public static String longitude = "";
+    public static int singleDataLimit = 20;
 
     public static void init(Context context, String trackUrl, String trackApphubkey) {
         try {
             TrackConfig.trackUrl = trackUrl;
             TrackConfig.trackApphubkey = trackApphubkey;
             TrackConfig.context = context;
+            new TrackLocationData().getLngAndLat();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
+    public static void init(Context context, String trackUrl, String trackApphubkey,int singleDataLimit) {
+        try {
+            TrackConfig.trackUrl = trackUrl;
+            TrackConfig.trackApphubkey = trackApphubkey;
+            TrackConfig.context = context;
+            TrackConfig.singleDataLimit = singleDataLimit;
             new TrackLocationData().getLngAndLat();
         }catch (Exception e){
             e.printStackTrace();

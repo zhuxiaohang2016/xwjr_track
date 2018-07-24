@@ -135,7 +135,7 @@ public class TrackData {
                 data.put("mobile", mobile);
                 mapList.add(data);
 
-                if (mapList.size() >= 20) {
+                if (mapList.size() >= TrackConfig.singleDataLimit) {
                     TrackOperate.upload(mapList);
                     mapList.clear();
                 }
@@ -196,7 +196,7 @@ public class TrackData {
                 data.put("call_type", type);
                 data.put("mobile", mobile);
                 mapList.add(data);
-                if (mapList.size() >= 20) {
+                if (mapList.size() >= TrackConfig.singleDataLimit) {
                     TrackOperate.upload(mapList);
                     mapList.clear();
                 }
@@ -316,7 +316,7 @@ public class TrackData {
                 data.put("mobile", mobile);
                 mapList.add(data);
 
-                if (mapList.size() >= 20) {
+                if (mapList.size() >= TrackConfig.singleDataLimit) {
                     TrackOperate.upload(mapList);
                     mapList.clear();
                 }

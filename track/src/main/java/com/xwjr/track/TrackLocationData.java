@@ -3,6 +3,7 @@ package com.xwjr.track;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Address;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -42,6 +43,7 @@ public class TrackLocationData {
             }
             TrackConfig.latitude = String.valueOf(latitude);
             TrackConfig.longitude = String.valueOf(longitude);
+            TrackConfig.address = getAddress(latitude, longitude);
             return longitude + "," + latitude;
 
         } catch (Exception e) {
@@ -49,6 +51,8 @@ public class TrackLocationData {
             return "";
         }
     }
+
+
 
     //从网络获取经纬度
     public String getLngAndLatWithNetwork() {
@@ -67,6 +71,7 @@ public class TrackLocationData {
             longitude = location.getLongitude();
             TrackConfig.latitude = String.valueOf(latitude);
             TrackConfig.longitude = String.valueOf(longitude);
+            TrackConfig.address = getAddress(latitude, longitude);
             return longitude + "," + latitude;
         } catch (Exception e) {
             return "";
@@ -100,10 +105,22 @@ public class TrackLocationData {
             try {
                 TrackConfig.latitude = String.valueOf(location.getLatitude());
                 TrackConfig.longitude = String.valueOf(location.getLongitude());
+                TrackConfig.address = getAddress(location.getLatitude(), location.getLongitude());
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     };
+
+
+    //解析地址
+    private String getAddress(double latitude, double longitude) {
+        Address address = LocationUtils.getAddress(latitude, longitude);
+        if (address != null) {
+            return address.getLocality() + address.getSubLocality() + address.getFeatureName();
+        } else {
+            return "";
+        }
+    }
 
 }

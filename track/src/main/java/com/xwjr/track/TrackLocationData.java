@@ -53,7 +53,6 @@ public class TrackLocationData {
     }
 
 
-
     //从网络获取经纬度
     public String getLngAndLatWithNetwork() {
         try {
@@ -117,7 +116,14 @@ public class TrackLocationData {
     private String getAddress(double latitude, double longitude) {
         Address address = LocationUtils.getAddress(latitude, longitude);
         if (address != null) {
-            return address.getLocality() + address.getSubLocality() + address.getFeatureName();
+            String data = "";
+            if (address.getLocality() != null && !address.getLocality().equals("null"))
+                data += address.getLocality();
+            if (address.getSubLocality() != null && !address.getSubLocality().equals("null"))
+                data += address.getSubLocality();
+            if (address.getFeatureName() != null && !address.getFeatureName().equals("null"))
+                data += address.getFeatureName();
+            return data;
         } else {
             return "";
         }

@@ -29,7 +29,7 @@ public class TrackData {
         try {
             map.put("latitude", TrackConfig.latitude);
             map.put("longitude", TrackConfig.longitude);
-            map.put("addressDetail",TrackConfig.address);
+            map.put("address",TrackConfig.address);
         } catch (Exception e) {
             e.printStackTrace();
         }

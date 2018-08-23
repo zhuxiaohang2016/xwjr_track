@@ -4,6 +4,11 @@
 
 ### 导包
     compile 'com.github.zhuxiaohang2016:xwjr_track:0.7'
+    
+manifest 配置   2.0之后定位调整为amap需要申请 amap key 进行相关配置
+
+    <meta-data android:name="com.amap.api.v2.apikey" android:value="amapkey">
+    </meta-data>
 
 ### 配置
     1.TrackConfig.init(a,b,c)  a:context  b:请求url  c:apphubkey  备注：提前调用，否则可能获取不到经纬度

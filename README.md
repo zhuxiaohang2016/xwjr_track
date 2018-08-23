@@ -5,7 +5,8 @@
 ### 导包
     compile 'com.github.zhuxiaohang2016:xwjr_track:0.7'
     
-    //manifest 配置   1.5之后定位调整为amap需要申请 amap key 进行相关配置
+manifest 配置   1.5之后定位调整为amap需要申请 amap key 进行相关配置
+
     <meta-data android:name="com.amap.api.v2.apikey" android:value="amapkey">
     </meta-data>
 

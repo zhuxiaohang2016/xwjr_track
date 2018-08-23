@@ -2,6 +2,8 @@ package com.xwjr.track;
 
 import android.content.Context;
 
+import com.amap.api.location.AMapLocationClient;
+
 public class TrackConfig {
 
     public static Context context;
@@ -14,23 +16,25 @@ public class TrackConfig {
     public static int singleDataLimit = 20;
     public static long locationInterval = 60000;
 
-    public static void init(Context context, String trackUrl, String trackApphubkey) {
+    public static void init(Context context, String trackUrl, String trackApphubkey,String amapKey) {
         try {
             TrackConfig.trackUrl = trackUrl;
             TrackConfig.trackApphubkey = trackApphubkey;
             TrackConfig.context = context;
+            AMapLocationClient.setApiKey(amapKey);
             new TrackLocationData().initAMap();
         }catch (Exception e){
             e.printStackTrace();
         }
     }
 
-    public static void init(Context context, String trackUrl, String trackApphubkey,int singleDataLimit) {
+    public static void init(Context context, String trackUrl, String trackApphubkey,int singleDataLimit,String amapKey) {
         try {
             TrackConfig.trackUrl = trackUrl;
             TrackConfig.trackApphubkey = trackApphubkey;
             TrackConfig.context = context;
             TrackConfig.singleDataLimit = singleDataLimit;
+            AMapLocationClient.setApiKey(amapKey);
             new TrackLocationData().initAMap();
         }catch (Exception e){
             e.printStackTrace();

@@ -17,9 +17,6 @@
             </intent-filter>
         </activity>
 
-        <meta-data android:name="com.amap.api.v2.apikey" android:value="15e703beb1cc85b69ccba4f2ebb21a37">
-
-        </meta-data>
     </application>
 
 </manifest>

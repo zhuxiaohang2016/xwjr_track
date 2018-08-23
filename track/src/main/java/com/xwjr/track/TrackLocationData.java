@@ -64,7 +64,7 @@ public class TrackLocationData {
         //设置是否允许模拟位置,默认为true，允许模拟位置
         mLocationOption.setMockEnable(false);
         //设置定位间隔,单位毫秒,默认为2000ms，最低1000ms。
-        mLocationOption.setInterval(10000);
+        mLocationOption.setInterval(TrackConfig.locationInterval);
         mLocationClient.setLocationOption(mLocationOption);
         //设置定位回调监听
         mLocationClient.setLocationListener(mLocationListener);

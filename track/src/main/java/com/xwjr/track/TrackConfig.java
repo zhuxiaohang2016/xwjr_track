@@ -12,6 +12,7 @@ public class TrackConfig {
     public static String longitude = "";
     public static String address = "";
     public static int singleDataLimit = 20;
+    public static long locationInterval = 60000;
 
     public static void init(Context context, String trackUrl, String trackApphubkey) {
         try {
@@ -34,6 +35,12 @@ public class TrackConfig {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+
+    //设置定位间隔时间
+    public static void setLocationInterval(long time){
+        locationInterval = time;
     }
 
 

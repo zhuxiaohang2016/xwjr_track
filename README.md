@@ -12,7 +12,7 @@ manifest 配置   2.0之后定位调整为amap需要申请 amap key 进行相关
 
 ### 配置
     1.TrackConfig.init(a,b,c)  a:context  b:请求url  c:apphubkey  备注：提前调用，否则可能获取不到经纬度
-    2.设置定位间隔时间 TrackConfig.setLocationInterval(a)  a:定位间隔时间 1000->1s 默认60000
+    2.设置定位间隔时间 TrackConfig.setLocationInterval(a)  a:定位间隔时间 1000->1s 默认60000  需要再init方法之前调用才有效
     
 ### 数据处理
     1.获取通用数据      TrackData.getCommonMap()  返回 Map<String, String>  

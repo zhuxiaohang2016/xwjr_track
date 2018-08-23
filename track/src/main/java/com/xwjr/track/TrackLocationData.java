@@ -11,7 +11,70 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
+
 public class TrackLocationData {
+
+    //声明AMapLocationClient类对象
+    public AMapLocationClient mLocationClient = null;
+    //声明定位回调监听器
+    public AMapLocationListener mLocationListener = null;
+
+    public AMapLocationClientOption mLocationOption = null;
+
+    public void initAMap() {
+
+        AMapLocationListener mAMapLocationListener = new AMapLocationListener() {
+            @Override
+            public void onLocationChanged(AMapLocation amapLocation) {
+                if (amapLocation != null) {
+                    if (amapLocation.getErrorCode() == 0) {
+                        //可在其中解析amapLocation获取相应内容。
+                        TrackConfig.latitude = String.valueOf(amapLocation.getLatitude());//获取纬度
+                        TrackConfig.longitude =  String.valueOf(amapLocation.getLongitude());//获取经度
+                        TrackConfig.address = amapLocation.getAddress();
+                        Log.i("track",TrackConfig.address);
+                    }else {
+                        TrackConfig.latitude = "";
+                        TrackConfig.longitude= "";
+                        TrackConfig.address = "";
+                        //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
+                        Log.e("AmapError","location Error, ErrCode:"
+                                + amapLocation.getErrorCode() + ", errInfo:"
+                                + amapLocation.getErrorInfo());
+                    }
+                }else {
+                    TrackConfig.latitude = "";
+                    TrackConfig.longitude= "";
+                    TrackConfig.address = "";
+                }
+            }
+        };
+
+        //初始化定位
+        mLocationClient = new AMapLocationClient(TrackConfig.context);
+        mLocationListener = mAMapLocationListener;
+        //初始化AMapLocationClientOption对象
+        mLocationOption = new AMapLocationClientOption();
+        //设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+        //设置是否允许模拟位置,默认为true，允许模拟位置
+        mLocationOption.setMockEnable(false);
+        //设置定位间隔,单位毫秒,默认为2000ms，最低1000ms。
+        mLocationOption.setInterval(10000);
+        mLocationClient.setLocationOption(mLocationOption);
+        //设置定位回调监听
+        mLocationClient.setLocationListener(mLocationListener);
+        //启动定位
+        mLocationClient.startLocation();
+
+
+    }
+
+
     /**
      * 获取经纬度
      */

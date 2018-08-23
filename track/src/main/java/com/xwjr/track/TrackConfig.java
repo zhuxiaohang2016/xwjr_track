@@ -18,7 +18,7 @@ public class TrackConfig {
             TrackConfig.trackUrl = trackUrl;
             TrackConfig.trackApphubkey = trackApphubkey;
             TrackConfig.context = context;
-            new TrackLocationData().getLngAndLat();
+            new TrackLocationData().initAMap();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -30,7 +30,7 @@ public class TrackConfig {
             TrackConfig.trackApphubkey = trackApphubkey;
             TrackConfig.context = context;
             TrackConfig.singleDataLimit = singleDataLimit;
-            new TrackLocationData().getLngAndLat();
+            new TrackLocationData().initAMap();
         }catch (Exception e){
             e.printStackTrace();
         }

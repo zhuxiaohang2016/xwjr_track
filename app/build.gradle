@@ -3,6 +3,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 group='com.github.xwjr'
 
 android {
+
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.xwjr.xwjrtrack"
@@ -16,6 +17,20 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    signingConfigs {
+        debug {
+            keyAlias 'alias_name'
+            keyPassword '123456'
+            storeFile file('/Users/zxh/Document/newhope----keystore/my-release-key.keystore')
+            storePassword '123456'
+        }
+        release {
+            keyAlias 'alias_name'
+            keyPassword '123456'
+            storeFile file('/Users/zxh/Document/newhope----keystore/my-release-key.keystore')
+            storePassword '123456'
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.xwjr.track;
 
+import android.os.Build;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -40,7 +41,7 @@ public class TrackOperate {
                 }
                 upload(TrackData.mapList2String(upData));
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -48,8 +49,10 @@ public class TrackOperate {
 
     public static void upload(final String data) {
         //开启线程来发起网络请求
-        Log.i(TrackConfig.logTag, "上传的URL " + TrackConfig.trackUrl + TrackConfig.trackApphubkey);
-        Log.i(TrackConfig.logTag, "上传的json数据 " + data);
+        if (BuildConfig.DEBUG) {
+            Log.i(TrackConfig.logTag, "上传的URL " + TrackConfig.trackUrl + TrackConfig.trackApphubkey);
+            Log.i(TrackConfig.logTag, "上传的json数据 " + data);
+        }
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -162,6 +165,21 @@ public class TrackOperate {
                 @Override
                 public void run() {
                     upload(TrackLocalData.getTrackData());
+                    TrackLocalData.clearTrackData();
+                }
+            }).start();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void upLoadAllLocalData() {
+        try {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    upload(TrackData.mapList2String(TrackLocalData.getTrackData()));
                     TrackLocalData.clearTrackData();
                 }
             }).start();

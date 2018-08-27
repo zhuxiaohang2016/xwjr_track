@@ -3,6 +3,7 @@ package com.xwjr.track;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -11,11 +12,15 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class TrackLocalData {
 
     private static String XWJRTrackTable = "XWJRTrackTable";
     private static String XWJRTrackData = "XWJRTrackData";
+    private static TimerTask timerTask;
+    private static Timer timer;
 
     /**
      * 储存单次数据
@@ -24,10 +29,11 @@ public class TrackLocalData {
         try {
             SharedPreferences sharedPreferences = TrackConfig.context.getSharedPreferences(XWJRTrackTable, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            List<Map<String,String>> d = getTrackData();
+            List<Map<String, String>> d = getTrackData();
             d.add(data);
             editor.putString(XWJRTrackData, new Gson().toJson(d));
             editor.commit();
+            checkLength(d);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -40,12 +46,33 @@ public class TrackLocalData {
         try {
             SharedPreferences sharedPreferences = TrackConfig.context.getSharedPreferences(XWJRTrackTable, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            List<Map<String,String>> d = getTrackData();
+            List<Map<String, String>> d = getTrackData();
             d.addAll(data);
             editor.putString(XWJRTrackData, new Gson().toJson(d));
             editor.commit();
+            //如果超过20条，则上传
+            checkLength(d);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void checkLength(List<Map<String, String>> d) {
+        if (TrackConfig.localDataAutoUpload) {
+            //如果超过20条，则上传
+            if (d.size() >= TrackConfig.singleDataLimit) {
+                timerTask = new TimerTask() {
+                    @Override
+                    public void run() {
+                        TrackOperate.upLoadLocalData();
+                    }
+                };
+                if (timer != null) {
+                    timer.cancel();
+                }
+                timer = new Timer();
+                timer.schedule(timerTask, 3000);
+            }
         }
     }
 

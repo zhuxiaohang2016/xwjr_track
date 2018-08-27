@@ -15,20 +15,21 @@ public class TrackConfig {
     public static String address = "";
     public static int singleDataLimit = 20;
     public static long locationInterval = 60000;
+    public static boolean localDataAutoUpload = true;
 
-    public static void init(Context context, String trackUrl, String trackApphubkey,String amapKey) {
+    public static void init(Context context, String trackUrl, String trackApphubkey, String amapKey) {
         try {
             TrackConfig.trackUrl = trackUrl;
             TrackConfig.trackApphubkey = trackApphubkey;
             TrackConfig.context = context;
             AMapLocationClient.setApiKey(amapKey);
             new TrackLocationData().initAMap();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static void init(Context context, String trackUrl, String trackApphubkey,int singleDataLimit,String amapKey) {
+    public static void init(Context context, String trackUrl, String trackApphubkey, int singleDataLimit, String amapKey) {
         try {
             TrackConfig.trackUrl = trackUrl;
             TrackConfig.trackApphubkey = trackApphubkey;
@@ -36,18 +37,19 @@ public class TrackConfig {
             TrackConfig.singleDataLimit = singleDataLimit;
             AMapLocationClient.setApiKey(amapKey);
             new TrackLocationData().initAMap();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
 
     //设置定位间隔时间
-    public static void setLocationInterval(long time){
+    public static void setLocationInterval(long time) {
         locationInterval = time;
     }
 
-
-
-
+    //设置本地数据自动上传功能
+    public static void setLocalDataAutoUpload(boolean data) {
+        localDataAutoUpload = data;
+    }
 }

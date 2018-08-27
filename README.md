@@ -3,11 +3,14 @@
 ## How To Use ?
 
 ### 导包
-    compile 'com.github.zhuxiaohang2016:xwjr_track:2.2'
+    compile 'com.github.zhuxiaohang2016:xwjr_track:2.3'
     
 
 ### 配置
-    1.TrackConfig.init(a,b,c,d)  a:context  b:请求url  c:apphubkey d:amapKey 备注：提前调用，否则可能获取不到经纬度
+    1.TrackConfig.init(a,b,c,d)  a:context  b:请求url  c:apphubkey d:amapKey   备注：提前调用，否则可能获取不到经纬度
+      TrackConfig.init(a,b,c,e,d)  a:context  b:请求url  c:apphubkey d:amapKey e:单次上传数据条数限制，默认20   备注：提前调用，否则可能获取不到经纬度
+    2.TrackConfig.setLocationInterval(a)    a:定位间隔时间，默认60000（60s）
+    3.TrackConfig.localDataAutoUpload(a)    a:是否自动上传本地数据(超过单次上传数据条数限制，则会在3s后自动上传)，默认true
     
 ### 数据处理
     1.获取通用数据      TrackData.getCommonMap()  返回 Map<String, String>  

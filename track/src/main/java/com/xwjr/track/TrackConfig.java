@@ -16,6 +16,7 @@ public class TrackConfig {
     public static int singleDataLimit = 20;
     public static long locationInterval = 60000;
     public static boolean localDataAutoUpload = true;
+    public static boolean debug = false;
 
     public static void init(Context context, String trackUrl, String trackApphubkey, String amapKey) {
         try {
@@ -51,5 +52,9 @@ public class TrackConfig {
     //设置本地数据自动上传功能
     public static void setLocalDataAutoUpload(boolean data) {
         localDataAutoUpload = data;
+    }
+    //设置debug模式
+    public static void setDebug(boolean data) {
+        debug = data;
     }
 }

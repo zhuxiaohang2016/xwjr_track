@@ -58,6 +58,9 @@ public class TrackLocalData {
     }
 
     public static void checkLength(List<Map<String, String>> d) {
+        if (TrackConfig.debug){
+            Log.i("track","当前本地数据："+d.size()+"条");
+        }
         if (TrackConfig.localDataAutoUpload) {
             //如果超过20条，则上传
             if (d.size() >= TrackConfig.singleDataLimit) {

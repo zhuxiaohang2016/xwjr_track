@@ -49,7 +49,7 @@ public class TrackOperate {
 
     public static void upload(final String data) {
         //开启线程来发起网络请求
-        if (BuildConfig.DEBUG) {
+        if (TrackConfig.debug) {
             Log.i(TrackConfig.logTag, "上传的URL " + TrackConfig.trackUrl + TrackConfig.trackApphubkey);
             Log.i(TrackConfig.logTag, "上传的json数据 " + data);
         }
@@ -79,7 +79,9 @@ public class TrackOperate {
                     while ((line = reader.readLine()) != null) {
                         response.append(line);
                     }
-                    Log.i(TrackConfig.logTag, "上传返回数据 " + response.toString());
+                    if (TrackConfig.debug) {
+                        Log.i(TrackConfig.logTag, "上传返回数据 " + response.toString());
+                    }
 
                 } catch (Exception e) {
                     e.printStackTrace();

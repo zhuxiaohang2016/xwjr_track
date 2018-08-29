@@ -3,7 +3,7 @@
 ## How To Use ?
 
 ### 导包
-    compile 'com.github.zhuxiaohang2016:xwjr_track:2.5'
+    compile 'com.github.zhuxiaohang2016:xwjr_track:2.6'
     
 
 ### 配置

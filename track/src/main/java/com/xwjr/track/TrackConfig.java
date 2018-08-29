@@ -2,7 +2,7 @@ package com.xwjr.track;
 
 import android.content.Context;
 
-import com.amap.api.location.AMapLocationClient;
+import xwjr.amap.api.location.AMapLocationClient;
 
 public class TrackConfig {
 

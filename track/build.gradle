@@ -28,5 +28,5 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:25.2.0'
     implementation 'com.google.code.gson:gson:2.8.5'
-    implementation files('libs/AMap_Location_V4.2.0_20180809.jar')
+    implementation files('libs/xwjr_amap_4.2.0.jar')
 }

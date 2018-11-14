@@ -1,6 +1,8 @@
 package com.xwjr.track;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 
 import xwjr.amap.api.location.AMapLocationClient;
 
@@ -15,6 +17,7 @@ public class TrackConfig {
     static String address = "";
     static int singleDataLimit = 20;
     static long locationInterval = 60000;
+    static String battery = "-1";
     static boolean localDataAutoUpload = true;
     static boolean debug = false;
 
@@ -25,6 +28,8 @@ public class TrackConfig {
             TrackConfig.context = context;
             AMapLocationClient.setApiKey(amapKey);
             new TrackLocationData().initAMap();
+            IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+            context.registerReceiver(new BatteryReceiver(), filter);
         } catch (Exception e) {
             e.printStackTrace();
         }

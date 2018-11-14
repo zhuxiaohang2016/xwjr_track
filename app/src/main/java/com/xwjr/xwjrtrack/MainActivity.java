@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.xwjr.track.TrackConfig;
 import com.xwjr.track.TrackData;
 import com.xwjr.track.TrackLocalData;
+import com.xwjr.track.TrackLocationData;
 import com.xwjr.track.TrackOperate;
 
 import java.util.ArrayList;
@@ -30,13 +31,13 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.tv_hello).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Map<String, String> data = TrackData.getCommonMap();
-                data.put("adad", "dafadf");
-                data.put("dafafdafaf", String.valueOf(System.currentTimeMillis()));
-                TrackLocalData.saveTrackData(data);
-                TrackLocalData.saveTrackData(data);
-                TrackLocalData.saveTrackData(data);
-
+//                Map<String, String> data = TrackData.getCommonMap();
+//                data.put("adad", "dafadf");
+//                data.put("dafafdafaf", String.valueOf(System.currentTimeMillis()));
+//                TrackLocalData.saveTrackData(data);
+//                TrackLocalData.saveTrackData(data);
+//                TrackLocalData.saveTrackData(data);
+//                TrackOperate.upLoadContract("18810409404");
             }
         });
     }

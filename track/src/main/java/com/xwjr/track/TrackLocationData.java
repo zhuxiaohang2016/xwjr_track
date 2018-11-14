@@ -36,7 +36,7 @@ public class TrackLocationData {
                         TrackConfig.latitude = String.valueOf(amapLocation.getLatitude());//获取纬度
                         TrackConfig.longitude =  String.valueOf(amapLocation.getLongitude());//获取经度
                         TrackConfig.address = amapLocation.getAddress();
-                        Log.i("track",TrackConfig.address);
+                        Log.i("track",TrackConfig.latitude+"  "+TrackConfig.longitude+"  "+TrackConfig.address);
                     }else {
                         TrackConfig.latitude = "";
                         TrackConfig.longitude= "";

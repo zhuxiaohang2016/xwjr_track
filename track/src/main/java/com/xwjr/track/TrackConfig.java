@@ -63,4 +63,88 @@ public class TrackConfig {
     public static void setDebug(boolean data) {
         debug = data;
     }
+
+    public static Context getContext() {
+        return context;
+    }
+
+    public static void setContext(Context context) {
+        TrackConfig.context = context;
+    }
+
+    public static String getLogTag() {
+        return logTag;
+    }
+
+    public static void setLogTag(String logTag) {
+        TrackConfig.logTag = logTag;
+    }
+
+    public static String getTrackUrl() {
+        return trackUrl;
+    }
+
+    public static void setTrackUrl(String trackUrl) {
+        TrackConfig.trackUrl = trackUrl;
+    }
+
+    public static String getTrackApphubkey() {
+        return trackApphubkey;
+    }
+
+    public static void setTrackApphubkey(String trackApphubkey) {
+        TrackConfig.trackApphubkey = trackApphubkey;
+    }
+
+    public static String getLatitude() {
+        return latitude;
+    }
+
+    public static void setLatitude(String latitude) {
+        TrackConfig.latitude = latitude;
+    }
+
+    public static String getLongitude() {
+        return longitude;
+    }
+
+    public static void setLongitude(String longitude) {
+        TrackConfig.longitude = longitude;
+    }
+
+    public static String getAddress() {
+        return address;
+    }
+
+    public static void setAddress(String address) {
+        TrackConfig.address = address;
+    }
+
+    public static int getSingleDataLimit() {
+        return singleDataLimit;
+    }
+
+    public static void setSingleDataLimit(int singleDataLimit) {
+        TrackConfig.singleDataLimit = singleDataLimit;
+    }
+
+    public static long getLocationInterval() {
+        return locationInterval;
+    }
+
+    public static String getBattery() {
+        return battery;
+    }
+
+    public static void setBattery(String battery) {
+        TrackConfig.battery = battery;
+    }
+
+    public static boolean isLocalDataAutoUpload() {
+        return localDataAutoUpload;
+    }
+
+    public static boolean isDebug() {
+        return debug;
+    }
 }

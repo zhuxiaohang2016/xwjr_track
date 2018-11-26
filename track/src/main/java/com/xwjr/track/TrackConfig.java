@@ -47,6 +47,8 @@ public class TrackConfig {
             TrackConfig.singleDataLimit = singleDataLimit;
             AMapLocationClient.setApiKey(amapKey);
             new TrackLocationData().initAMap();
+            IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+            context.registerReceiver(new BatteryReceiver(), filter);
         } catch (Exception e) {
             e.printStackTrace();
         }

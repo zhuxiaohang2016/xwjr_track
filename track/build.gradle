@@ -24,9 +24,17 @@ android {
 
 }
 
+allprojects {
+    repositories {
+        jcenter() // 或者 mavenCentral()
+    }
+}
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:25.2.0'
     implementation 'com.google.code.gson:gson:2.8.5'
-    implementation files('libs/xwjr_amap_4.2.0.jar')
+    api 'com.amap.api:3dmap:6.5.0'
+    api 'com.amap.api:location:4.4.0'
+    api 'com.amap.api:search:6.5.0.1'
 }

@@ -11,10 +11,11 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
-import xwjr.amap.api.location.AMapLocation;
-import xwjr.amap.api.location.AMapLocationClient;
-import xwjr.amap.api.location.AMapLocationClientOption;
-import xwjr.amap.api.location.AMapLocationListener;
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
+
 
 public class TrackLocationData {
 

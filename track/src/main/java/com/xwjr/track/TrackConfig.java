@@ -4,7 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
-import xwjr.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.maps.AMap;
+import com.amap.api.maps.AMapOptions;
+import com.amap.api.maps.AMapUtils;
+
 
 public class TrackConfig {
 

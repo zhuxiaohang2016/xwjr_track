@@ -12,6 +12,7 @@
     2.TrackConfig.setLocationInterval(a)    a:定位间隔时间，默认60000（60s）
     3.TrackConfig.localDataAutoUpload(a)    a:是否自动上传本地数据(超过单次上传数据条数限制，则会在3s后自动上传)，默认true
     4.TrackConfig.setDebug(a)   a:debug模式，决定日志是否输出，默认为false
+    5.TrackConfig.setXwjrUserId(a)  a:xwjrUserId 默认为null
     
 ### 数据处理
     1.获取通用数据      TrackData.getCommonMap()  返回 Map<String, String>  

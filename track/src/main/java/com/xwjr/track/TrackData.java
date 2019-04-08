@@ -28,8 +28,13 @@ public class TrackData {
         try {
             if (!TextUtils.isEmpty(TrackConfig.xwjrUserId)) {
                 map.put("xwjrUserId", TrackConfig.xwjrUserId);
-            } else {
-                map.put("xwjrUserId", "null");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            if (!TextUtils.isEmpty(TrackConfig.empId)) {
+                map.put("empId", TrackConfig.empId);
             }
         } catch (Exception e) {
             e.printStackTrace();

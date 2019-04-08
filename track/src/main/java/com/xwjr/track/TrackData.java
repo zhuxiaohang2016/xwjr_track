@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.ContactsContract;
 import android.support.v4.app.ActivityCompat;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -25,9 +26,18 @@ public class TrackData {
     public static Map<String, String> getCommonMap() {
         Map<String, String> map = new HashMap<>();
         try {
+            if (!TextUtils.isEmpty(TrackConfig.xwjrUserId)) {
+                map.put("xwjrUserId", TrackConfig.xwjrUserId);
+            } else {
+                map.put("xwjrUserId", "null");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
             map.put("latitude", TrackConfig.latitude);
             map.put("longitude", TrackConfig.longitude);
-            map.put("address",TrackConfig.address);
+            map.put("address", TrackConfig.address);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -67,8 +77,8 @@ public class TrackData {
             e.printStackTrace();
         }
         try {
-            map.put("systemNetWork",AndroidUtil.getNetworkState(context));
-            map.put("systemBattery",TrackConfig.battery);
+            map.put("systemNetWork", AndroidUtil.getNetworkState(context));
+            map.put("systemBattery", TrackConfig.battery);
 //            map.put("systemInfoId", Build.ID);
             map.put("systemInfoBrand", Build.BRAND);
 //            map.put("systemInfoModel", Build.MODEL);

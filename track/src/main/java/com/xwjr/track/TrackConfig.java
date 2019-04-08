@@ -24,6 +24,7 @@ public class TrackConfig {
     static String battery = "-1";
     static boolean localDataAutoUpload = true;
     static boolean debug = false;
+    static String xwjrUserId = "";
 
     public static void init(Context context, String trackUrl, String trackApphubkey, String amapKey) {
         try {
@@ -152,5 +153,13 @@ public class TrackConfig {
 
     public static boolean isDebug() {
         return debug;
+    }
+
+    public static String getXwjrUserId() {
+        return xwjrUserId;
+    }
+
+    public static void setXwjrUserId(String xwjrUserId) {
+        TrackConfig.xwjrUserId = xwjrUserId;
     }
 }

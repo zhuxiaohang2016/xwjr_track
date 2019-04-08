@@ -3,7 +3,7 @@
 ## How To Use ?
 
 ### 导包
-    compile 'com.github.zhuxiaohang2016:xwjr_track:2.6'
+    compile 'com.github.zhuxiaohang2016:xwjr_track:3.1'
     
 
 ### 配置
@@ -12,7 +12,8 @@
     2.TrackConfig.setLocationInterval(a)    a:定位间隔时间，默认60000（60s）
     3.TrackConfig.localDataAutoUpload(a)    a:是否自动上传本地数据(超过单次上传数据条数限制，则会在3s后自动上传)，默认true
     4.TrackConfig.setDebug(a)   a:debug模式，决定日志是否输出，默认为false
-    5.TrackConfig.setXwjrUserId(a)  a:xwjrUserId 默认为null
+    5.TrackConfig.setXwjrUserId(a)  a:xwjrUserId c端用户的用户Id
+    6.TrackConfig.setEmpId(a)   a:empId  b端用户的员工Id
     
 ### 数据处理
     1.获取通用数据      TrackData.getCommonMap()  返回 Map<String, String>  

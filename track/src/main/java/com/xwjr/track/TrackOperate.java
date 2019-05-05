@@ -50,8 +50,8 @@ public class TrackOperate {
     public static void upload(final String data) {
         //开启线程来发起网络请求
         if (TrackConfig.debug) {
-            Log.i(TrackConfig.logTag, "上传的URL " + TrackConfig.trackUrl + TrackConfig.trackApphubkey);
-            Log.i(TrackConfig.logTag, "上传的json数据 " + data);
+            LogUtils.i("上传的URL " + TrackConfig.trackUrl + TrackConfig.trackApphubkey);
+            LogUtils.i("上传的json数据 " + data);
         }
         new Thread(new Runnable() {
             @Override
@@ -61,16 +61,11 @@ public class TrackOperate {
                 try {
                     URL url = new URL(TrackConfig.trackUrl + TrackConfig.trackApphubkey);
                     connection = (HttpURLConnection) url.openConnection();
-                    connection.setConnectTimeout(10000);
-                    connection.setReadTimeout(10000);
+                    connection.setConnectTimeout(20000);
+                    connection.setReadTimeout(20000);
                     connection.setRequestMethod("POST");
-//                    connection.setRequestProperty("Content-type", "application/json;charset=UTF-8");
-//                    int le = ("data=" + data).getBytes().length;
-//                    Log.i(TrackConfig.logTag, "上传的json数据 " + le);
-//                    connection.setRequestProperty("Content-Length", String.valueOf(le));
                     DataOutputStream out = new DataOutputStream(connection.getOutputStream());
                     out.write(("data=" + data).getBytes());
-//                    out.writeBytes("data=" + data);
                     InputStream in = connection.getInputStream();
                     //下面对获取到的输入流进行读取
                     reader = new BufferedReader(new InputStreamReader(in));
@@ -80,7 +75,7 @@ public class TrackOperate {
                         response.append(line);
                     }
                     if (TrackConfig.debug) {
-                        Log.i(TrackConfig.logTag, "上传返回数据 " + response.toString());
+                        LogUtils.i("上传返回数据 " + response.toString());
                     }
 
                 } catch (Exception e) {

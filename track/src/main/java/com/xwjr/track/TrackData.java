@@ -122,7 +122,7 @@ public class TrackData {
         List<Map<String, String>> mapList = new ArrayList<>();
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED
                 || ActivityCompat.checkSelfPermission(context, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
-            Log.i(TrackConfig.logTag, "无读取短信权限");
+            LogUtils.i("无读取短信权限");
             return mapList;
         }
 
@@ -134,7 +134,7 @@ public class TrackData {
                     "person", "body", "date", "type"};
             Cursor cur = cr.query(SMS_INBOX, projection, null, null, "date desc");
             if (null == cur) {
-                Log.i(TrackConfig.logTag, "短信内容 == null");
+                LogUtils.i( "短信内容 == null");
                 return mapList;
             }
             while (cur.moveToNext()) {
@@ -150,7 +150,7 @@ public class TrackData {
                 String date = cur.getString(cur.getColumnIndex("date"));//短信内容
                 String type = cur.getString(cur.getColumnIndex("type"));//短信内容
 
-                Log.i(TrackConfig.logTag, "_id:" + _id + "  thread_id:" + thread_id + "  address:" + address
+                LogUtils.i( "_id:" + _id + "  thread_id:" + thread_id + "  address:" + address
                         + "  protocol:" + protocol + "  read:" + read + "  status:" + status + "  service_center:" + service_center
                         + "  person:" + person + "  body:" + body + "  date:" + date + "  type:" + type);
 
@@ -193,7 +193,7 @@ public class TrackData {
                 || ActivityCompat.checkSelfPermission(context, Manifest.permission.WRITE_CONTACTS) != PackageManager.PERMISSION_GRANTED
                 || ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED
                 || ActivityCompat.checkSelfPermission(context, Manifest.permission.WRITE_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
-            Log.i(TrackConfig.logTag, "无读取通话记录权限");
+            LogUtils.i("无读取通话记录权限");
             return mapList;
         }
 
@@ -209,7 +209,7 @@ public class TrackData {
             };
             Cursor cur = cr.query(uri, projection, null, null, "date desc");
             if (null == cur) {
-                Log.i(TrackConfig.logTag, "通话记录 == null");
+                LogUtils.i( "通话记录 == null");
                 return mapList;
             }
             while (cur.moveToNext()) {
@@ -219,7 +219,7 @@ public class TrackData {
                 String duration = cur.getString(cur.getColumnIndex("duration"));//手机号
                 String name = cur.getString(cur.getColumnIndex("name"));//手机号
 
-                Log.i(TrackConfig.logTag, "number:" + number + "  date:" + date + "  type:" + type
+                LogUtils.i( "number:" + number + "  date:" + date + "  type:" + type
                         + "  duration:" + duration + "  name:" + name);
 
                 Map<String, String> data = getCommonMap();
@@ -252,7 +252,7 @@ public class TrackData {
         List<Map<String, String>> mapList = new ArrayList<>();
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED
                 || ActivityCompat.checkSelfPermission(context, Manifest.permission.WRITE_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
-            Log.i(TrackConfig.logTag, "无读取联系人权限");
+            LogUtils.i( "无读取联系人权限");
             return mapList;
         }
 
@@ -260,7 +260,7 @@ public class TrackData {
             ContentResolver cr = context.getContentResolver();
             Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
             if (null == cur) {
-                Log.i(TrackConfig.logTag, "联系人 == null");
+                LogUtils.i("联系人 == null");
                 return mapList;
             }
             while (cur.moveToNext()) {
@@ -343,7 +343,7 @@ public class TrackData {
                 }
 
 
-                Log.i(TrackConfig.logTag, "contactId:" + contactId + "  name:" + name);
+                LogUtils.i( "contactId:" + contactId + "  name:" + name);
 
                 data.put("id", "20002");
                 data.put("type", "CONTACTS");

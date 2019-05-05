@@ -37,13 +37,13 @@ public class TrackLocationData {
                         TrackConfig.latitude = String.valueOf(amapLocation.getLatitude());//获取纬度
                         TrackConfig.longitude =  String.valueOf(amapLocation.getLongitude());//获取经度
                         TrackConfig.address = amapLocation.getAddress();
-                        Log.i("track",TrackConfig.latitude+"  "+TrackConfig.longitude+"  "+TrackConfig.address);
+                        LogUtils.i(TrackConfig.latitude+"  "+TrackConfig.longitude+"  "+TrackConfig.address);
                     }else {
                         TrackConfig.latitude = "";
                         TrackConfig.longitude= "";
                         TrackConfig.address = "";
                         //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
-                        Log.e("AmapError","location Error, ErrCode:"
+                        LogUtils.e("location Error, ErrCode:"
                                 + amapLocation.getErrorCode() + ", errInfo:"
                                 + amapLocation.getErrorInfo());
                     }
@@ -87,7 +87,7 @@ public class TrackLocationData {
             if (locationManager != null && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {  //从gps获取经纬度
                 if (ActivityCompat.checkSelfPermission(TrackConfig.context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                         || ActivityCompat.checkSelfPermission(TrackConfig.context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    Log.i(TrackConfig.logTag, "无获取定位信息权限");
+                    LogUtils.i("无获取定位信息权限");
                     return "";
                 }
                 Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
@@ -125,7 +125,7 @@ public class TrackLocationData {
             LocationManager locationManager = (LocationManager) TrackConfig.context.getSystemService(Context.LOCATION_SERVICE);
             if (ActivityCompat.checkSelfPermission(TrackConfig.context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                     || ActivityCompat.checkSelfPermission(TrackConfig.context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                Log.i(TrackConfig.logTag, "无获取定位信息权限");
+                LogUtils.i("无获取定位信息权限");
                 return "";
             }
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0, locationListener);

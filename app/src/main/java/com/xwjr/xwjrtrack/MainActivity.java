@@ -16,6 +16,9 @@ import com.xwjr.track.TrackData;
 import com.xwjr.track.TrackLocalData;
 import com.xwjr.track.TrackLocationData;
 import com.xwjr.track.TrackOperate;
+import com.xwjr.track.attend.AttendActivity;
+import com.xwjr.track.attend.broadcast.AutoSignReceiver;
+import com.xwjr.track.attend.extension.BroadcastExtensionKt;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         TrackConfig.init(this, "http://p2psp.kfxfd.cn:9080/apphub/tracking/", "49dd08f0-24e6-11e7-b026-6b0b8b32be51", "15e703beb1cc85b69ccba4f2ebb21a37");
         MapView mMapView = null;
 
-        requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION}, 99);
+        requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 99);
 
 
         findViewById(R.id.tv_hello).setOnClickListener(new View.OnClickListener() {
@@ -54,6 +57,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, AMapActivity.class));
+            }
+        });
+
+        findViewById(R.id.tv_attend).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, AttendActivity.class));
             }
         });
     }

@@ -20,10 +20,20 @@
         android:id="@+id/tv_amap"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:text="Hello amap!"
+        android:text="Amap!"
         android:gravity="center_vertical"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_hello" />
+
+    <TextView
+        android:id="@+id/tv_attend"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="考勤"
+        android:gravity="center_vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_amap" />
 
 </android.support.constraint.ConstraintLayout>

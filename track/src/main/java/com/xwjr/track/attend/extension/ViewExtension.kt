@@ -10,7 +10,10 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.ImageView
 import android.widget.PopupWindow
+import android.widget.TextView
+import com.google.gson.annotations.Until
 import com.xwjr.track.R
 import java.util.*
 
@@ -60,6 +63,47 @@ fun Context.showSignSuccess() {
             }
         }
         timer?.schedule(timeTask, 2000)
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+}
+
+//popupWindow弹出提示信息
+fun Context.showTip(description: String? = "", buttonText: String? = null, error: (() -> Unit)? = null, deal: (() -> Unit)? = null) {
+    try {
+        val view = View.inflate(this, R.layout.attend_common_tip, null)
+        val popupWindow = PopupWindow(
+                view,
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+        )
+
+        val tvDescription = view.findViewById(R.id.tv_description) as TextView
+        val tvSure = view.findViewById(R.id.tv_sure) as TextView
+        val ivClose = view.findViewById(R.id.iv_close) as ImageView
+
+        tvDescription.text = description
+        tvSure.text = buttonText
+
+        ivClose.setOnClickListener {
+            if (error != null) error()
+            popupWindow.dismiss()
+        }
+
+        tvSure.setOnClickListener {
+            if (deal!=null) deal()
+            popupWindow.dismiss()
+        }
+
+
+        popupWindow.apply {
+            isFocusable = true
+            isOutsideTouchable = true
+            isTouchable = true
+            setBackgroundDrawable(BitmapDrawable())
+            showAtLocation(view, Gravity.CENTER, 0, 0)
+        }
+
     } catch (e: Exception) {
         e.printStackTrace()
     }

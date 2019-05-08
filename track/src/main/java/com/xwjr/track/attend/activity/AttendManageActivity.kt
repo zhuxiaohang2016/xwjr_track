@@ -8,6 +8,7 @@ import com.xwjr.track.LogUtils
 import com.xwjr.track.R
 import com.xwjr.track.attend.adapter.AttendManageListAdapter
 import com.xwjr.track.attend.bean.AttendManageListBean
+import com.xwjr.track.attend.extension.showTip
 import kotlinx.android.synthetic.main.activity_attend_manage.*
 import kotlinx.android.synthetic.main.attend_title.*
 
@@ -56,9 +57,10 @@ class AttendManageActivity : AppCompatActivity() {
                 }
 
                 override fun delete(position: Int) {
-                    LogUtils.i("删除第${position}条数据么")
-                    attendManageList.removeAt(position)
-                    rv_attend_manage_list.adapter.notifyDataSetChanged()
+                    showTip("请确认是否删除", "确定") {
+                        attendManageList.removeAt(position)
+                        rv_attend_manage_list.adapter.notifyDataSetChanged()
+                    }
                 }
             }
         }

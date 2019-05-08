@@ -12,7 +12,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginRight="57dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/attend_add_button_border"
+        android:background="@drawable/attend_shape_add_button_border"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 

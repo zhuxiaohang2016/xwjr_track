@@ -3,6 +3,7 @@
     <style name="AttendActivity" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@color/attend_activity_bg</item>
+        <item name="android:splitMotionEvents">false</item>
     </style>
 
 </resources>

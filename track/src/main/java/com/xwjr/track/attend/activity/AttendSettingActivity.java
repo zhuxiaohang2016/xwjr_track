@@ -1,4 +1,4 @@
-package com.xwjr.track.attend;
+package com.xwjr.track.attend.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/title"
+        layout="@layout/attend_title" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/cl_year_month"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#0084ff"
+        app:layout_constraintTop_toBottomOf="@id/title">
+
+        <ImageView
+            android:id="@+id/iv_last_month"
+            android:layout_width="36dp"
+            android:layout_height="0dp"
+            android:padding="10dp"
+            android:src="@mipmap/attend_icon_last_month"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/tv_year_and_month"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_year_and_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="#ffffff"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_next_month"
+            android:layout_width="36dp"
+            android:layout_height="0dp"
+            android:padding="10dp"
+            android:src="@mipmap/attend_icon_next_month"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/tv_year_and_month"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <com.haibin.calendarview.CalendarLayout
+        android:id="@+id/calendarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#fff"
+        android:orientation="vertical"
+        app:calendar_content_view_id="@id/rl_content"
+        app:default_status="expand"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cl_year_month">
+
+        <com.haibin.calendarview.CalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#0084ff"
+            app:calendar_height="39dp"
+            app:calendar_padding="40dp"
+            app:current_day_text_color="#ffffff"
+            app:current_month_text_color="#ffffff"
+            app:day_text_size="12sp"
+            app:max_year="2050"
+            app:max_year_day="31"
+            app:max_year_month="12"
+            app:min_year="2019"
+            app:min_year_day="1"
+            app:min_year_month="1"
+            app:month_view="com.xwjr.track.attend.calendar.CustomMonthView"
+            app:month_view_show_mode="mode_fix"
+            app:other_month_text_color="#999999"
+            app:select_mode="single_mode"
+            app:selected_text_color="#0084ff"
+            app:selected_theme_color="#ffffff"
+            app:week_bar_height="29dp"
+            app:week_bar_view="com.xwjr.track.attend.calendar.CustomWeekBar"
+            app:week_start_with="sun"
+            app:week_text_size="12sp"
+            app:week_view="com.xwjr.track.attend.calendar.CustomWeekView" />
+
+        <RelativeLayout
+            android:id="@+id/rl_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ffffff">
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/cl_statistic"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/iv_dot1"
+                    android:layout_width="6dp"
+                    android:layout_height="6dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:src="@mipmap/attend_dot_blue"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_late"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:text="迟到：0次"
+                    android:textColor="#333333"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/iv_dot1"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <ImageView
+                    android:id="@+id/iv_dot2"
+                    android:layout_width="6dp"
+                    android:layout_height="6dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
+                    android:src="@mipmap/attend_dot_red"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/tv_early"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_early"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="早退：0次"
+                    android:textColor="#333333"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/iv_dot2"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <ImageView
+                    android:id="@+id/iv_dot3"
+                    android:layout_width="6dp"
+                    android:layout_height="6dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
+                    android:src="@mipmap/attend_dot_orange"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/tv_forget"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_forget"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:text="忘打卡：0次"
+                    android:textColor="#333333"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </android.support.constraint.ConstraintLayout>
+
+            <View
+                android:id="@+id/view_line"
+                android:layout_width="match_parent"
+                android:layout_height="7dp"
+                android:layout_below="@id/cl_statistic"
+                android:background="#f6f6f6" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_sign_record_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/view_line"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+            </android.support.v7.widget.RecyclerView>
+        </RelativeLayout>
+
+
+    </com.haibin.calendarview.CalendarLayout>
+
+
+</android.support.constraint.ConstraintLayout>

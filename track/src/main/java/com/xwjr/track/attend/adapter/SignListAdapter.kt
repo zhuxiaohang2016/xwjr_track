@@ -3,7 +3,7 @@ package com.xwjr.track.attend.adapter
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import com.xwjr.track.attend.bean.AttendListBean
+import com.xwjr.track.attend.bean.SignListBean
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
@@ -11,11 +11,11 @@ import android.widget.TextView
 import com.xwjr.track.R
 
 
-class SignListAdapter(private val context: Context, private var dataList: MutableList<AttendListBean>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class SignListAdapter(private val context: Context, private var dataList: MutableList<SignListBean>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
-        val LAST_DATA = 1024
-        val MORMAL_DATA = 1025
+       const val LAST_DATA = 1024
+       const val NORMAL_DATA = 1025
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
@@ -31,7 +31,7 @@ class SignListAdapter(private val context: Context, private var dataList: Mutabl
         if (position == dataList.size - 1) {
             return LAST_DATA
         }
-        return MORMAL_DATA
+        return NORMAL_DATA
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {

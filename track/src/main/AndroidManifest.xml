@@ -21,19 +21,30 @@
 
     <application>
         <activity
-            android:name=".attend.AttendActivity"
+            android:name=".attend.activity.AttendManageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AttendActivity"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".attend.AttendSettingActivity"
+            android:name=".attend.activity.SignRecordActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AttendActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".attend.activity.SignActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AttendActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".attend.activity.AttendSettingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AttendActivity"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <service android:name="com.amap.api.location.APSService" />
-
-        <service android:name=".attend.service.AutoSignService" android:exported="false"/>
+        <service
+            android:name=".attend.service.AutoSignService"
+            android:exported="false" />
     </application>
 
 </manifest>

@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="#ffffff"
+    android:layout_height="wrap_content">
+
+
+    <ImageView
+        android:id="@+id/iv_sign_time_morning_on"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:src="@mipmap/attend_icon_sign_time_day"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_sign_time_morning_on_des"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginLeft="2dp"
+        android:text="上午上班"
+        android:textColor="#666666"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_sign_time_morning_on"
+        app:layout_constraintLeft_toRightOf="@id/iv_sign_time_morning_on"
+        app:layout_constraintTop_toTopOf="@id/iv_sign_time_morning_on" />
+
+    <TextView
+        android:id="@+id/tv_sign_time_morning_on"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:text="09:00"
+        android:textColor="#80b7ea"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_sign_time_morning_on"
+        app:layout_constraintLeft_toRightOf="@id/tv_sign_time_morning_on_des"
+        app:layout_constraintTop_toTopOf="@id/iv_sign_time_morning_on" />
+
+
+    <android.support.constraint.Group
+        android:id="@+id/group_sign_time_morning_on"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="tv_sign_time_morning_on,tv_sign_time_morning_on_des,iv_sign_time_morning_on" />
+
+    <ImageView
+        android:id="@+id/iv_sign_time_morning_off"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="7dp"
+        android:src="@mipmap/attend_icon_sign_time_day"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_sign_time_morning_on" />
+
+    <TextView
+        android:id="@+id/tv_sign_time_morning_off_des"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginLeft="2dp"
+        android:text="上午下班"
+        android:textColor="#666666"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_sign_time_morning_off"
+        app:layout_constraintLeft_toRightOf="@id/iv_sign_time_morning_off"
+        app:layout_constraintTop_toTopOf="@id/iv_sign_time_morning_off" />
+
+    <TextView
+        android:id="@+id/tv_sign_time_morning_off"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:text="09:00"
+        android:textColor="#80b7ea"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_sign_time_morning_off"
+        app:layout_constraintLeft_toRightOf="@id/tv_sign_time_morning_off_des"
+        app:layout_constraintTop_toTopOf="@id/iv_sign_time_morning_off" />
+
+    <android.support.constraint.Group
+        android:id="@+id/group_sign_time_morning_off"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="tv_sign_time_morning_off,tv_sign_time_morning_off_des,iv_sign_time_morning_off" />
+
+    <ImageView
+        android:id="@+id/iv_sign_time_afternoon_on"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginRight="2dp"
+        android:src="@mipmap/attend_icon_sign_time_night"
+        app:layout_constraintBottom_toBottomOf="@id/iv_sign_time_morning_on"
+        app:layout_constraintRight_toLeftOf="@id/tv_sign_time_afternoon_on_des"
+        app:layout_constraintTop_toTopOf="@id/iv_sign_time_morning_on" />
+
+    <TextView
+        android:id="@+id/tv_sign_time_afternoon_on_des"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:text="下午上班"
+        android:textColor="#666666"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_sign_time_morning_on"
+        app:layout_constraintRight_toLeftOf="@id/tv_sign_time_afternoon_on"
+        app:layout_constraintTop_toTopOf="@id/iv_sign_time_morning_on" />
+
+    <TextView
+        android:id="@+id/tv_sign_time_afternoon_on"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:text="09:00"
+        android:textColor="#80b7ea"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_sign_time_morning_on"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iv_sign_time_morning_on" />
+
+    <android.support.constraint.Group
+        android:id="@+id/group_sign_time_afternoon_on"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="tv_sign_time_afternoon_on,tv_sign_time_afternoon_on_des,iv_sign_time_afternoon_on" />
+
+    <ImageView
+        android:id="@+id/iv_sign_time_afternoon_off"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginRight="2dp"
+        android:src="@mipmap/attend_icon_sign_time_night"
+        app:layout_constraintBottom_toBottomOf="@id/iv_sign_time_morning_off"
+        app:layout_constraintRight_toLeftOf="@id/tv_sign_time_afternoon_off_des"
+        app:layout_constraintTop_toTopOf="@id/iv_sign_time_morning_off" />
+
+    <TextView
+        android:id="@+id/tv_sign_time_afternoon_off_des"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:text="下午上班"
+        android:textColor="#666666"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_sign_time_morning_off"
+        app:layout_constraintRight_toLeftOf="@id/tv_sign_time_afternoon_on"
+        app:layout_constraintTop_toTopOf="@id/iv_sign_time_morning_off" />
+
+    <TextView
+        android:id="@+id/tv_sign_time_afternoon_off"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:text="09:00"
+        android:textColor="#80b7ea"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_sign_time_morning_off"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iv_sign_time_morning_off" />
+
+    <android.support.constraint.Group
+        android:id="@+id/group_sign_time_afternoon_off"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="tv_sign_time_afternoon_off,tv_sign_time_afternoon_off_des,iv_sign_time_afternoon_off" />
+
+
+    <ImageView
+        android:id="@+id/iv_delete"
+        android:layout_width="81dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="10dp"
+        android:src="@mipmap/attend_icon_delete"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_sign_time_morning_off" />
+
+    <ImageView
+        android:id="@+id/iv_location_gray"
+        android:layout_width="10dp"
+        android:layout_height="14dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="13dp"
+        android:src="@mipmap/attend_icon_location_gray2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_sign_time_morning_off" />
+
+    <TextView
+        android:id="@+id/tv_location_des"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:gravity="center|start"
+        android:text="北京北京北京北京北京北京北京北北京北京北京北京北京北京北京北北京北京北京北京北京北京北京北"
+        android:textColor="#cccccc"
+        android:textSize="13sp"
+        app:layout_constraintLeft_toRightOf="@id/iv_location_gray"
+        app:layout_constraintRight_toLeftOf="@id/iv_delete"
+        app:layout_constraintTop_toBottomOf="@id/iv_sign_time_morning_off" />
+
+    <View
+        android:id="@+id/view_line_separate"
+        android:layout_width="match_parent"
+        android:layout_height="7dp"
+        android:layout_marginTop="5dp"
+        android:background="#f6f6f6"
+        app:layout_constraintTop_toBottomOf="@id/tv_location_des" />
+
+</android.support.constraint.ConstraintLayout>

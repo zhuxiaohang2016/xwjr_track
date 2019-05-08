@@ -6,23 +6,11 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.amap.api.maps.MapView;
 import com.xwjr.track.TrackConfig;
-import com.xwjr.track.TrackData;
-import com.xwjr.track.TrackLocalData;
-import com.xwjr.track.TrackLocationData;
-import com.xwjr.track.TrackOperate;
-import com.xwjr.track.attend.AttendActivity;
-import com.xwjr.track.attend.broadcast.AutoSignReceiver;
-import com.xwjr.track.attend.extension.BroadcastExtensionKt;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import com.xwjr.track.attend.activity.SignActivity;
 
 import static java.lang.Thread.sleep;
 
@@ -63,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.tv_attend).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, AttendActivity.class));
+                startActivity(new Intent(MainActivity.this, SignActivity.class));
             }
         });
     }

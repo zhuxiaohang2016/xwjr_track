@@ -18,15 +18,27 @@ import com.xwjr.track.R
 import java.util.*
 
 //初始化checkBox DrawableLeft图片问题
-fun Context.initCheckBoxView(rb: CheckBox) {
-    val rbTrue = resources.getDrawable(R.drawable.attend_switch)
+fun TextView.initDrawableLeftView(resId: Int, width: Float, height: Float) {
+    val rbTrue = resources.getDrawable(resId)
     rbTrue.setBounds(
             0,
             0,
-            applyDimension(TypedValue.COMPLEX_UNIT_DIP, 64f, resources.displayMetrics).toInt(),
-            applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24f, resources.displayMetrics).toInt()
+            applyDimension(TypedValue.COMPLEX_UNIT_DIP, width, resources.displayMetrics).toInt(),
+            applyDimension(TypedValue.COMPLEX_UNIT_DIP, height, resources.displayMetrics).toInt()
     )
-    rb.setCompoundDrawables(rbTrue, null, null, null)
+    this.setCompoundDrawables(rbTrue, null, null, null)
+}
+
+//初始化checkBox DrawableLeft图片问题
+fun TextView.initDrawableRightView(resId: Int, width: Float, height: Float) {
+    val rbTrue = resources.getDrawable(resId)
+    rbTrue.setBounds(
+            0,
+            0,
+            applyDimension(TypedValue.COMPLEX_UNIT_DIP, width, resources.displayMetrics).toInt(),
+            applyDimension(TypedValue.COMPLEX_UNIT_DIP, height, resources.displayMetrics).toInt()
+    )
+    this.setCompoundDrawables(null, null, rbTrue, null)
 }
 
 
@@ -91,7 +103,7 @@ fun Context.showTip(description: String? = "", buttonText: String? = null, error
         }
 
         tvSure.setOnClickListener {
-            if (deal!=null) deal()
+            if (deal != null) deal()
             popupWindow.dismiss()
         }
 

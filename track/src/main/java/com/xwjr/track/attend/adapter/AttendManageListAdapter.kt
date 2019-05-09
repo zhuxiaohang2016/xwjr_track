@@ -98,6 +98,10 @@ class AttendManageListAdapter(private val context: Context, private var dataList
                 holder.ivDelete.setOnClickListener {
                     manageListener?.delete(position)
                 }
+
+                holder.clContent.setOnClickListener {
+                    manageListener?.itemClick(position)
+                }
             }
 
             if (holder is AttendManageAddButtonHolder) {
@@ -114,6 +118,7 @@ class AttendManageListAdapter(private val context: Context, private var dataList
     interface ManageListener {
         fun delete(position: Int)
         fun add()
+        fun itemClick(position: Int)
     }
 
 }
@@ -131,6 +136,7 @@ class AttendManageHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val groupSignTimeAfternoonOff = itemView.findViewById(R.id.group_sign_time_afternoon_off) as Group
     val ivDelete = itemView.findViewById(R.id.iv_delete) as ImageView
     val tvLocationDes = itemView.findViewById(R.id.tv_location_des) as TextView
+    val clContent = itemView.findViewById(R.id.cl_content) as ConstraintLayout
 }
 
 class AttendManageAddButtonHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

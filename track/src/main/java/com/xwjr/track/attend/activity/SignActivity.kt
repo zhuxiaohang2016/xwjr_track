@@ -9,9 +9,9 @@ import com.xwjr.track.LogUtils
 import com.xwjr.track.R
 import com.xwjr.track.attend.adapter.SignListAdapter
 import com.xwjr.track.attend.bean.SignListBean
-import com.xwjr.track.attend.extension.initCheckBoxView
+import com.xwjr.track.attend.extension.initDrawableLeftView
 import com.xwjr.track.attend.extension.showSignSuccess
-import kotlinx.android.synthetic.main.activity_attend.*
+import kotlinx.android.synthetic.main.activity_sign.*
 import kotlinx.android.synthetic.main.attend_title.*
 
 /**
@@ -23,7 +23,7 @@ class SignActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_attend)
+        setContentView(R.layout.activity_sign)
 
         init()
         setListener()
@@ -34,7 +34,7 @@ class SignActivity : AppCompatActivity() {
         tv_title.text = "考勤"
         tv_right.text = "考勤记录"
 
-        initCheckBoxView(cb_auto_sign)
+        cb_auto_sign.initDrawableLeftView(R.drawable.attend_switch,64f,24f)
 
 
         signList.add(SignListBean("上午签到", "卑微竟然看我大家", "08:00", true))
@@ -57,7 +57,7 @@ class SignActivity : AppCompatActivity() {
             showSignSuccess()
         }
         iv_manage.setOnClickListener {
-            startActivity(Intent(this@SignActivity, AttendManageActivity::class.java))
+            startActivity(Intent(this@SignActivity, AttendManageListActivity::class.java))
         }
         iv_statistic.setOnClickListener {
             LogUtils.i("统计")

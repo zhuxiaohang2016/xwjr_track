@@ -11,7 +11,7 @@ import com.xwjr.track.LogUtils
 import com.xwjr.track.R
 import com.xwjr.track.attend.adapter.SignListAdapter
 import com.xwjr.track.attend.bean.SignListBean
-import kotlinx.android.synthetic.main.activity_attend_record.*
+import kotlinx.android.synthetic.main.activity_sign_record.*
 import kotlinx.android.synthetic.main.attend_title.*
 import java.util.HashMap
 
@@ -24,7 +24,7 @@ class SignRecordActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_attend_record)
+        setContentView(R.layout.activity_sign_record)
         init()
         setListener()
         defaultData()

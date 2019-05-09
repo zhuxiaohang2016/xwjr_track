@@ -2,4 +2,3 @@
     <item android:drawable="@drawable/attend_icon_switch_on" android:state_checked="true" />
     <item android:drawable="@drawable/attend_icon_switch_off" android:state_checked="false" />
 </selector>
-

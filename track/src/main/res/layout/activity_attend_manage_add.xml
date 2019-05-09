@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".attend.activity.AttendManageAddActivity">
+
+    <include
+        android:id="@+id/title"
+        layout="@layout/attend_title" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/cl_time_range"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:background="#ffffff"
+        app:layout_constraintTop_toBottomOf="@id/title">
+
+        <TextView
+            android:id="@+id/tv_sign_time_morning_des"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:text="上班时间"
+            android:textColor="#666666"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_sign_time_morning_off"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/attend_shape_text_border_gray"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="12:00"
+            android:textColor="#aaaaaa"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_sign_time_morning_des"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_sign_time_morning_des" />
+
+        <TextView
+            android:id="@+id/tv_sign_time_morning_separate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:text="-"
+            android:textColor="#aaaaaa"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_sign_time_morning_des"
+            app:layout_constraintRight_toLeftOf="@id/tv_sign_time_morning_off"
+            app:layout_constraintTop_toTopOf="@id/tv_sign_time_morning_des" />
+
+        <TextView
+            android:id="@+id/tv_sign_time_morning_on"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/attend_shape_text_border_gray"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="12:00"
+            android:textColor="#aaaaaa"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_sign_time_morning_des"
+            app:layout_constraintRight_toLeftOf="@id/tv_sign_time_morning_separate"
+            app:layout_constraintTop_toTopOf="@id/tv_sign_time_morning_des" />
+
+        <android.support.constraint.Group
+            android:id="@+id/group_sign_time_morning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="tv_sign_time_morning_on,tv_sign_time_morning_separate,tv_sign_time_morning_off,tv_sign_time_morning_des" />
+
+        <TextView
+            android:id="@+id/tv_sign_time_afternoon_des"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:text="上班时间"
+            android:textColor="#666666"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_sign_time_morning_des" />
+
+        <TextView
+            android:id="@+id/tv_sign_time_afternoon_off"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/attend_shape_text_border_gray"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="12:00"
+            android:textColor="#aaaaaa"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_sign_time_afternoon_des"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_sign_time_afternoon_des" />
+
+        <TextView
+            android:id="@+id/tv_sign_time_afternoon_separate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:text="-"
+            android:textColor="#aaaaaa"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_sign_time_afternoon_des"
+            app:layout_constraintRight_toLeftOf="@id/tv_sign_time_afternoon_off"
+            app:layout_constraintTop_toTopOf="@id/tv_sign_time_afternoon_des" />
+
+        <TextView
+            android:id="@+id/tv_sign_time_afternoon_on"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/attend_shape_text_border_gray"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="12:00"
+            android:textColor="#aaaaaa"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_sign_time_afternoon_des"
+            app:layout_constraintRight_toLeftOf="@id/tv_sign_time_afternoon_separate"
+            app:layout_constraintTop_toTopOf="@id/tv_sign_time_afternoon_des" />
+
+        <android.support.constraint.Group
+            android:id="@+id/group_sign_time_afternoon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="tv_sign_time_afternoon_on,tv_sign_time_afternoon_separate,tv_sign_time_afternoon_off,tv_sign_time_afternoon_des" />
+
+        <View
+            android:id="@+id/view_line1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:background="#f6f6f6"
+            app:layout_constraintTop_toBottomOf="@id/tv_sign_time_afternoon_des" />
+
+
+        <TextView
+            android:id="@+id/tv_sign_time_week_des"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:gravity="center"
+            android:minHeight="40dp"
+            android:text="上班日期"
+            android:textColor="#666666"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_line1" />
+
+        <TextView
+            android:id="@+id/tv_sign_time_week"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:drawablePadding="5dp"
+            android:gravity="center|end"
+            android:minHeight="40dp"
+            android:text="请选择"
+            android:textColor="#aaaaaa"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toRightOf="@id/tv_sign_time_week_des"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_line1" />
+
+    </android.support.constraint.ConstraintLayout>
+
+
+    <CheckBox
+        android:id="@+id/cb_switch_attend_way"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:button="@null"
+        android:text="切换到一天两次打卡"
+        android:textColor="#0084ff"
+        android:textSize="13sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cl_time_range" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/cl_attend_range"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        app:layout_constraintTop_toBottomOf="@id/cb_switch_attend_way">
+
+        <TextView
+            android:id="@+id/tv_attend_worker_des"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:gravity="center"
+            android:text="考勤人员"
+            android:textColor="#666666"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_attend_worker"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:drawablePadding="5dp"
+            android:gravity="center|end"
+            android:minHeight="40dp"
+            android:text="请选择"
+            android:textColor="#aaaaaa"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toRightOf="@id/tv_attend_worker_des"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_attend_location_add"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            android:text="添加考勤地点"
+            android:textColor="#0084ff"
+            android:textSize="13sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_attend_worker_des" />
+
+        <TextView
+            android:id="@+id/tv_attend_location_des"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:drawablePadding="5dp"
+            android:gravity="center|start"
+            android:minHeight="40dp"
+            android:text="添加考勤地点添加考勤地点添加考勤地点添加考勤地点添加考勤地点添加考勤地点"
+            android:textColor="#cccccc"
+            android:textSize="13sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_attend_location_add" />
+
+    </android.support.constraint.ConstraintLayout>
+
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/cl_attend_option"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:background="#ffffff"
+        app:layout_constraintTop_toBottomOf="@id/cl_attend_range">
+
+        <TextView
+            android:id="@+id/tv_attend_offset_des"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:gravity="center"
+            android:text="允许偏差"
+            android:textColor="#666666"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_attend_offset"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:drawablePadding="5dp"
+            android:gravity="center|end"
+            android:minHeight="40dp"
+            android:text="请选择"
+            android:textColor="#aaaaaa"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toRightOf="@id/tv_attend_offset_des"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/view_line2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="#f6f6f6"
+            app:layout_constraintTop_toBottomOf="@id/tv_attend_offset_des" />
+
+
+        <TextView
+            android:id="@+id/tv_attend_auto_sign_des"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:gravity="center"
+            android:text="自动签到"
+            android:textColor="#666666"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_line2" />
+
+        <CheckBox
+            android:id="@+id/cb_attend_auto_sign"
+            android:layout_width="64dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:background="#00000000"
+            android:button="@null"
+            app:layout_constraintBottom_toBottomOf="@id/tv_attend_auto_sign_des"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_attend_auto_sign_des" />
+
+        <View
+            android:id="@+id/view_line3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="#f6f6f6"
+            app:layout_constraintTop_toBottomOf="@id/tv_attend_auto_sign_des" />
+
+
+        <TextView
+            android:id="@+id/tv_attend_view_permission_des"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:gravity="center"
+            android:text="允许谁看考勤记录"
+            android:textColor="#666666"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_line3" />
+
+        <TextView
+            android:id="@+id/tv_attend_view_permission"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:drawablePadding="5dp"
+            android:gravity="center|end"
+            android:textColor="#aaaaaa"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toRightOf="@id/tv_attend_view_permission_des"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_line3" />
+
+        <com.xwjr.track.attend.widget.WrapLayout
+            android:id="@+id/wl_permission_people"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            app:layout_constraintTop_toBottomOf="@id/tv_attend_view_permission_des">
+
+        </com.xwjr.track.attend.widget.WrapLayout>
+
+
+    </android.support.constraint.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/tv_add"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginLeft="57dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="57dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/attend_shape_button_solid"
+        android:drawablePadding="5dp"
+        android:gravity="center"
+        android:text="完成"
+        android:textColor="#ffffff"
+        app:layout_constraintTop_toBottomOf="@id/cl_attend_option" />
+
+</android.support.constraint.ConstraintLayout>

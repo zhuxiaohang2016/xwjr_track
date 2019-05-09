@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cl_content"
     android:layout_width="match_parent"
-    android:background="#ffffff"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="#ffffff">
 
 
     <ImageView
@@ -188,8 +189,6 @@
         android:id="@+id/iv_delete"
         android:layout_width="81dp"
         android:layout_height="32dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
         android:paddingRight="20dp"

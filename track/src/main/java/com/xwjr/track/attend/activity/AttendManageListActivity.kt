@@ -1,5 +1,7 @@
 package com.xwjr.track.attend.activity
 
+import android.app.Activity
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -9,19 +11,23 @@ import com.xwjr.track.R
 import com.xwjr.track.attend.adapter.AttendManageListAdapter
 import com.xwjr.track.attend.bean.AttendManageListBean
 import com.xwjr.track.attend.extension.showTip
-import kotlinx.android.synthetic.main.activity_attend_manage.*
+import kotlinx.android.synthetic.main.activity_attend_manage_list.*
 import kotlinx.android.synthetic.main.attend_title.*
 
 /**
  * 考勤管理页面
  */
-class AttendManageActivity : AppCompatActivity() {
+class AttendManageListActivity : AppCompatActivity() {
 
     private val attendManageList: MutableList<AttendManageListBean> = arrayListOf()
 
+    companion object {
+        const val ADD_ATTEND = 1024
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_attend_manage)
+        setContentView(R.layout.activity_attend_manage_list)
         init()
         setListener()
         defaultData()
@@ -50,10 +56,13 @@ class AttendManageActivity : AppCompatActivity() {
         rv_attend_manage_list.layoutManager = LinearLayoutManager(this)
         rv_attend_manage_list.adapter = AttendManageListAdapter(this, attendManageList).apply {
             this.manageListener = object : AttendManageListAdapter.ManageListener {
+                override fun itemClick(position: Int) {
+                    LogUtils.i("点击了$position")
+                }
+
                 override fun add() {
-                    attendManageList.add(AttendManageListBean("8:00", "34:34", "18:00", "", "爱的发圣诞节啦收到了发牢骚的减肥垃圾的法拉水电费骄傲了的减肥的爱的发圣诞节啦收到了发牢骚的减肥垃圾的法拉水电费骄傲了的减肥的爱的发圣诞节啦收到了发牢骚的减肥垃圾的法拉水电费骄傲了的减肥的爱的发圣诞节啦收到了发牢骚的减肥垃圾的法拉水电费骄傲了的减肥的"))
-                    rv_attend_manage_list.adapter.notifyDataSetChanged()
-                    LogUtils.i("新增考勤")
+                    val intent = Intent(this@AttendManageListActivity, AttendManageAddActivity::class.java)
+                    startActivityForResult(intent, ADD_ATTEND)
                 }
 
                 override fun delete(position: Int) {
@@ -61,6 +70,17 @@ class AttendManageActivity : AppCompatActivity() {
                         attendManageList.removeAt(position)
                         rv_attend_manage_list.adapter.notifyDataSetChanged()
                     }
+                }
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                ADD_ATTEND -> {
+                    LogUtils.i("新增考勤返回")
                 }
             }
         }

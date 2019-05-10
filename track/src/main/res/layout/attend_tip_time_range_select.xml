@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#4c000000">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:background="#ffffff"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="取消"
+            android:textColor="#555555"
+            android:textSize="18sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_sure"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="确定"
+            android:textColor="#555555"
+            android:textSize="18sp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#eeeeee"
+            app:layout_constraintTop_toBottomOf="@id/tv_cancel" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="15dp"
+            android:background="#0084ff"
+            app:layout_constraintBottom_toTopOf="@id/tv_separate_hour_start" />
+
+        <LinearLayout
+            android:id="@+id/ll_hour_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="60dp"
+            android:layout_marginLeft="60dp"
+            android:minWidth="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_cancel">
+
+            <com.xwjr.track.attend.widget.WheelView
+                android:id="@+id/wv_hour_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </com.xwjr.track.attend.widget.WheelView>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_separate_hour_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":"
+            android:textColor="#0084ff"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/ll_hour_start"
+            app:layout_constraintRight_toLeftOf="@id/ll_second_start"
+            app:layout_constraintTop_toBottomOf="@id/tv_cancel" />
+
+        <LinearLayout
+            android:id="@+id/ll_second_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:minWidth="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/ll_hour_start"
+            app:layout_constraintTop_toBottomOf="@id/tv_cancel">
+
+            <com.xwjr.track.attend.widget.WheelView
+                android:id="@+id/wv_second_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </com.xwjr.track.attend.widget.WheelView>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="—"
+            android:textColor="#0084ff"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="parent"
+            app:layout_constraintRight_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_cancel" />
+
+
+        <LinearLayout
+            android:id="@+id/ll_hour_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:minWidth="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/ll_second_end"
+            app:layout_constraintTop_toBottomOf="@id/tv_cancel">
+
+            <com.xwjr.track.attend.widget.WheelView
+                android:id="@+id/wv_hour_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </com.xwjr.track.attend.widget.WheelView>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":"
+            android:textColor="#0084ff"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/ll_hour_end"
+            app:layout_constraintRight_toLeftOf="@id/ll_second_end"
+            app:layout_constraintTop_toBottomOf="@id/tv_cancel" />
+
+        <LinearLayout
+            android:id="@+id/ll_second_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="60dp"
+            android:layout_marginRight="60dp"
+            android:minWidth="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_cancel">
+
+            <com.xwjr.track.attend.widget.WheelView
+                android:id="@+id/wv_second_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </com.xwjr.track.attend.widget.WheelView>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="20dp"
+            android:background="#0084ff"
+            app:layout_constraintTop_toBottomOf="@id/tv_separate_hour_start" />
+
+
+    </android.support.constraint.ConstraintLayout>
+</android.support.constraint.ConstraintLayout>

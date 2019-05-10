@@ -48,7 +48,7 @@ public class WheelView extends ScrollView {
     private String selectColor = "#0084ff";
     private String defaultColor = "#bbbbbb";
     private String separateColor = "#0084ff";
-    private int textSize = 20;
+    private int textSize = 15;
 
 
     public WheelView(Context context) {
@@ -300,8 +300,8 @@ public class WheelView extends ScrollView {
         background = new Drawable() {
             @Override
             public void draw(Canvas canvas) {
-                canvas.drawLine(dip2px(25), obtainSelectedAreaBorder()[0], viewWidth - dip2px(25), obtainSelectedAreaBorder()[0], paint);
-                canvas.drawLine(dip2px(25), obtainSelectedAreaBorder()[1], viewWidth - dip2px(25), obtainSelectedAreaBorder()[1], paint);
+//                canvas.drawLine(dip2px(25), obtainSelectedAreaBorder()[0], viewWidth - dip2px(25), obtainSelectedAreaBorder()[0], paint);
+//                canvas.drawLine(dip2px(25), obtainSelectedAreaBorder()[1], viewWidth - dip2px(25), obtainSelectedAreaBorder()[1], paint);
             }
 
             @Override
@@ -352,7 +352,23 @@ public class WheelView extends ScrollView {
                 WheelView.this.smoothScrollTo(0, p * itemHeight);
             }
         });
+        onSeletedCallBack();
+    }
 
+    public void setSelectItem(String item) {
+        int p = items.indexOf(item) - 1;
+        if (p < 0) {
+            p = 0;
+        }
+        selectedIndex = p + offset;
+        final int finalP = p;
+        this.post(new Runnable() {
+            @Override
+            public void run() {
+                WheelView.this.smoothScrollTo(0, finalP * itemHeight);
+            }
+        });
+        onSeletedCallBack();
     }
 
     public String getSeletedItem() {

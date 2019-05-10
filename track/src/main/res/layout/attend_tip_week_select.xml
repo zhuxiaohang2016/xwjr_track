@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#4c000000">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="360dp"
+        android:background="#ffffff"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="取消"
+            android:textColor="#555555"
+            android:textSize="18sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_sure"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="确定"
+            android:textColor="#555555"
+            android:textSize="18sp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#eeeeee"
+            app:layout_constraintTop_toBottomOf="@id/tv_cancel" />
+
+        <CheckBox
+            android:id="@+id/cb_monday"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:button="@null"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="星期一"
+            android:textColor="#888888"
+            android:textSize="15sp"
+            app:layout_constraintTop_toBottomOf="@id/tv_cancel" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="#eeeeee"
+            app:layout_constraintTop_toBottomOf="@id/cb_monday" />
+
+        <CheckBox
+            android:id="@+id/cb_tuesday"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:button="@null"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="星期二"
+            android:textColor="#888888"
+            android:textSize="15sp"
+            app:layout_constraintTop_toBottomOf="@id/cb_monday" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="#eeeeee"
+            app:layout_constraintTop_toBottomOf="@id/cb_tuesday" />
+
+        <CheckBox
+            android:id="@+id/cb_wednesday"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:button="@null"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="星期三"
+            android:textColor="#888888"
+            android:textSize="15sp"
+            app:layout_constraintTop_toBottomOf="@id/cb_tuesday" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="#eeeeee"
+            app:layout_constraintTop_toBottomOf="@id/cb_wednesday" />
+
+        <CheckBox
+            android:id="@+id/cb_thursday"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:button="@null"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="星期四"
+            android:textColor="#888888"
+            android:textSize="15sp"
+            app:layout_constraintTop_toBottomOf="@id/cb_wednesday" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="#eeeeee"
+            app:layout_constraintTop_toBottomOf="@id/cb_thursday" />
+
+        <CheckBox
+            android:id="@+id/cb_friday"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:button="@null"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="星期五"
+            android:textColor="#888888"
+            android:textSize="15sp"
+            app:layout_constraintTop_toBottomOf="@id/cb_thursday" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="#eeeeee"
+            app:layout_constraintTop_toBottomOf="@id/cb_friday" />
+
+        <CheckBox
+            android:id="@+id/cb_saturday"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:button="@null"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="星期六"
+            android:textColor="#888888"
+            android:textSize="15sp"
+            app:layout_constraintTop_toBottomOf="@id/cb_friday" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="#eeeeee"
+            app:layout_constraintTop_toBottomOf="@id/cb_saturday" />
+
+        <CheckBox
+            android:id="@+id/cb_sunday"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:button="@null"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="星期日"
+            android:textColor="#888888"
+            android:textSize="15sp"
+            app:layout_constraintTop_toBottomOf="@id/cb_saturday" />
+
+
+    </android.support.constraint.ConstraintLayout>
+</android.support.constraint.ConstraintLayout>

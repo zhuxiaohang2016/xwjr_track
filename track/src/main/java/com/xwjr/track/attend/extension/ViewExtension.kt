@@ -13,8 +13,8 @@ import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.PopupWindow
 import android.widget.TextView
-import com.google.gson.annotations.Until
 import com.xwjr.track.R
+import com.xwjr.track.attend.widget.WheelView
 import java.util.*
 
 //初始化checkBox DrawableLeft图片问题
@@ -45,7 +45,7 @@ fun TextView.initDrawableRightView(resId: Int, width: Float, height: Float) {
 //popupWindow弹出签到成功 2s后自动消失
 fun Context.showSignSuccess() {
     try {
-        val view = View.inflate(this, R.layout.attend_sign_success, null)
+        val view = View.inflate(this, R.layout.attend_tip_sign_success, null)
         val popupWindow = PopupWindow(
                 view,
                 ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -83,7 +83,7 @@ fun Context.showSignSuccess() {
 //popupWindow弹出提示信息
 fun Context.showTip(description: String? = "", buttonText: String? = null, error: (() -> Unit)? = null, deal: (() -> Unit)? = null) {
     try {
-        val view = View.inflate(this, R.layout.attend_common_tip, null)
+        val view = View.inflate(this, R.layout.attend_tip_common, null)
         val popupWindow = PopupWindow(
                 view,
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -104,6 +104,219 @@ fun Context.showTip(description: String? = "", buttonText: String? = null, error
 
         tvSure.setOnClickListener {
             if (deal != null) deal()
+            popupWindow.dismiss()
+        }
+
+
+        popupWindow.apply {
+            isFocusable = true
+            isOutsideTouchable = true
+            isTouchable = true
+            setBackgroundDrawable(BitmapDrawable())
+            showAtLocation(view, Gravity.CENTER, 0, 0)
+        }
+
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+}
+
+
+//popupWindow弹出提示时间选择
+fun Context.showTimeRangeSelect(deal: ((hourStart: String, secondStart: String, hourEnd: String, secondEnd: String) -> Unit)? = null) {
+    try {
+        var hourStart = ""
+        var secondStart = ""
+        var hourEnd = ""
+        var secondEnd = ""
+
+        val hoursString = arrayListOf("00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23")
+        val secondsString = arrayListOf(
+                "00", "01", "02", "03", "04", "05", "06", "07", "08", "09",
+                "10", "11", "12", "13", "14", "15", "16", "17", "18", "19",
+                "20", "21", "22", "23", "24", "25", "26", "27", "28", "29",
+                "30", "31", "32", "33", "34", "35", "36", "37", "38", "39",
+                "40", "41", "42", "43", "44", "45", "46", "47", "48", "49",
+                "50", "51", "52", "53", "54", "55", "56", "57", "58", "59")
+        val view = View.inflate(this, R.layout.attend_tip_time_range_select, null)
+        val popupWindow = PopupWindow(
+                view,
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+        )
+
+        val tvCancel = view.findViewById(R.id.tv_cancel) as TextView
+        val tvSure = view.findViewById(R.id.tv_sure) as TextView
+        val wvHourStart = view.findViewById(R.id.wv_hour_start) as WheelView
+        val wvSecondStart = view.findViewById(R.id.wv_second_start) as WheelView
+        val wvHourEnd = view.findViewById(R.id.wv_hour_end) as WheelView
+        val wvSecondEnd = view.findViewById(R.id.wv_second_end) as WheelView
+
+        wvHourStart.offset = 1
+        wvHourStart.setItems(hoursString)
+        wvHourStart.onWheelViewListener = (object : WheelView.OnWheelViewListener() {
+            override fun onSelected(selectedIndex: Int, item: String?) {
+                hourStart = hoursString[selectedIndex - 1]
+            }
+        })
+        wvHourStart.setSelectItem("08")
+
+        wvSecondStart.offset = 1
+        wvSecondStart.setItems(secondsString)
+        wvSecondStart.onWheelViewListener = (object : WheelView.OnWheelViewListener() {
+            override fun onSelected(selectedIndex: Int, item: String?) {
+                secondStart = secondsString[selectedIndex - 1]
+            }
+        })
+        wvSecondStart.setSelectItem("30")
+
+        wvHourEnd.offset = 1
+        wvHourEnd.setItems(hoursString)
+        wvHourEnd.onWheelViewListener = (object : WheelView.OnWheelViewListener() {
+            override fun onSelected(selectedIndex: Int, item: String?) {
+                hourEnd = hoursString[selectedIndex - 1]
+            }
+        })
+        wvHourEnd.setSelectItem("18")
+
+        wvSecondEnd.offset = 1
+        wvSecondEnd.setItems(secondsString)
+        wvSecondEnd.onWheelViewListener = (object : WheelView.OnWheelViewListener() {
+            override fun onSelected(selectedIndex: Int, item: String?) {
+                secondEnd = secondsString[selectedIndex - 1]
+            }
+        })
+        wvSecondEnd.setSelectItem("00")
+
+        tvCancel.setOnClickListener {
+            popupWindow.dismiss()
+        }
+
+        tvSure.setOnClickListener {
+            if (deal != null) deal(hourStart, secondStart, hourEnd, secondEnd)
+            popupWindow.dismiss()
+        }
+
+
+        popupWindow.apply {
+            isFocusable = true
+            isOutsideTouchable = true
+            isTouchable = true
+            setBackgroundDrawable(BitmapDrawable())
+            showAtLocation(view, Gravity.CENTER, 0, 0)
+        }
+
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+}
+
+
+//popupWindow弹出提示星期选择
+fun Context.showWeekSelect(deal: ((dataString: MutableList<String>) -> Unit)? = null) {
+    try {
+        val view = View.inflate(this, R.layout.attend_tip_week_select, null)
+        val popupWindow = PopupWindow(
+                view,
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+        )
+
+        val tvCancel = view.findViewById(R.id.tv_cancel) as TextView
+        val tvSure = view.findViewById(R.id.tv_sure) as TextView
+        val cbMonday = view.findViewById(R.id.cb_monday) as CheckBox
+        val cbTuesday = view.findViewById(R.id.cb_tuesday) as CheckBox
+        val cbWednesday = view.findViewById(R.id.cb_wednesday) as CheckBox
+        val cbThursday = view.findViewById(R.id.cb_thursday) as CheckBox
+        val cbFriday = view.findViewById(R.id.cb_friday) as CheckBox
+        val cbSaturday = view.findViewById(R.id.cb_saturday) as CheckBox
+        val cbSunday = view.findViewById(R.id.cb_sunday) as CheckBox
+
+        cbMonday.initDrawableRightView(R.drawable.attend_checkbox, 17f, 17f)
+        cbTuesday.initDrawableRightView(R.drawable.attend_checkbox, 17f, 17f)
+        cbWednesday.initDrawableRightView(R.drawable.attend_checkbox, 17f, 17f)
+        cbThursday.initDrawableRightView(R.drawable.attend_checkbox, 17f, 17f)
+        cbFriday.initDrawableRightView(R.drawable.attend_checkbox, 17f, 17f)
+        cbSaturday.initDrawableRightView(R.drawable.attend_checkbox, 17f, 17f)
+        cbSunday.initDrawableRightView(R.drawable.attend_checkbox, 17f, 17f)
+
+        tvCancel.setOnClickListener {
+            popupWindow.dismiss()
+        }
+
+        tvSure.setOnClickListener {
+            val result = arrayListOf<String>()
+            if (cbMonday.isChecked) {
+                result.add(cbMonday.text.toString())
+            }
+            if (cbTuesday.isChecked) {
+                result.add(cbTuesday.text.toString())
+            }
+            if (cbWednesday.isChecked) {
+                result.add(cbWednesday.text.toString())
+            }
+            if (cbThursday.isChecked) {
+                result.add(cbThursday.text.toString())
+            }
+            if (cbFriday.isChecked) {
+                result.add(cbFriday.text.toString())
+            }
+            if (cbSaturday.isChecked) {
+                result.add(cbSaturday.text.toString())
+            }
+            if (cbSunday.isChecked) {
+                result.add(cbSunday.text.toString())
+            }
+            if (deal != null) deal(result)
+            popupWindow.dismiss()
+        }
+
+
+        popupWindow.apply {
+            isFocusable = true
+            isOutsideTouchable = true
+            isTouchable = true
+            setBackgroundDrawable(BitmapDrawable())
+            showAtLocation(view, Gravity.CENTER, 0, 0)
+        }
+
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+}
+
+
+//popupWindow弹出提示时间选择
+fun Context.showWheelSelect(dataString: MutableList<String>, deal: ((selectData: String) -> Unit)? = null) {
+    try {
+        var selectData = ""
+        val view = View.inflate(this, R.layout.attend_tip_wheel_select, null)
+        val popupWindow = PopupWindow(
+                view,
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+        )
+
+        val tvCancel = view.findViewById(R.id.tv_cancel) as TextView
+        val tvSure = view.findViewById(R.id.tv_sure) as TextView
+        val wvWheel = view.findViewById(R.id.wv_wheel) as WheelView
+
+        wvWheel.offset = 1
+        wvWheel.setItems(dataString)
+        wvWheel.onWheelViewListener = (object : WheelView.OnWheelViewListener() {
+            override fun onSelected(selectedIndex: Int, item: String?) {
+                selectData = dataString[selectedIndex - 1]
+            }
+        })
+        wvWheel.setSelectItem(selectData)
+
+
+        tvCancel.setOnClickListener {
+            popupWindow.dismiss()
+        }
+
+        tvSure.setOnClickListener {
+            if (deal != null) deal(selectData)
             popupWindow.dismiss()
         }
 

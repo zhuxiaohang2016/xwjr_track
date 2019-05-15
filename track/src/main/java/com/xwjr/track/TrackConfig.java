@@ -19,6 +19,7 @@ public class TrackConfig {
     static String latitude = "";
     static String longitude = "";
     static String address = "";
+    static String city="";
     static int singleDataLimit = 20;
     static long locationInterval = 60000;
     static String battery = "-1";
@@ -170,5 +171,13 @@ public class TrackConfig {
 
     public static void setEmpId(String empId) {
         TrackConfig.empId = empId;
+    }
+
+    public static String getCity() {
+        return city;
+    }
+
+    public static void setCity(String city) {
+        TrackConfig.city = city;
     }
 }

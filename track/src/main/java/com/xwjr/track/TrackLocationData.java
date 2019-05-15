@@ -15,6 +15,14 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.amap.api.maps.model.LatLng;
+import com.amap.api.services.core.LatLonPoint;
+import com.amap.api.services.geocoder.GeocodeResult;
+import com.amap.api.services.geocoder.GeocodeSearch;
+import com.amap.api.services.geocoder.RegeocodeQuery;
+import com.amap.api.services.geocoder.RegeocodeResult;
+
+import javax.security.auth.callback.Callback;
 
 
 public class TrackLocationData {
@@ -35,22 +43,25 @@ public class TrackLocationData {
                     if (amapLocation.getErrorCode() == 0) {
                         //可在其中解析amapLocation获取相应内容。
                         TrackConfig.latitude = String.valueOf(amapLocation.getLatitude());//获取纬度
-                        TrackConfig.longitude =  String.valueOf(amapLocation.getLongitude());//获取经度
+                        TrackConfig.longitude = String.valueOf(amapLocation.getLongitude());//获取经度
                         TrackConfig.address = amapLocation.getAddress();
-                        LogUtils.i(TrackConfig.latitude+"  "+TrackConfig.longitude+"  "+TrackConfig.address);
-                    }else {
+                        TrackConfig.city = amapLocation.getCity();
+                        LogUtils.i("高德地图定位地址：" + TrackConfig.latitude + "  " + TrackConfig.longitude + "  " + TrackConfig.address);
+                    } else {
                         TrackConfig.latitude = "";
-                        TrackConfig.longitude= "";
+                        TrackConfig.longitude = "";
                         TrackConfig.address = "";
+                        TrackConfig.city = "";
                         //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
                         LogUtils.e("location Error, ErrCode:"
                                 + amapLocation.getErrorCode() + ", errInfo:"
                                 + amapLocation.getErrorInfo());
                     }
-                }else {
+                } else {
                     TrackConfig.latitude = "";
-                    TrackConfig.longitude= "";
+                    TrackConfig.longitude = "";
                     TrackConfig.address = "";
+                    TrackConfig.city = "";
                 }
             }
         };
@@ -192,5 +203,30 @@ public class TrackLocationData {
             return "";
         }
     }
+
+    public static void getAMapAddress(Context context, double latitude, double longitude, final LocationAddressCallBack callback) {
+        LatLonPoint latLng = new LatLonPoint(latitude, longitude);
+        GeocodeSearch geocoderSearch = new GeocodeSearch(context);
+        geocoderSearch.setOnGeocodeSearchListener(new GeocodeSearch.OnGeocodeSearchListener() {
+            @Override
+            public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
+                callback.getAddress(regeocodeResult.getRegeocodeAddress().getFormatAddress(),regeocodeResult.getRegeocodeAddress().getCity());
+                LogUtils.i("高德地图解析地址：" + regeocodeResult.getRegeocodeAddress().getFormatAddress());
+            }
+
+            @Override
+            public void onGeocodeSearched(GeocodeResult geocodeResult, int i) {
+            }
+        });
+
+        RegeocodeQuery query = new RegeocodeQuery(latLng, 200, GeocodeSearch.AMAP);
+
+        geocoderSearch.getFromLocationAsyn(query);
+    }
+
+    public interface LocationAddressCallBack {
+        void getAddress(String address,String city);
+    }
+
 
 }

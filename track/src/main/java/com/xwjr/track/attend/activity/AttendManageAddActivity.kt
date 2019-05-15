@@ -1,6 +1,8 @@
 package com.xwjr.track.attend.activity
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -16,6 +18,7 @@ class AttendManageAddActivity : AppCompatActivity() {
     companion object {
         const val TWICE = 2
         const val FOUR_TIMES = 4
+        const val ATTEND_MAP = 1024
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -109,8 +112,19 @@ class AttendManageAddActivity : AppCompatActivity() {
                 tv_attend_offset.text = selectData
             }
         }
+
+        tv_attend_location_add.setOnClickListener {
+            startActivityForResult(Intent(this@AttendManageAddActivity,AttendMapActivity::class.java),ATTEND_MAP)
+        }
     }
 
     private fun defaultData() {
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK){
+
+        }
     }
 }

@@ -21,6 +21,11 @@
 
     <application>
         <activity
+            android:name=".attend.activity.AttendStatisticActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AttendActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
             android:name=".attend.activity.AttendMapActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AttendActivity"

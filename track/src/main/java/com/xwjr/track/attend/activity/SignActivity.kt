@@ -60,7 +60,7 @@ class SignActivity : AppCompatActivity() {
             startActivity(Intent(this@SignActivity, AttendManageListActivity::class.java))
         }
         iv_statistic.setOnClickListener {
-            LogUtils.i("统计")
+            startActivity(Intent(this@SignActivity, AttendStatisticActivity::class.java))
         }
         cb_auto_sign.setOnCheckedChangeListener { _, isChecked ->
             val intent = Intent("attend.broadcast.AutoSignReceiver")

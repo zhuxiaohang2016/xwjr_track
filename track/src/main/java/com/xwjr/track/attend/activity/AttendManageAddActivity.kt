@@ -11,6 +11,9 @@ import com.xwjr.track.attend.extension.*
 import kotlinx.android.synthetic.main.activity_attend_manage_add.*
 import kotlinx.android.synthetic.main.attend_title.*
 
+/**
+ * 考勤管理新增页面
+ */
 class AttendManageAddActivity : AppCompatActivity() {
 
     private var attendTimes = TWICE //考勤打卡次数

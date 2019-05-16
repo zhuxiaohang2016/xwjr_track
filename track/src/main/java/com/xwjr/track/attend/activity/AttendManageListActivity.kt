@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.activity_attend_manage_list.*
 import kotlinx.android.synthetic.main.attend_title.*
 
 /**
- * 考勤管理页面
+ * 考勤管理列表页面
  */
 class AttendManageListActivity : AppCompatActivity() {
 

@@ -26,6 +26,14 @@
     8.获取本地存储的mapLists数据  TrackLocalData.getTrackData()  返回 List<Map<String,String>> 
     9.清楚本地存储的数据 TrackLocalData.clearTrackData()  
     10.上传本地存储的数据 TrackOperate.upLoadLocalData(a)  a:上传后是否清楚本地数据   非必选项，默然true  
+    
+### 考勤模块使用示例
+     Intent intent = new Intent(MainActivity.this, SignActivity.class);
+     intent.putExtra("userRole","ZJL");
+     intent.putExtra("loginName","32");
+     intent.putExtra("token","8fb708fa9160b1c17929cf2e4fcbbd7a891dfba50485b4a5fb90de8a933f7e81");
+     intent.putExtra("bankId","91000");
+     startActivity(intent);
 
 ## 注意事项
     所有权限需要自行处理，目前只会校验权限是否存在，不会主动请求权限，

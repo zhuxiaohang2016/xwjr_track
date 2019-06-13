@@ -51,7 +51,12 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.tv_attend).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, SignActivity.class));
+                Intent intent = new Intent(MainActivity.this, SignActivity.class);
+                intent.putExtra("userRole","ZJL");
+                intent.putExtra("loginName","32");
+                intent.putExtra("token","8fb708fa9160b1c17929cf2e4fcbbd7a891dfba50485b4a5fb90de8a933f7e81");
+                intent.putExtra("bankId","91000");
+                startActivity(intent);
             }
         });
     }

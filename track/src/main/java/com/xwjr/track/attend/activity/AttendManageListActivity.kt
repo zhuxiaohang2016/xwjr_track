@@ -6,23 +6,33 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import com.google.gson.Gson
 import com.xwjr.track.LogUtils
 import com.xwjr.track.R
 import com.xwjr.track.attend.adapter.AttendManageListAdapter
 import com.xwjr.track.attend.bean.AttendManageListBean
+import com.xwjr.track.attend.extension.err
+import com.xwjr.track.attend.extension.logI
 import com.xwjr.track.attend.extension.showTip
+import com.xwjr.track.attend.net.AttendUrlConfig
+import com.xwjr.track.attend.net.TrackHttpContract
+import com.xwjr.track.attend.net.TrackHttpPresenter
 import kotlinx.android.synthetic.main.activity_attend_manage_list.*
 import kotlinx.android.synthetic.main.attend_title.*
 
 /**
  * 考勤管理列表页面
  */
-class AttendManageListActivity : AppCompatActivity() {
+class AttendManageListActivity : AppCompatActivity(), TrackHttpContract {
 
-    private val attendManageList: MutableList<AttendManageListBean> = arrayListOf()
+
+    private var attendManageData: AttendManageListBean? = null
+    private val attendManageDataList: MutableList<AttendManageListBean.DataBean> = arrayListOf()
+    private var trackHttpPresenter: TrackHttpPresenter? = null
 
     companion object {
         const val ADD_ATTEND = 1024
+        const val EDIT_ATTEND = 1025
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,12 +46,12 @@ class AttendManageListActivity : AppCompatActivity() {
     private fun init() {
         tv_title.text = "考勤管理"
         tv_right.visibility = View.GONE
+        trackHttpPresenter = TrackHttpPresenter(this, this)
+        queryData()
+    }
 
-        attendManageList.add(AttendManageListBean("8:00", "", "18:00", "", "24234fssadffjlljkadsljkfalfjalksf"))
-        attendManageList.add(AttendManageListBean("8:00", "34:34", "18:00", "", "爱的发圣诞节啦收到了发牢骚的减肥垃圾的法拉水电费骄傲了的减肥的爱的发圣诞节啦收到了发牢骚的减肥垃圾的法拉水电费骄傲了的减肥的爱的发圣诞节啦收到了发牢骚的减肥垃圾的法拉水电费骄傲了的减肥的爱的发圣诞节啦收到了发牢骚的减肥垃圾的法拉水电费骄傲了的减肥的"))
-        attendManageList.add(AttendManageListBean("8:00", "16:09", "18:00", "87:09", "打算发打发斯蒂芬"))
-        attendManageList.add(AttendManageListBean("8:00", "04:82", "18:00", "33:98", "阿斯顿发卡机劳动法拉克的看法拉开大口径拉了卡决胜巅峰"))
-        attendManageList.add(AttendManageListBean("8:00", "", "18:00", "23:00", "阿道夫逻辑吖大立科技发酵"))
+    private fun queryData() {
+        trackHttpPresenter?.queryAttendManageList(intent.getStringExtra("token"))
     }
 
     private fun setListener() {
@@ -49,29 +59,54 @@ class AttendManageListActivity : AppCompatActivity() {
     }
 
     private fun defaultData() {
-        updateRecycleView()
     }
 
     private fun updateRecycleView() {
         rv_attend_manage_list.layoutManager = LinearLayoutManager(this)
-        rv_attend_manage_list.adapter = AttendManageListAdapter(this, attendManageList).apply {
+        rv_attend_manage_list.adapter = AttendManageListAdapter(this, attendManageDataList).apply {
             this.manageListener = object : AttendManageListAdapter.ManageListener {
                 override fun itemClick(position: Int) {
-                    LogUtils.i("点击了$position")
+                    val intent = intent.setClass(this@AttendManageListActivity, AttendManageAddActivity::class.java)
+                    intent.putExtra("operateType", "EDIT")
+                    intent.putExtra("attendManageDetail", Gson().toJson(attendManageDataList[position]))
+                    startActivityForResult(intent, EDIT_ATTEND)
                 }
 
                 override fun add() {
-                    val intent = Intent(this@AttendManageListActivity, AttendManageAddActivity::class.java)
+                    val intent = intent.setClass(this@AttendManageListActivity, AttendManageAddActivity::class.java)
+                    intent.putExtra("operateType", "ADD")
                     startActivityForResult(intent, ADD_ATTEND)
                 }
 
                 override fun delete(position: Int) {
-                    showTip("请确认是否删除", "确定") {
-                        attendManageList.removeAt(position)
-                        rv_attend_manage_list.adapter.notifyDataSetChanged()
+//                    showTip("请确认是否删除", "确定") {
+//                        attendManageDataList.removeAt(position)
+//                        rv_attend_manage_list.adapter.notifyDataSetChanged()
+//                    }
+                }
+            }
+        }
+    }
+
+    override fun statusBack(i: String, data: Any) {
+        try {
+            when (i) {
+                AttendUrlConfig.queryAttendManageList -> {
+                    logI("获取考勤计划数据成功，开始解析")
+                    data as String
+                    attendManageData = (Gson().fromJson(data, AttendManageListBean::class.java))
+                    if (attendManageData != null && attendManageData!!.checkCodeIfErrorShow() && attendManageData!!.data != null) {
+                        attendManageDataList.clear()
+                        attendManageDataList.add(attendManageData!!.data!!)
+                        updateRecycleView()
+                    } else {
+                        attendManageDataList.clear()
+                        updateRecycleView()
                     }
                 }
             }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
@@ -79,8 +114,9 @@ class AttendManageListActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
-                ADD_ATTEND -> {
-                    LogUtils.i("新增考勤返回")
+                ADD_ATTEND, EDIT_ATTEND -> {
+                    logI("新增/编辑考勤返回")
+                    queryData()
                 }
             }
         }

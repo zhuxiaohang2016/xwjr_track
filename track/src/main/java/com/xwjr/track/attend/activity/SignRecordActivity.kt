@@ -5,12 +5,19 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import com.google.gson.Gson
 import com.haibin.calendarview.Calendar
 import com.haibin.calendarview.CalendarView
 import com.xwjr.track.LogUtils
 import com.xwjr.track.R
 import com.xwjr.track.attend.adapter.SignListAdapter
+import com.xwjr.track.attend.adapter.SignRecordListAdapter
+import com.xwjr.track.attend.bean.AttendRecordListBean
 import com.xwjr.track.attend.bean.SignListBean
+import com.xwjr.track.attend.extension.logI
+import com.xwjr.track.attend.net.AttendUrlConfig
+import com.xwjr.track.attend.net.TrackHttpContract
+import com.xwjr.track.attend.net.TrackHttpPresenter
 import kotlinx.android.synthetic.main.activity_sign_record.*
 import kotlinx.android.synthetic.main.attend_title.*
 import java.util.HashMap
@@ -18,10 +25,11 @@ import java.util.HashMap
 /**
  * 考勤记录页面
  */
-class SignRecordActivity : AppCompatActivity() {
+class SignRecordActivity : AppCompatActivity(), TrackHttpContract {
 
     private val signList: MutableList<SignListBean> = arrayListOf()
-
+    private var trackHttpPresenter: TrackHttpPresenter? = null
+    private var attendRecordListBean: AttendRecordListBean? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_record)
@@ -34,16 +42,15 @@ class SignRecordActivity : AppCompatActivity() {
     private fun init() {
         tv_title.text = "考勤记录"
         tv_right.visibility = View.GONE
+        trackHttpPresenter = TrackHttpPresenter(this, this)
+    }
 
-        signList.add(SignListBean("上午签到", "卑微竟然看我大家", "08:00", true))
-        signList.add(SignListBean("上午签退", "是的法定防守打法", "12:00", false))
-        signList.add(SignListBean("下午签到", "ad发送到发送到发送到发送到发多发的发送到发顺丰拉开", "13:46", false))
-        signList.add(SignListBean("下午签退", "卑微竟然看我大家卑微竟然看我大家卑微竟然看我大家卑微竟然看我大家卑微竟然看我大家", "18:05", true))
-        signList.add(SignListBean("下午签退", "卑微竟然看我大家卑微竟然看我大家卑微竟然看我大家卑微竟然看我大家卑微竟然看我大家", "18:05", true))
-        signList.add(SignListBean("下午签退", "卑微竟然看我大家卑微竟然看我大家卑微竟然看我大家卑微竟然看我大家卑微竟然看我大家", "18:05", true))
-        signList.add(SignListBean("下午签退", "卑微竟然看我大家卑微竟然看我大家卑微竟然看我大家卑微竟然看我大家卑微竟然看我大家", "18:05", true))
-        signList.add(SignListBean("下午签退", "卑微竟然看我大家卑微竟然看我大家卑微竟然看我大家卑微竟然看我大家卑微竟然看我大家", "18:05", true))
-        signList.add(SignListBean("未签到", "卑微竟然看我大家卑微竟然看我大家卑微竟然看我大家卑微竟然看我大家卑微竟然看我大家卑微竟然看我大家卑微竟然看我大家卑微竟然看我大家卑微竟然看我大家卑微竟然看我大家", "18:05", true))
+
+    /**
+     * 考勤记录
+     */
+    private fun queryAttendRecord(time: String) {
+        trackHttpPresenter?.attendRecord(intent.getStringExtra("token"), intent.getStringExtra("loginName"), time)
     }
 
     @SuppressLint("SetTextI18n")
@@ -59,8 +66,10 @@ class SignRecordActivity : AppCompatActivity() {
 
         calendarView.setOnCalendarSelectListener(object : CalendarView.OnCalendarSelectListener {
             override fun onCalendarSelect(calendar: Calendar?, isClick: Boolean) {
-                tv_year_and_month.text = "${calendar?.year}年${calendar?.month}月"
-                LogUtils.i("isClick $isClick  选择了${calendar?.year}  ${calendar?.month} ${calendar?.day}")
+                tv_year_and_month.text = "${calendar?.year}年${formatDate(calendar?.month)}月"
+                tv_date.text = "${calendar?.year}-${formatDate(calendar?.month)}-${formatDate(calendar?.day)}"
+                LogUtils.i("isClick $isClick  选择了${calendar?.year}  ${formatDate(calendar?.month)} ${formatDate(calendar?.day)}")
+                queryAttendRecord(tv_date.text.toString())
             }
 
             override fun onCalendarOutOfRange(calendar: Calendar?) {
@@ -68,21 +77,39 @@ class SignRecordActivity : AppCompatActivity() {
         })
 
         calendarView.setOnMonthChangeListener { year, month ->
-            tv_year_and_month.text = "${year}年${month}月"
+            tv_year_and_month.text = "${year}年${formatDate(month)}月"
         }
     }
+
 
     private fun defaultData() {
         //日历默认选择当天
         calendarView.scrollToCalendar(calendarView.curYear, calendarView.curMonth, calendarView.curDay)
-        //
-        addTag()
-        updateRecycleView()
+//        addTag()
+    }
+
+    private fun formatDate(data: Int?): String {
+        if (data in 1..9) {
+            return "0$data"
+        }
+        return data.toString()
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun updateStatisticView() {
+        tv_late.text = "${attendRecordListBean!!.data!!.count!!.lateCount}"
+        tv_early.text = "${attendRecordListBean!!.data!!.count!!.leaveEarlyCount}"
+        tv_forget.text = "${attendRecordListBean!!.data!!.count!!.uncheckin}"
+        tv_check_out.text = "${attendRecordListBean!!.data!!.count!!.checkinOutside}"
     }
 
     private fun updateRecycleView() {
+        signList.clear()
+        attendRecordListBean!!.data!!.records!!.forEach {
+            signList.add(SignListBean("", it.locationDetail.toString(), it.checkinTime.toString().substring(11, 16), ""))
+        }
         rv_sign_record_list.layoutManager = LinearLayoutManager(this)
-        rv_sign_record_list.adapter = SignListAdapter(this, signList)
+        rv_sign_record_list.adapter = SignRecordListAdapter(this, signList)
     }
 
     private fun addTag() {
@@ -124,6 +151,25 @@ class SignRecordActivity : AppCompatActivity() {
         calendar.day = day
         calendar.scheme = text
         return calendar
+    }
+
+    override fun statusBack(i: String, data: Any) {
+        try {
+            when (i) {
+
+                AttendUrlConfig.attendRecord -> {
+                    logI("获取考勤记录成功，开始解析")
+                    data as String
+                    attendRecordListBean = (Gson().fromJson(data, AttendRecordListBean::class.java))
+                    if (attendRecordListBean != null && attendRecordListBean!!.checkCodeIfErrorShow() && attendRecordListBean!!.data != null && attendRecordListBean!!.data?.records != null && attendRecordListBean!!.data?.count != null) {
+                        updateStatisticView()
+                        updateRecycleView()
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
 }

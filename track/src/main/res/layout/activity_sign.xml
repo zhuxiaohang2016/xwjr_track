@@ -14,7 +14,7 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/cl_sign_top"
         android:layout_width="match_parent"
-        android:layout_height="135dp"
+        android:layout_height="60dp"
         android:background="@mipmap/attend_sign_bg"
         app:layout_constraintTop_toBottomOf="@id/title">
 
@@ -25,6 +25,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
             android:src="@mipmap/attend_icon_sign"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -36,12 +37,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginBottom="10dp"
             android:text="2019-05-20"
             android:textColor="#b3ffffff"
             android:textSize="13sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent" />
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_week" />
 
         <TextView
             android:id="@+id/tv_week"
@@ -49,12 +50,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginBottom="5dp"
             android:text="星期一"
             android:textColor="#b3ffffff"
             android:textSize="13sp"
             app:layout_constraintBottom_toTopOf="@id/tv_date"
-            app:layout_constraintLeft_toLeftOf="parent" />
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_sign_time"
@@ -62,72 +63,116 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginBottom="10dp"
-            android:text="09:00-18:00"
+            android:text="--:--"
             android:textColor="#b3ffffff"
             android:textSize="13sp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_week" />
 
 
         <ImageView
             android:id="@+id/iv_manage"
-            android:layout_width="71dp"
+            android:layout_width="83dp"
             android:layout_height="0dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
             android:src="@mipmap/attend_icon_manage"
-            app:layout_constraintDimensionRatio="142:57"
-            app:layout_constraintRight_toRightOf="parent"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="166:57"
+            app:layout_constraintRight_toLeftOf="@id/iv_statistic"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/iv_statistic"
-            android:layout_width="71dp"
+            android:layout_width="83dp"
             android:layout_height="0dp"
-            android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
             android:layout_marginRight="20dp"
             android:src="@mipmap/attend_icon_statistic"
-            app:layout_constraintDimensionRatio="142:57"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="166:57"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_manage" />
+            app:layout_constraintTop_toTopOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 
-    <ImageView
-        android:id="@+id/iv_location_yellow"
-        android:layout_width="10dp"
-        android:layout_height="40dp"
-        android:src="@mipmap/attend_icon_location_yellow"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/tv_location_des"
-        app:layout_constraintTop_toBottomOf="@id/cl_sign_top" />
-
-    <TextView
-        android:id="@+id/tv_location_des"
-        android:layout_width="wrap_content"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/cl_location"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:text="已进入考勤范围"
-        android:textColor="#ffc793"
-        android:textSize="13sp"
-        app:layout_constraintBottom_toBottomOf="@id/iv_location_yellow"
-        app:layout_constraintLeft_toRightOf="@id/iv_location_yellow"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/iv_location_yellow" />
+        app:layout_constraintTop_toBottomOf="@id/cl_sign_top">
+
+        <ImageView
+            android:id="@+id/iv_location_yellow"
+            android:layout_width="10dp"
+            android:layout_height="12dp"
+            android:src="@mipmap/attend_icon_location_yellow"
+            app:layout_constraintBottom_toBottomOf="@id/tv_location_des"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/tv_location_des"
+            app:layout_constraintTop_toTopOf="@id/tv_location_des" />
+
+        <TextView
+            android:id="@+id/tv_location_des"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:gravity="center"
+            android:text="获取中..."
+            android:textColor="#ffc793"
+            android:textSize="13sp"
+            app:layout_constraintLeft_toRightOf="@id/iv_location_yellow"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_location"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:text="正在获取定位地址"
+            android:textColor="#47719d"
+            android:textSize="13sp"
+            app:layout_constraintLeft_toLeftOf="@id/tv_location_des"
+            app:layout_constraintRight_toRightOf="@id/tv_location_des"
+            app:layout_constraintTop_toBottomOf="@id/tv_location_des" />
+
+    </android.support.constraint.ConstraintLayout>
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_sign_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/tv_auto_sign"
-        app:layout_constraintTop_toBottomOf="@id/iv_location_yellow">
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@id/tv_check_out"
+        app:layout_constraintTop_toBottomOf="@id/cl_location">
 
     </android.support.v7.widget.RecyclerView>
+
+
+    <TextView
+        android:id="@+id/tv_check_out"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginRight="100dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/attend_shape_button_solid"
+        android:gravity="center"
+        android:text="外勤签到"
+        android:textColor="#ffffff"
+        android:textSize="15sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
         android:id="@+id/tv_auto_sign"
@@ -139,6 +184,7 @@
         android:text="自动签到设置"
         android:textColor="#666666"
         android:textSize="16sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
 
@@ -150,6 +196,7 @@
         android:layout_marginRight="20dp"
         android:background="#00000000"
         android:button="@null"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/tv_auto_sign"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/tv_auto_sign" />

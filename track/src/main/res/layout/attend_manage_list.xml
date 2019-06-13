@@ -26,7 +26,7 @@
         android:layout_marginLeft="2dp"
         android:text="上午上班"
         android:textColor="#666666"
-        android:textSize="16sp"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="@id/iv_sign_time_morning_on"
         app:layout_constraintLeft_toRightOf="@id/iv_sign_time_morning_on"
         app:layout_constraintTop_toTopOf="@id/iv_sign_time_morning_on" />
@@ -39,7 +39,7 @@
         android:layout_marginLeft="5dp"
         android:text="09:00"
         android:textColor="#80b7ea"
-        android:textSize="16sp"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="@id/iv_sign_time_morning_on"
         app:layout_constraintLeft_toRightOf="@id/tv_sign_time_morning_on_des"
         app:layout_constraintTop_toTopOf="@id/iv_sign_time_morning_on" />
@@ -70,7 +70,7 @@
         android:layout_marginLeft="2dp"
         android:text="上午下班"
         android:textColor="#666666"
-        android:textSize="16sp"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="@id/iv_sign_time_morning_off"
         app:layout_constraintLeft_toRightOf="@id/iv_sign_time_morning_off"
         app:layout_constraintTop_toTopOf="@id/iv_sign_time_morning_off" />
@@ -83,7 +83,7 @@
         android:layout_marginLeft="5dp"
         android:text="09:00"
         android:textColor="#80b7ea"
-        android:textSize="16sp"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="@id/iv_sign_time_morning_off"
         app:layout_constraintLeft_toRightOf="@id/tv_sign_time_morning_off_des"
         app:layout_constraintTop_toTopOf="@id/iv_sign_time_morning_off" />
@@ -115,7 +115,7 @@
         android:layout_marginRight="5dp"
         android:text="下午上班"
         android:textColor="#666666"
-        android:textSize="16sp"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="@id/iv_sign_time_morning_on"
         app:layout_constraintRight_toLeftOf="@id/tv_sign_time_afternoon_on"
         app:layout_constraintTop_toTopOf="@id/iv_sign_time_morning_on" />
@@ -128,7 +128,7 @@
         android:layout_marginRight="20dp"
         android:text="09:00"
         android:textColor="#80b7ea"
-        android:textSize="16sp"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="@id/iv_sign_time_morning_on"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/iv_sign_time_morning_on" />
@@ -160,7 +160,7 @@
         android:layout_marginRight="5dp"
         android:text="下午上班"
         android:textColor="#666666"
-        android:textSize="16sp"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="@id/iv_sign_time_morning_off"
         app:layout_constraintRight_toLeftOf="@id/tv_sign_time_afternoon_on"
         app:layout_constraintTop_toTopOf="@id/iv_sign_time_morning_off" />
@@ -173,7 +173,7 @@
         android:layout_marginRight="20dp"
         android:text="09:00"
         android:textColor="#80b7ea"
-        android:textSize="16sp"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="@id/iv_sign_time_morning_off"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/iv_sign_time_morning_off" />

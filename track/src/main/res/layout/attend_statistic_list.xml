@@ -129,7 +129,7 @@
                 android:textColor="#cccccc"
                 android:textSize="13sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/li"
+                app:layout_constraintLeft_toRightOf="@id/view_line5"
                 app:layout_constraintRight_toRightOf="parent" />
 
             <View

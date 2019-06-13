@@ -1,6 +1,7 @@
 package com.xwjr.track.attend.adapter
 
 import android.content.Context
+import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import com.xwjr.track.attend.bean.SignListBean
@@ -9,13 +10,16 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.xwjr.track.R
+import com.xwjr.track.attend.extension.isNotNullOrEmpty
 
 
 class SignListAdapter(private val context: Context, private var dataList: MutableList<SignListBean>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    var signListener: SignListener? = null
+
     companion object {
-       const val LAST_DATA = 1024
-       const val NORMAL_DATA = 1025
+        const val LAST_DATA = 1024
+        const val NORMAL_DATA = 1025
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
@@ -49,26 +53,33 @@ class SignListAdapter(private val context: Context, private var dataList: Mutabl
                     }
                 }
                 holder.tvSignTimeDes.text = dataList[position].timeDes
-                when (dataList[position].autoSign) {
-                    true -> {
-                        holder.tvSignType.text = "（自动签到）"
-                    }
-                    false -> {
-                        holder.tvSignType.text = ""
-                    }
-                }
+                holder.tvSignType.text = dataList[position].signStatus
                 holder.tvSignTimeDetail.text = dataList[position].timeDetail
                 holder.tvLocationDes.text = dataList[position].location
                 if (position == dataList.size - 1) {
                     holder.viewLineVertical.visibility = View.GONE
                 }
-
+                if (dataList[position].signStatus.isNotNullOrEmpty()) {
+                    holder.tvSign.setBackgroundResource(R.drawable.attend_shape_gray_solid)
+                    holder.tvSign.text = "考勤结束"
+                    holder.tvSign.setTextColor(Color.parseColor("#b4b4b5"))
+                } else {
+                    holder.tvSign.setBackgroundResource(R.drawable.attend_shape_button_solid)
+                    holder.tvSign.text = "考勤签到"
+                    holder.tvSign.setTextColor(Color.parseColor("#ffffff"))
+                    holder.tvSign.setOnClickListener {
+                        signListener?.sign(dataList[position].timeDes)
+                    }
+                }
             }
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
+}
 
+interface SignListener {
+    fun sign(time: String)
 }
 
 class SignListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -78,6 +89,7 @@ class SignListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val tvSignTimeDetail = itemView.findViewById(R.id.tv_sign_time_detail) as TextView
     val tvLocationDes = itemView.findViewById(R.id.tv_location_des) as TextView
     val viewLineVertical = itemView.findViewById(R.id.view_line_vertical) as View
+    val tvSign = itemView.findViewById(R.id.tv_sign) as TextView
 }
 
 

@@ -1,6 +1,7 @@
 package com.xwjr.track.attend.activity
 
 import android.app.Activity
+import android.content.Intent
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -22,8 +23,9 @@ import com.amap.api.services.poisearch.PoiResult
 import com.amap.api.services.poisearch.PoiSearch
 import com.xwjr.track.LogUtils
 import com.xwjr.track.attend.adapter.MapSearchAdapter
-import com.xwjr.track.attend.adapter.MapSearchListener
 import android.view.inputmethod.InputMethodManager
+import com.xwjr.track.attend.adapter.MapSearchListener
+import com.xwjr.track.attend.extension.showTip
 
 
 /**
@@ -38,6 +40,7 @@ class AttendMapActivity : AppCompatActivity() {
     private var mapSearchList: MutableList<PoiItem> = arrayListOf()
     private var marker: Marker? = null
     private var circle: Circle? = null
+    private var circleRadius = 0.toDouble()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +55,7 @@ class AttendMapActivity : AppCompatActivity() {
         tv_title.text = "选择考勤地址"
         tv_right.visibility = View.GONE
         et_search.initDrawableRightView(R.mipmap.attend_icon_search_gray, 16f, 16f)
+        circleRadius = intent.getStringExtra("circleRadius").toDouble()
         rv_map_search.layoutManager = LinearLayoutManager(this)
         rv_map_search.adapter = MapSearchAdapter(this@AttendMapActivity, mapSearchList).apply {
             this.mapSearchListener = object : MapSearchListener {
@@ -76,6 +80,56 @@ class AttendMapActivity : AppCompatActivity() {
         initMapLocation()
     }
 
+    private fun setListener() {
+        iv_back.setOnClickListener {
+            hideSoftKeyboard()
+            finish()
+        }
+
+
+//        var inputQuery: InputtipsQuery
+//        var inputTips: Inputtips
+
+        et_search.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+
+                if (s.toString().isNotEmpty()) {
+                    rv_map_search.visibility = View.VISIBLE
+                } else {
+                    rv_map_search.visibility = View.GONE
+                }
+                searchPoint(s.toString())
+//                inputQuery = InputtipsQuery(s.toString(), pointCity)
+//                inputQuery.cityLimit = false//限制在当前城市
+//                inputTips = Inputtips(this@AttendMapActivity, inputQuery)
+//                inputTips.setInputtipsListener { p0, _ -> LogUtils.i("检索返回数据：$p0") }
+//                inputTips.requestInputtipsAsyn()
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+        })
+
+        tv_sure.setOnClickListener {
+            showTip("确定使用此位置？", "确定") {
+                val intent = Intent()
+                intent.putExtra("latitude", pointX.toString())
+                intent.putExtra("longitude", pointY.toString())
+                intent.putExtra("location", pointAddress)
+                setResult(Activity.RESULT_OK, intent)
+                finish()
+            }
+        }
+    }
+
+    private fun defaultData() {
+
+    }
+
     private fun initMapLocation() {
         if (aMap == null) {
             aMap = mv.map
@@ -90,16 +144,35 @@ class AttendMapActivity : AppCompatActivity() {
 
 
         //绘制定位锚点 和面
-        pointX = TrackConfig.getLatitude().toDouble()
-        pointY = TrackConfig.getLongitude().toDouble()
-        pointAddress = TrackConfig.getAddress()
-        pointCity = TrackConfig.getCity()
+        val latitude = intent.getStringExtra("latitude")
+        val longitude = intent.getStringExtra("longitude")
+        pointX = if (latitude.isNullOrEmpty()){
+            TrackConfig.getLatitude().toDouble()
+        }else{
+            latitude.toDouble()
+        }
+
+        pointY = if (longitude.isNullOrEmpty()){
+            TrackConfig.getLongitude().toDouble()
+        }else{
+            longitude.toDouble()
+        }
+
         var latLng = LatLng(pointX, pointY)
+
+        TrackLocationData.getAMapAddress(this@AttendMapActivity, pointX, pointY) { address, city ->
+            pointAddress = address
+            pointCity = city
+            marker?.position = latLng
+            marker?.snippet = pointAddress
+            marker?.showInfoWindow()
+        }
+
         val markerOptions = MarkerOptions().position(latLng).title("当前位置").snippet(pointAddress).draggable(true).visible(true)
         marker = aMap?.addMarker(markerOptions)
         marker?.showInfoWindow()
         //绘制范围
-        val circleOptions = CircleOptions().center(latLng).radius(100.0).fillColor(Color.argb(80, 0, 132, 255)).strokeColor(Color.argb(80, 0, 132, 255)).strokeWidth(15f)
+        val circleOptions = CircleOptions().center(latLng).radius(circleRadius).fillColor(Color.argb(80, 0, 132, 255)).strokeColor(Color.argb(80, 0, 132, 255)).strokeWidth(15f)
         circle = aMap?.addCircle(circleOptions)
 
 
@@ -144,52 +217,13 @@ class AttendMapActivity : AppCompatActivity() {
         aMap?.animateCamera(mCameraUpdate)
     }
 
-    private fun setListener() {
-        iv_back.setOnClickListener {
-            hideSoftKeyboard()
-            finish()
-        }
-
-
-//        var inputQuery: InputtipsQuery
-//        var inputTips: Inputtips
-
-        et_search.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-
-                if (s.toString().isNotEmpty()) {
-                    rv_map_search.visibility = View.VISIBLE
-                } else {
-                    rv_map_search.visibility = View.GONE
-                }
-                searchPoint(s.toString())
-//                inputQuery = InputtipsQuery(s.toString(), pointCity)
-//                inputQuery.cityLimit = false//限制在当前城市
-//                inputTips = Inputtips(this@AttendMapActivity, inputQuery)
-//                inputTips.setInputtipsListener { p0, _ -> LogUtils.i("检索返回数据：$p0") }
-//                inputTips.requestInputtipsAsyn()
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-
-        })
-    }
-
-    private fun defaultData() {
-
-    }
-
     //搜索地点
     private fun searchPoint(key: String) {
-        val query = PoiSearch.Query(key, "", pointCity)
+        val query = PoiSearch.Query(key, "", "")
         //keyWord表示搜索字符串，
         //第二个参数表示POI搜索类型，二者选填其一，选用POI搜索类型时建议填写类型代码，码表可以参考下方（而非文字）
         //cityCode表示POI搜索区域，可以是城市编码也可以是城市名称，也可以传空字符串，空字符串代表全国在全国范围内进行搜索
-        query.pageSize = 10// 设置每页最多返回多少条poiitem
+        query.pageSize = 100// 设置每页最多返回多少条poiitem
         query.pageNum = 1 //设置查询页码
 
         val poiSearch = PoiSearch(this, query)

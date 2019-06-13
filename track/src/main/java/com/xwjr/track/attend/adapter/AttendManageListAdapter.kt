@@ -12,9 +12,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.xwjr.track.R
 import com.xwjr.track.attend.bean.AttendManageListBean
+import com.xwjr.track.attend.extension.secondToTime
+import com.xwjr.track.attend.extension.showToast
 
 
-class AttendManageListAdapter(private val context: Context, private var dataList: MutableList<AttendManageListBean>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class AttendManageListAdapter(private val context: Context, private var dataList: MutableList<AttendManageListBean.DataBean>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var manageListener: ManageListener? = null
 
@@ -37,11 +39,14 @@ class AttendManageListAdapter(private val context: Context, private var dataList
     }
 
     override fun getItemCount(): Int {
-        return dataList.size + 1
+        if (dataList.size == 0) {
+            return 1
+        }
+        return dataList.size
     }
 
     override fun getItemViewType(position: Int): Int {
-        if (position == dataList.size) {
+        if (dataList.size == 0) {
             return ADD_BUTTON
         }
         return NORMAL_DATA
@@ -51,40 +56,47 @@ class AttendManageListAdapter(private val context: Context, private var dataList
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
         try {
             if (holder is AttendManageHolder) {
-                if (dataList[position].morningOffTime.isNullOrEmpty() || dataList[position].afternoonOffTime.isNullOrEmpty()) {
-                    //2次签到
-                    holder.groupSignTimeMorningOff.visibility = View.GONE
-                    holder.groupSignTimeAfternoonOff.visibility = View.GONE
-                    holder.tvSignTimeMorningOnDes.text = "上班"
-                    holder.tvSignTimeAfternoonOnDes.text = "下班"
-                } else {
-                    //4次签到
-                    holder.groupSignTimeMorningOff.visibility = View.VISIBLE
-                    holder.groupSignTimeAfternoonOff.visibility = View.VISIBLE
-                    holder.tvSignTimeMorningOnDes.text = "上午上班"
-                    holder.tvSignTimeAfternoonOnDes.text = "下午上班"
+                when {
+                    dataList[position].ruleType == "0" -> {
+                        //2次签到
+                        holder.groupSignTimeMorningOff.visibility = View.GONE
+                        holder.groupSignTimeAfternoonOff.visibility = View.GONE
+                        holder.tvSignTimeMorningOnDes.text = "上班"
+                        holder.tvSignTimeAfternoonOnDes.text = "下班"
+                    }
+                    dataList[position].ruleType == "1" -> {
+                        //4次签到
+                        holder.groupSignTimeMorningOff.visibility = View.VISIBLE
+                        holder.groupSignTimeAfternoonOff.visibility = View.VISIBLE
+                        holder.tvSignTimeMorningOnDes.text = "上午上班"
+                        holder.tvSignTimeAfternoonOnDes.text = "下午上班"
+                    }
+                    else -> {
+                        showToast("未获取到打卡类型")
+                        return
+                    }
                 }
 
-                if (!dataList[position].morningOnTime.isNullOrEmpty()) {
-                    holder.tvSignTimeMorningOn.text = dataList[position].morningOnTime
+                if (!dataList[position].onWork.isNullOrEmpty()) {
+                    holder.tvSignTimeMorningOn.text = secondToTime(dataList[position].onWork!!.toInt())
                 } else {
                     holder.tvSignTimeMorningOn.text = ""
                 }
 
-                if (!dataList[position].morningOffTime.isNullOrEmpty()) {
-                    holder.tvSignTimeMorningOff.text = dataList[position].morningOffTime
+                if (!dataList[position].onWorkTwo.isNullOrEmpty()) {
+                    holder.tvSignTimeMorningOff.text = secondToTime(dataList[position].onWorkTwo!!.toInt())
                 } else {
                     holder.tvSignTimeMorningOff.text = ""
                 }
 
-                if (!dataList[position].afternoonOnTime.isNullOrEmpty()) {
-                    holder.tvSignTimeAfternoonOn.text = dataList[position].afternoonOnTime
+                if (!dataList[position].offWork.isNullOrEmpty()) {
+                    holder.tvSignTimeAfternoonOn.text = secondToTime(dataList[position].offWork!!.toInt())
                 } else {
                     holder.tvSignTimeAfternoonOn.text = ""
                 }
 
-                if (!dataList[position].afternoonOffTime.isNullOrEmpty()) {
-                    holder.tvSignTimeAfternoonOff.text = dataList[position].afternoonOffTime
+                if (!dataList[position].offWorkTwo.isNullOrEmpty()) {
+                    holder.tvSignTimeAfternoonOff.text = secondToTime(dataList[position].offWorkTwo!!.toInt())
                 } else {
                     holder.tvSignTimeAfternoonOff.text = ""
                 }
@@ -95,6 +107,7 @@ class AttendManageListAdapter(private val context: Context, private var dataList
                     holder.tvLocationDes.text = ""
                 }
 
+                holder.ivDelete.visibility = View.GONE
                 holder.ivDelete.setOnClickListener {
                     manageListener?.delete(position)
                 }

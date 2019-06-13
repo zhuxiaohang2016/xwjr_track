@@ -123,7 +123,7 @@ fun Context.showTip(description: String? = "", buttonText: String? = null, error
 
 
 //popupWindow弹出提示时间选择
-fun Context.showTimeRangeSelect(deal: ((hourStart: String, secondStart: String, hourEnd: String, secondEnd: String) -> Unit)? = null) {
+fun Context.showTimeRangeSelect(timeStart: String = "", timeEnd: String = "", deal: ((hourStart: String, secondStart: String, hourEnd: String, secondEnd: String) -> Unit)? = null) {
     try {
         var hourStart = ""
         var secondStart = ""
@@ -159,7 +159,10 @@ fun Context.showTimeRangeSelect(deal: ((hourStart: String, secondStart: String, 
                 hourStart = hoursString[selectedIndex - 1]
             }
         })
-        wvHourStart.setSelectItem("08")
+        if (timeStart.isNotNullOrEmpty())
+            wvHourStart.setSelectItem(timeStart.split(":")[0])
+        else
+            wvHourStart.setSelectItem("00")
 
         wvSecondStart.offset = 1
         wvSecondStart.setItems(secondsString)
@@ -168,7 +171,12 @@ fun Context.showTimeRangeSelect(deal: ((hourStart: String, secondStart: String, 
                 secondStart = secondsString[selectedIndex - 1]
             }
         })
-        wvSecondStart.setSelectItem("30")
+
+        if (timeStart.isNotNullOrEmpty())
+            wvSecondStart.setSelectItem(timeStart.split(":")[1])
+        else
+            wvSecondStart.setSelectItem("00")
+
 
         wvHourEnd.offset = 1
         wvHourEnd.setItems(hoursString)
@@ -177,7 +185,11 @@ fun Context.showTimeRangeSelect(deal: ((hourStart: String, secondStart: String, 
                 hourEnd = hoursString[selectedIndex - 1]
             }
         })
-        wvHourEnd.setSelectItem("18")
+
+        if (timeEnd.isNotNullOrEmpty())
+            wvHourEnd.setSelectItem(timeEnd.split(":")[0])
+        else
+            wvHourEnd.setSelectItem("00")
 
         wvSecondEnd.offset = 1
         wvSecondEnd.setItems(secondsString)
@@ -186,7 +198,12 @@ fun Context.showTimeRangeSelect(deal: ((hourStart: String, secondStart: String, 
                 secondEnd = secondsString[selectedIndex - 1]
             }
         })
-        wvSecondEnd.setSelectItem("00")
+
+        if (timeEnd.isNotNullOrEmpty())
+            wvSecondEnd.setSelectItem(timeEnd.split(":")[1])
+        else
+            wvSecondEnd.setSelectItem("00")
+
 
         tvCancel.setOnClickListener {
             popupWindow.dismiss()
@@ -213,7 +230,7 @@ fun Context.showTimeRangeSelect(deal: ((hourStart: String, secondStart: String, 
 
 
 //popupWindow弹出提示星期选择
-fun Context.showWeekSelect(deal: ((dataString: MutableList<String>) -> Unit)? = null) {
+fun Context.showWeekSelect(defaultData: String = "", deal: ((dataString: MutableList<String>) -> Unit)? = null) {
     try {
         val view = View.inflate(this, R.layout.attend_tip_week_select, null)
         val popupWindow = PopupWindow(
@@ -239,6 +256,32 @@ fun Context.showWeekSelect(deal: ((dataString: MutableList<String>) -> Unit)? = 
         cbFriday.initDrawableRightView(R.drawable.attend_checkbox, 17f, 17f)
         cbSaturday.initDrawableRightView(R.drawable.attend_checkbox, 17f, 17f)
         cbSunday.initDrawableRightView(R.drawable.attend_checkbox, 17f, 17f)
+
+        defaultData.split(",").forEach {
+            when (it) {
+                cbMonday.text.toString() -> {
+                    cbMonday.isChecked = true
+                }
+                cbTuesday.text.toString() -> {
+                    cbTuesday.isChecked = true
+                }
+                cbWednesday.text.toString() -> {
+                    cbWednesday.isChecked = true
+                }
+                cbThursday.text.toString() -> {
+                    cbThursday.isChecked = true
+                }
+                cbFriday.text.toString() -> {
+                    cbFriday.isChecked = true
+                }
+                cbSaturday.text.toString() -> {
+                    cbSaturday.isChecked = true
+                }
+                cbSunday.text.toString() -> {
+                    cbSunday.isChecked = true
+                }
+            }
+        }
 
         tvCancel.setOnClickListener {
             popupWindow.dismiss()

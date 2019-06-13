@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minWidth="30dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
+
+
+    <TextView
+        android:id="@+id/tv_sign_time_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:layout_marginLeft="35dp"
+        android:text="08：00"
+        android:textColor="#666666"
+        android:textSize="13sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/iv_location_gray"
+        android:layout_width="8dp"
+        android:layout_height="10dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:src="@mipmap/attend_icon_location_gray"
+        app:layout_constraintBottom_toBottomOf="@id/tv_sign_time_detail"
+        app:layout_constraintLeft_toRightOf="@id/tv_sign_time_detail"
+        app:layout_constraintTop_toTopOf="@id/tv_sign_time_detail" />
+
+    <TextView
+        android:id="@+id/tv_location_des"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:text="北京北京北京北京北京北京北京北京北京北京北京北京北京北京北京北京北京北京"
+        android:textColor="#cccccc"
+        android:textSize="13sp"
+        app:layout_constraintLeft_toRightOf="@id/iv_location_gray"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_sign_time_des"
+        app:layout_constraintTop_toTopOf="@id/tv_sign_time_detail" />
+
+
+</android.support.constraint.ConstraintLayout>

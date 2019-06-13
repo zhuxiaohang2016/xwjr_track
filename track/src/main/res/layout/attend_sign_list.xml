@@ -33,22 +33,41 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="（自动签到）"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
         android:textColor="#80b7ea"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/tv_sign_time_detail"
+        app:layout_constraintLeft_toRightOf="@id/tv_sign_time_detail"
+        app:layout_constraintTop_toTopOf="@id/tv_sign_time_detail" />
+
+    <TextView
+        android:id="@+id/tv_sign_time_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:text="08：00"
+        android:textColor="#0084ff"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@id/tv_sign_time_des"
         app:layout_constraintLeft_toRightOf="@id/tv_sign_time_des"
         app:layout_constraintTop_toTopOf="@id/tv_sign_time_des" />
 
     <TextView
-        android:id="@+id/tv_sign_time_detail"
+        android:id="@+id/tv_sign"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
         android:layout_marginRight="20dp"
-        android:text="08：00"
-        android:textColor="#0084ff"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@id/tv_sign_time_des"
+        android:background="@drawable/attend_shape_button_solid"
+        android:paddingLeft="5dp"
+        android:paddingTop="3dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="3dp"
+        android:text="考勤签到"
+        android:textColor="#ffffff"
+        android:textSize="13sp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/tv_sign_time_des" />
 
@@ -77,7 +96,7 @@
         android:textColor="#cccccc"
         android:textSize="13sp"
         app:layout_constraintLeft_toRightOf="@id/iv_location_gray"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/tv_sign"
         app:layout_constraintTop_toBottomOf="@id/tv_sign_time_des" />
 
     <View

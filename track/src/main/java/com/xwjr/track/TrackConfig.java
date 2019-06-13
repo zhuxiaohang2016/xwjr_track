@@ -12,6 +12,7 @@ import com.amap.api.maps.AMapUtils;
 
 public class TrackConfig {
 
+    public static Boolean isDebug = true;
     static Context context;
     static String logTag = "track";
     static String trackUrl = "http://p2psp.kfxfd.cn:9080/apphub/tracking/";

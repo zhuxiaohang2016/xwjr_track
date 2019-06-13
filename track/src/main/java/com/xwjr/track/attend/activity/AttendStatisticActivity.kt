@@ -1,7 +1,6 @@
 package com.xwjr.track.attend.activity
 
 import android.annotation.SuppressLint
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.xwjr.track.R
@@ -14,7 +13,7 @@ import java.util.*
 /**
  * 考勤统计页面
  */
-class AttendStatisticActivity : AppCompatActivity() {
+class AttendStatisticActivity : AttendBaseActivity() {
 
     private var year = 2019
     private var month = 5
@@ -38,7 +37,7 @@ class AttendStatisticActivity : AppCompatActivity() {
     }
 
     private fun queryData() {
-        
+
     }
 
     private fun setListener() {

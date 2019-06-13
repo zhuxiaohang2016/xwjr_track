@@ -2,18 +2,14 @@ package com.xwjr.track.attend.activity
 
 import android.app.Activity
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.google.gson.Gson
-import com.xwjr.track.LogUtils
 import com.xwjr.track.R
 import com.xwjr.track.attend.adapter.AttendManageListAdapter
 import com.xwjr.track.attend.bean.AttendManageListBean
-import com.xwjr.track.attend.extension.err
 import com.xwjr.track.attend.extension.logI
-import com.xwjr.track.attend.extension.showTip
 import com.xwjr.track.attend.net.AttendUrlConfig
 import com.xwjr.track.attend.net.TrackHttpContract
 import com.xwjr.track.attend.net.TrackHttpPresenter
@@ -23,7 +19,7 @@ import kotlinx.android.synthetic.main.attend_title.*
 /**
  * 考勤管理列表页面
  */
-class AttendManageListActivity : AppCompatActivity(), TrackHttpContract {
+class AttendManageListActivity : AttendBaseActivity(), TrackHttpContract {
 
 
     private var attendManageData: AttendManageListBean? = null

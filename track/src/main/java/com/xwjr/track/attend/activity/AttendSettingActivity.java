@@ -1,11 +1,10 @@
 package com.xwjr.track.attend.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.xwjr.track.R;
 
-public class AttendSettingActivity extends AppCompatActivity {
+public class AttendSettingActivity extends AttendBaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

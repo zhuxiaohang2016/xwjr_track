@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
@@ -30,7 +29,7 @@ import java.util.*
 /**
  * 考勤签到页面
  */
-class SignActivity : AppCompatActivity(), TrackHttpContract {
+class SignActivity : AttendBaseActivity(), TrackHttpContract {
 
     private val signList: MutableList<SignListBean> = arrayListOf()
     private var userRole = ""//用户角色
@@ -39,7 +38,7 @@ class SignActivity : AppCompatActivity(), TrackHttpContract {
     private var isInAttendRange = false
 
     companion object {
-        const val ZJL = "ZJL"
+        const val ZJL = "ZGSZJL"
         const val MANAGE_ATTEND = 1024
     }
 
@@ -64,13 +63,10 @@ class SignActivity : AppCompatActivity(), TrackHttpContract {
         trackHttpPresenter = TrackHttpPresenter(this, this)
 
 
-        when (userRole) {
-            ZJL -> {
-                iv_manage.visibility = View.VISIBLE
-            }
-            else -> {
-                iv_manage.visibility = View.GONE
-            }
+        if (ZJL in userRole.split(",")) {
+            iv_manage.visibility = View.VISIBLE
+        } else {
+            iv_manage.visibility = View.GONE
         }
         getDateData()
         updateLocationView()
@@ -369,10 +365,15 @@ class SignActivity : AppCompatActivity(), TrackHttpContract {
                             updateView()
                             queryAttendRecord()
                             tv_check_out.visibility = View.VISIBLE
+                        }else{
+                            rv_sign_list.visibility = View.GONE
+                            tv_check_out.visibility = View.GONE
                         }
                         if (intent.getStringExtra("loginName") in attendManageDetail!!.queryUserId.toString().split(",")) {
                             //如果有查看统计人员里有当前登录人，则显示统计按钮，否则不显示
                             iv_statistic.visibility = View.VISIBLE
+                        }else{
+                            iv_statistic.visibility = View.GONE
                         }
                     }
                 }

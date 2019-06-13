@@ -2,7 +2,6 @@ package com.xwjr.track.attend.activity
 
 import android.app.Activity
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.text.Editable
@@ -15,14 +14,16 @@ import com.xwjr.track.attend.adapter.StaffSearchListener
 import com.xwjr.track.attend.bean.StaffListBean
 import com.xwjr.track.attend.extension.initDrawableRightView
 import com.xwjr.track.attend.extension.logI
-import com.xwjr.track.attend.extension.showToast
 import com.xwjr.track.attend.net.AttendUrlConfig
 import com.xwjr.track.attend.net.TrackHttpContract
 import com.xwjr.track.attend.net.TrackHttpPresenter
 import kotlinx.android.synthetic.main.activity_staff_search.*
 import kotlinx.android.synthetic.main.attend_title.*
 
-class StaffSearchActivity : AppCompatActivity(), TrackHttpContract {
+/**
+ * 员工搜索列表
+ */
+class StaffSearchActivity : AttendBaseActivity(), TrackHttpContract {
 
     private var trackHttpPresenter: TrackHttpPresenter? = null
     private var staffList: MutableList<StaffListBean.DataBean> = arrayListOf()

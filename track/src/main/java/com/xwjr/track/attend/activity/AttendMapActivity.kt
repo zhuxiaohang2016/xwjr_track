@@ -3,7 +3,6 @@ package com.xwjr.track.attend.activity
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.text.Editable
@@ -31,7 +30,7 @@ import com.xwjr.track.attend.extension.showTip
 /**
  * 设置考勤地点
  */
-class AttendMapActivity : AppCompatActivity() {
+class AttendMapActivity : AttendBaseActivity() {
     private var aMap: AMap? = null
     private var pointX: Double = 0.0
     private var pointY: Double = 0.0

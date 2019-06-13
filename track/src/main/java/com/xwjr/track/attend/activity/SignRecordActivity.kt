@@ -1,7 +1,6 @@
 package com.xwjr.track.attend.activity
 
 import android.annotation.SuppressLint
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
@@ -10,7 +9,6 @@ import com.haibin.calendarview.Calendar
 import com.haibin.calendarview.CalendarView
 import com.xwjr.track.LogUtils
 import com.xwjr.track.R
-import com.xwjr.track.attend.adapter.SignListAdapter
 import com.xwjr.track.attend.adapter.SignRecordListAdapter
 import com.xwjr.track.attend.bean.AttendRecordListBean
 import com.xwjr.track.attend.bean.SignListBean
@@ -25,7 +23,7 @@ import java.util.HashMap
 /**
  * 考勤记录页面
  */
-class SignRecordActivity : AppCompatActivity(), TrackHttpContract {
+class SignRecordActivity : AttendBaseActivity(), TrackHttpContract {
 
     private val signList: MutableList<SignListBean> = arrayListOf()
     private var trackHttpPresenter: TrackHttpPresenter? = null

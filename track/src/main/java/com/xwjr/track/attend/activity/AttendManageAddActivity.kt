@@ -3,7 +3,6 @@ package com.xwjr.track.attend.activity
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.google.gson.Gson
@@ -21,7 +20,7 @@ import kotlinx.android.synthetic.main.attend_title.*
 /**
  * 考勤管理新增页面
  */
-class AttendManageAddActivity : AppCompatActivity(), TrackHttpContract {
+class AttendManageAddActivity : AttendBaseActivity(), TrackHttpContract {
 
     private var attendTimes = TWICE //考勤打卡次数
     private var attendManageDetail: AttendManageListBean.DataBean? = null

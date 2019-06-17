@@ -50,6 +50,7 @@ class SignActivity : AttendBaseActivity(), TrackHttpContract {
         override fun handleMessage(msg: Message) {
             when (msg.what) {
                 0 -> {
+                    updateLocationView()
                     updateAttendRange()
                 }
             }
@@ -117,12 +118,18 @@ class SignActivity : AttendBaseActivity(), TrackHttpContract {
             sendBroadcast(intent)
         }
         cl_location.setOnClickListener {
+            if (!isLocServiceEnable(this@SignActivity) || !checkLocationPermission()) {
+                return@setOnClickListener
+            }
             TrackLocationData.refreshLocation()
             laterDeal(500) {
                 myHandler.sendEmptyMessage(0)
             }
         }
         tv_check_out.setOnClickListener {
+            if (!isLocServiceEnable(this@SignActivity) || !checkLocationPermission()) {
+                return@setOnClickListener
+            }
             showTip("请确认是否外勤签到？", "确定") {
                 attendSign("outside", "")
             }
@@ -253,6 +260,9 @@ class SignActivity : AttendBaseActivity(), TrackHttpContract {
         rv_sign_list.adapter = SignListAdapter(this, signList).apply {
             this.signListener = object : SignListener {
                 override fun sign(time: String) {
+                    if (!isLocServiceEnable(this@SignActivity) || !checkLocationPermission()) {
+                        return
+                    }
                     if (!isInAttendRange) {
                         showTip("您未进入考勤范围，如需签到，请用外勤签到", "我知道了")
                         return
@@ -522,9 +532,9 @@ class SignActivity : AttendBaseActivity(), TrackHttpContract {
                                     }
                                 }
                             }
-                            if (it.checkinOutside=="outside"){
+                            if (it.checkinOutside == "outside") {
                                 //外勤
-                                signList.add(SignListBean("外勤签到", it.locationDetail.convertNull(),it.checkinTime.convertNull().substring(10,16), ""))
+                                signList.add(SignListBean("外勤签到", it.locationDetail.convertNull(), it.checkinTime.convertNull().substring(10, 16), ""))
                             }
                         }
                         updateSignListData()

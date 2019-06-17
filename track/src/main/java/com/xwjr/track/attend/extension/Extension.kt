@@ -1,5 +1,6 @@
 package com.xwjr.track.attend.extension
 
+import android.os.Looper
 import android.util.Log
 import com.xwjr.track.TrackConfig
 import com.xwjr.track.attend.util.ToastUtils
@@ -73,7 +74,9 @@ fun Any?.laterDeal(time: Long = 3000, deal: (() -> Unit)? = null) {
                 logI("倒计时结束")
                 if (deal != null) {
                     logI("倒计时结束后，开始执行任务")
+//                    Looper.getMainLooper()
                     deal()
+//                    Looper.loop()
                 }
             }
         }

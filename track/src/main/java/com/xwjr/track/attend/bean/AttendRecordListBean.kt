@@ -6,7 +6,7 @@ class AttendRecordListBean : BaseBean() {
 
     class DataBean {
         var count: CountBean? = null
-        var records: List<RecordsBean>? = null
+        var records: MutableList<RecordsBean>? = null
 
         class CountBean {
 
@@ -33,6 +33,7 @@ class AttendRecordListBean : BaseBean() {
             var latitude: String? = null
             var locationDetail: String? = null
             var checkinResult: String? = null
+            var checkinResultDisplay: String? = null
             var createTime: String? = null
         }
     }

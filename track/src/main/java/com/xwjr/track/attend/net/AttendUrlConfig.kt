@@ -8,4 +8,6 @@ object AttendUrlConfig {
     var queryStaffList = "$domain/mloanApi/internal/user/userList/MYSELF"
     var attendSign = "$domain/bigbang/internal/checkin/save/MYSELF"
     var attendRecord = "$domain/bigbang/internal/checkin/info/MYSELF"
+    var abnormalAttendRecord = "$domain/bigbang/internal/checkin/abnormalRecord/info/MYSELF"
+    var attendStatistic = "$domain/bigbang/internal/checkin/count/MYSELF"
 }

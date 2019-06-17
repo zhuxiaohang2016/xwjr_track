@@ -245,23 +245,23 @@ class TrackHttpPresenter(private val context: Context, private val contract: Tra
      * 考勤
      */
     fun attendSign(token: String,
-                   type: String,
+                   checkinOutside: String,
                    equipmentId: String,
                    longitude: String,
                    latitude: String,
                    locationDetail: String,
-                   checkInType:String) {
+                   checkInType: String) {
         logI("开始考勤...")
         val url = AttendUrlConfig.attendSign
         logI("请求URL:$url")
         val requestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
-        requestBody.addFormDataPart("type", type)
+        requestBody.addFormDataPart("checkinOutside", checkinOutside)
         requestBody.addFormDataPart("equipmentId", equipmentId)
         requestBody.addFormDataPart("longitude", longitude)
         requestBody.addFormDataPart("latitude", latitude)
         requestBody.addFormDataPart("locationDetail", locationDetail)
         requestBody.addFormDataPart("checkInType", checkInType)
-        logI("请求参数：  type:" + type +
+        logI("请求参数：  type:" + checkinOutside +
                 "  equipmentId:" + equipmentId +
                 "  longitude:" + longitude +
                 "  latitude:" + latitude +
@@ -297,7 +297,7 @@ class TrackHttpPresenter(private val context: Context, private val contract: Tra
                      userId: String,
                      date: String) {
         logI("开始查询考勤记录...")
-        val url = AttendUrlConfig.attendRecord+"?userId=$userId&date=$date"
+        val url = AttendUrlConfig.attendRecord + "?userId=$userId&date=$date"
         logI("请求URL:$url")
         OkHttpClient().newCall(Request.Builder()
                 .addHeader("Cookie", "ccat=$token")
@@ -320,5 +320,69 @@ class TrackHttpPresenter(private val context: Context, private val contract: Tra
             }
         })
     }
+
+
+    /**
+     * 查询考勤记录
+     */
+    fun abnormalAttendRecord(token: String,
+                             userId: String,
+                             month: String) {
+        logI("开始查询考勤记录...")
+        val url = AttendUrlConfig.abnormalAttendRecord + "?userId=$userId&month=$month"
+        logI("请求URL:$url")
+        OkHttpClient().newCall(Request.Builder()
+                .addHeader("Cookie", "ccat=$token")
+                .url(url)
+                .get()
+                .build()
+        ).enqueue(object : Callback {
+
+            override fun onFailure(call: Call, e: IOException) {
+                logI("发生异常：查询考勤记录失败 $url")
+                showToast("发生异常：查询考勤记录失败")
+                e.printStackTrace()
+                sendData(url.err(), "")
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val data = response.body()?.string().toString()
+                logI("查询考勤记录返回数据 $url ：\n$data")
+                sendData(AttendUrlConfig.abnormalAttendRecord, data)
+            }
+        })
+    }
+
+
+    /**
+     * 查询考勤统计
+     */
+    fun attendStatistic(token: String,
+                        month: String) {
+        logI("开始查询考勤统计...")
+        val url = AttendUrlConfig.attendStatistic + "?month=$month"
+        logI("请求URL:$url")
+        OkHttpClient().newCall(Request.Builder()
+                .addHeader("Cookie", "ccat=$token")
+                .url(url)
+                .get()
+                .build()
+        ).enqueue(object : Callback {
+
+            override fun onFailure(call: Call, e: IOException) {
+                logI("发生异常：查询考勤统计失败 $url")
+                showToast("发生异常：查询考勤统计失败")
+                e.printStackTrace()
+                sendData(url.err(), "")
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val data = response.body()?.string().toString()
+                logI("查询考勤统计返回数据 $url ：\n$data")
+                sendData(AttendUrlConfig.attendStatistic, data)
+            }
+        })
+    }
+
 
 }

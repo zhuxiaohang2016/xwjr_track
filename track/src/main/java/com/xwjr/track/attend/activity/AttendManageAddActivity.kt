@@ -171,8 +171,8 @@ class AttendManageAddActivity : AttendBaseActivity(), TrackHttpContract {
                                 attendManageDetail?.longitude.toString(),
                                 attendManageDetail?.latitude.toString(),
                                 attendManageDetail?.location.toString(),
-                                attendManageDetail?.queryUserId.toString(),
-                                attendManageDetail?.queryUserName.toString()
+                                attendManageDetail?.queryUserId,
+                                attendManageDetail?.queryUserName
                         )
                     }
                     "EDIT" -> {
@@ -190,8 +190,8 @@ class AttendManageAddActivity : AttendBaseActivity(), TrackHttpContract {
                                 attendManageDetail?.longitude.toString(),
                                 attendManageDetail?.latitude.toString(),
                                 attendManageDetail?.location.toString(),
-                                attendManageDetail?.queryUserId.toString(),
-                                attendManageDetail?.queryUserName.toString()
+                                attendManageDetail?.queryUserId,
+                                attendManageDetail?.queryUserName
                         )
                     }
                 }

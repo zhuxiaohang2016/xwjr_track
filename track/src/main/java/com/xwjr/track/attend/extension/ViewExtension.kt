@@ -2,18 +2,18 @@
 
 package com.xwjr.track.attend.extension
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.drawable.BitmapDrawable
+import android.support.constraint.Group
 import android.util.TypedValue
 import android.util.TypedValue.applyDimension
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.ImageView
-import android.widget.PopupWindow
-import android.widget.TextView
+import android.widget.*
 import com.xwjr.track.R
+import com.xwjr.track.attend.bean.AttendRecordListBean
 import com.xwjr.track.attend.widget.WheelView
 import java.util.*
 
@@ -360,6 +360,133 @@ fun Context.showWheelSelect(dataString: MutableList<String>, deal: ((selectData:
 
         tvSure.setOnClickListener {
             if (deal != null) deal(selectData)
+            popupWindow.dismiss()
+        }
+
+
+        popupWindow.apply {
+            isFocusable = true
+            isOutsideTouchable = true
+            isTouchable = true
+            setBackgroundDrawable(BitmapDrawable())
+            showAtLocation(view, Gravity.CENTER, 0, 0)
+        }
+
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+}
+
+
+//popupWindow弹出提示信息
+@SuppressLint("SetTextI18n")
+fun Context.showAbnormalAttendRecord(abnormalAttendRecordListBean: AttendRecordListBean? = null) {
+    try {
+        val view = View.inflate(this, R.layout.attend_tip_attend_record, null)
+        val popupWindow = PopupWindow(
+                view,
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+        )
+
+        val tvSure = view.findViewById(R.id.tv_sure) as TextView
+        val ivClose = view.findViewById(R.id.iv_close) as ImageView
+        val llContent = view.findViewById(R.id.ll_content) as LinearLayout
+
+        val lateData = abnormalAttendRecordListBean!!.data!!.records!!.filter {
+            it.checkinResult == "late"
+        }
+        if (lateData.isNotEmpty()) {
+            val lateTitle = View.inflate(this, R.layout.attend_tip_attend_record_title, null)
+            val tvStatus = lateTitle.findViewById(R.id.tv_status) as TextView
+            val tvTimes = lateTitle.findViewById(R.id.tv_times) as TextView
+            tvStatus.initDrawableLeftView(R.mipmap.attend_dot_blue, 6f, 6f)
+            tvStatus.text = "迟到"
+            tvTimes.text = "共" + lateData.size + "次"
+            llContent.addView(lateTitle)
+            lateData.forEach {
+                val lateContent = View.inflate(this, R.layout.attend_tip_attend_record_content, null)
+                val tvSignTimeDetail = lateContent.findViewById(R.id.tv_sign_time_detail) as TextView
+                val groupLocation = lateContent.findViewById(R.id.group_location) as Group
+                tvSignTimeDetail.text = it.checkinTime + "    " + it.checkinTime?.substring(0, 10)?.getWeekData()
+                groupLocation.visibility = View.GONE
+                llContent.addView(lateContent)
+            }
+        }
+
+        val earlyData = abnormalAttendRecordListBean.data!!.records!!.filter {
+            it.checkinResult == "leaveEarly"
+        }
+        if (earlyData.isNotEmpty()) {
+            val earlyTitle = View.inflate(this, R.layout.attend_tip_attend_record_title, null)
+            val tvStatus = earlyTitle.findViewById(R.id.tv_status) as TextView
+            val tvTimes = earlyTitle.findViewById(R.id.tv_times) as TextView
+            tvStatus.initDrawableLeftView(R.mipmap.attend_dot_red, 6f, 6f)
+            tvStatus.text = "早退"
+            tvTimes.text = "共" + earlyData.size + "次"
+            llContent.addView(earlyTitle)
+            earlyData.forEach {
+                val earlyContent = View.inflate(this, R.layout.attend_tip_attend_record_content, null)
+                val tvSignTimeDetail = earlyContent.findViewById(R.id.tv_sign_time_detail) as TextView
+                val groupLocation = earlyContent.findViewById(R.id.group_location) as Group
+                tvSignTimeDetail.text = it.checkinTime + "    " + it.checkinTime?.substring(0, 10)?.getWeekData()
+                groupLocation.visibility = View.GONE
+                llContent.addView(earlyContent)
+            }
+        }
+
+
+        val forgetData = abnormalAttendRecordListBean.data!!.records!!.filter {
+            it.checkinResult == "uncheckin"
+        }
+        if (forgetData.isNotEmpty()) {
+            val forgetTitle = View.inflate(this, R.layout.attend_tip_attend_record_title, null)
+            val tvStatus = forgetTitle.findViewById(R.id.tv_status) as TextView
+            val tvTimes = forgetTitle.findViewById(R.id.tv_times) as TextView
+            tvStatus.initDrawableLeftView(R.mipmap.attend_dot_orange, 6f, 6f)
+            tvStatus.text = "未打卡"
+            tvTimes.text = "共" + forgetData.size + "次"
+            llContent.addView(forgetTitle)
+            forgetData.forEach {
+                val forgetContent = View.inflate(this, R.layout.attend_tip_attend_record_content, null)
+                val tvSignTimeDetail = forgetContent.findViewById(R.id.tv_sign_time_detail) as TextView
+                val groupLocation = forgetContent.findViewById(R.id.group_location) as Group
+                tvSignTimeDetail.text = it.checkinTime + "    " + it.checkinTime?.substring(0, 10)?.getWeekData()
+                groupLocation.visibility = View.GONE
+                llContent.addView(forgetContent)
+            }
+        }
+
+
+        val outsideData = abnormalAttendRecordListBean.data!!.records!!.filter {
+            it.checkinOutside == "outside"
+        }
+        if (outsideData.isNotEmpty()) {
+            val outsideTitle = View.inflate(this, R.layout.attend_tip_attend_record_title, null)
+            val tvStatus = outsideTitle.findViewById(R.id.tv_status) as TextView
+            val tvTimes = outsideTitle.findViewById(R.id.tv_times) as TextView
+            tvStatus.initDrawableLeftView(R.mipmap.attend_dot_blue_soft, 6f, 6f)
+            tvStatus.text = "迟到"
+            tvTimes.text = "共" + outsideData.size + "次"
+            llContent.addView(outsideTitle)
+            outsideData.forEach {
+                val outsideContent = View.inflate(this, R.layout.attend_tip_attend_record_content, null)
+                val tvSignTimeDetail = outsideContent.findViewById(R.id.tv_sign_time_detail) as TextView
+                val groupLocation = outsideContent.findViewById(R.id.group_location) as Group
+                val tvLocationDes = outsideContent.findViewById(R.id.tv_location_des) as TextView
+                tvSignTimeDetail.text = it.checkinTime + "    " + it.checkinTime?.substring(0, 10)?.getWeekData()
+                groupLocation.visibility = View.VISIBLE
+                tvLocationDes.text = it.locationDetail
+                llContent.addView(outsideContent)
+            }
+        }
+
+
+        ivClose.setOnClickListener {
+            popupWindow.dismiss()
+        }
+
+        tvSure.setOnClickListener {
             popupWindow.dismiss()
         }
 

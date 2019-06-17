@@ -201,4 +201,35 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/tv_auto_sign" />
 
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/cl_attend_null"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        android:background="@color/attend_activity_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cl_sign_top">
+
+        <ImageView
+            android:id="@+id/iv_attend_null"
+            android:layout_marginTop="100dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@mipmap/attend_icon_null"
+            android:layout_width="127dp"
+            android:layout_height="106dp" />
+        <TextView
+            android:layout_marginTop="10dp"
+            android:textColor="#b3b3b3"
+            android:textSize="14sp"
+            app:layout_constraintRight_toRightOf="@id/iv_attend_null"
+            app:layout_constraintLeft_toLeftOf="@id/iv_attend_null"
+            app:layout_constraintTop_toBottomOf="@id/iv_attend_null"
+            android:text="总经理尚未设置考勤计划"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </android.support.constraint.ConstraintLayout>
+
 </android.support.constraint.ConstraintLayout>

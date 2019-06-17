@@ -28,13 +28,14 @@ import javax.security.auth.callback.Callback;
 public class TrackLocationData {
 
     //声明AMapLocationClient类对象
-    public AMapLocationClient mLocationClient = null;
+    public static AMapLocationClient mLocationClient = null;
     //声明定位回调监听器
-    public AMapLocationListener mLocationListener = null;
+    public static AMapLocationListener mLocationListener = null;
 
-    public AMapLocationClientOption mLocationOption = null;
+    public static AMapLocationClientOption mLocationOption = null;
 
-    public void initAMap() {
+
+    public static void initAMap() {
 
         AMapLocationListener mAMapLocationListener = new AMapLocationListener() {
             @Override
@@ -82,8 +83,76 @@ public class TrackLocationData {
         mLocationClient.setLocationListener(mLocationListener);
         //启动定位
         mLocationClient.startLocation();
+    }
 
+    public static void setLocationInterval(int time) {
+        try {
+            mLocationClient.stopLocation();
+            mLocationOption.setInterval(time);
+            mLocationClient.setLocationOption(mLocationOption);
+            mLocationClient.startLocation();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
+    public static void recoverLocationInterval() {
+        try {
+            mLocationClient.stopLocation();
+            mLocationOption.setInterval(TrackConfig.locationInterval);
+            mLocationClient.setLocationOption(mLocationOption);
+            mLocationClient.startLocation();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void refreshLocation() {
+        AMapLocationListener mAMapLocationListener = new AMapLocationListener() {
+            @Override
+            public void onLocationChanged(AMapLocation amapLocation) {
+                if (amapLocation != null) {
+                    if (amapLocation.getErrorCode() == 0) {
+                        //可在其中解析amapLocation获取相应内容。
+                        TrackConfig.latitude = String.valueOf(amapLocation.getLatitude());//获取纬度
+                        TrackConfig.longitude = String.valueOf(amapLocation.getLongitude());//获取经度
+                        TrackConfig.address = amapLocation.getAddress();
+                        TrackConfig.city = amapLocation.getCity();
+                        LogUtils.i("高德地图定位地址：" + TrackConfig.latitude + "  " + TrackConfig.longitude + "  " + TrackConfig.address);
+                    } else {
+                        TrackConfig.latitude = "";
+                        TrackConfig.longitude = "";
+                        TrackConfig.address = "";
+                        TrackConfig.city = "";
+                        //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
+                        LogUtils.e("location Error, ErrCode:"
+                                + amapLocation.getErrorCode() + ", errInfo:"
+                                + amapLocation.getErrorInfo());
+                    }
+                } else {
+                    TrackConfig.latitude = "";
+                    TrackConfig.longitude = "";
+                    TrackConfig.address = "";
+                    TrackConfig.city = "";
+                }
+            }
+        };
+
+        //初始化定位
+        AMapLocationClient mLocationClient = new AMapLocationClient(TrackConfig.context);
+        //初始化AMapLocationClientOption对象
+        AMapLocationClientOption mLocationOption = new AMapLocationClientOption();
+        //设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+        //设置是否允许模拟位置,默认为true，允许模拟位置
+        mLocationOption.setMockEnable(false);
+        //设置定位间隔,单位毫秒,默认为2000ms，最低1000ms。
+        mLocationOption.setOnceLocation(true);
+        mLocationClient.setLocationOption(mLocationOption);
+        //设置定位回调监听
+        mLocationClient.setLocationListener(mAMapLocationListener);
+        //启动定位
+            mLocationClient.startLocation();
     }
 
 
@@ -210,7 +279,7 @@ public class TrackLocationData {
         geocoderSearch.setOnGeocodeSearchListener(new GeocodeSearch.OnGeocodeSearchListener() {
             @Override
             public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
-                callback.getAddress(regeocodeResult.getRegeocodeAddress().getFormatAddress(),regeocodeResult.getRegeocodeAddress().getCity());
+                callback.getAddress(regeocodeResult.getRegeocodeAddress().getFormatAddress(), regeocodeResult.getRegeocodeAddress().getCity());
                 LogUtils.i("高德地图解析地址：" + regeocodeResult.getRegeocodeAddress().getFormatAddress());
             }
 
@@ -225,7 +294,7 @@ public class TrackLocationData {
     }
 
     public interface LocationAddressCallBack {
-        void getAddress(String address,String city);
+        void getAddress(String address, String city);
     }
 
 

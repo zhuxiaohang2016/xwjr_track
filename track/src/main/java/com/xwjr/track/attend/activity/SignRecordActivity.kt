@@ -13,6 +13,7 @@ import com.xwjr.track.attend.adapter.SignRecordListAdapter
 import com.xwjr.track.attend.bean.AttendRecordListBean
 import com.xwjr.track.attend.bean.SignListBean
 import com.xwjr.track.attend.extension.logI
+import com.xwjr.track.attend.extension.showAbnormalAttendRecord
 import com.xwjr.track.attend.net.AttendUrlConfig
 import com.xwjr.track.attend.net.TrackHttpContract
 import com.xwjr.track.attend.net.TrackHttpPresenter
@@ -28,6 +29,7 @@ class SignRecordActivity : AttendBaseActivity(), TrackHttpContract {
     private val signList: MutableList<SignListBean> = arrayListOf()
     private var trackHttpPresenter: TrackHttpPresenter? = null
     private var attendRecordListBean: AttendRecordListBean? = null
+    private var abnormalAttendRecordListBean: AttendRecordListBean? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_record)
@@ -49,6 +51,10 @@ class SignRecordActivity : AttendBaseActivity(), TrackHttpContract {
      */
     private fun queryAttendRecord(time: String) {
         trackHttpPresenter?.attendRecord(intent.getStringExtra("token"), intent.getStringExtra("loginName"), time)
+    }
+
+    private fun queryAbnormalAttendRecord(time: String) {
+        trackHttpPresenter?.abnormalAttendRecord(intent.getStringExtra("token"), intent.getStringExtra("loginName"), time)
     }
 
     @SuppressLint("SetTextI18n")
@@ -76,6 +82,10 @@ class SignRecordActivity : AttendBaseActivity(), TrackHttpContract {
 
         calendarView.setOnMonthChangeListener { year, month ->
             tv_year_and_month.text = "${year}年${formatDate(month)}月"
+        }
+
+        iv_attend_record.setOnClickListener {
+            queryAbnormalAttendRecord(tv_year_and_month.text.substring(0,4)+"-"+tv_year_and_month.text.substring(5,7))
         }
     }
 
@@ -162,6 +172,15 @@ class SignRecordActivity : AttendBaseActivity(), TrackHttpContract {
                     if (attendRecordListBean != null && attendRecordListBean!!.checkCodeIfErrorShow() && attendRecordListBean!!.data != null && attendRecordListBean!!.data?.records != null && attendRecordListBean!!.data?.count != null) {
                         updateStatisticView()
                         updateRecycleView()
+                    }
+                }
+                AttendUrlConfig.abnormalAttendRecord -> {
+                    logI("获取考勤记录成功，开始解析")
+                    data as String
+                    abnormalAttendRecordListBean = (Gson().fromJson(data, AttendRecordListBean::class.java))
+                    if (abnormalAttendRecordListBean != null && abnormalAttendRecordListBean!!.checkCodeIfErrorShow() && abnormalAttendRecordListBean!!.data != null && abnormalAttendRecordListBean!!.data?.records != null && abnormalAttendRecordListBean!!.data?.records!!.size > 0) {
+                        //展示view
+                        showAbnormalAttendRecord(abnormalAttendRecordListBean)
                     }
                 }
             }

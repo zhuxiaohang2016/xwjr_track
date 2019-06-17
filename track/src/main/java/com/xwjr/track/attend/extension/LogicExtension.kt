@@ -1,5 +1,9 @@
 package com.xwjr.track.attend.extension
 
+import android.annotation.SuppressLint
+import java.text.SimpleDateFormat
+import java.util.*
+
 
 fun secondToTime(time: Int): String {
     val timeStr: String?
@@ -32,4 +36,17 @@ fun unitFormat(i: Int): String {
         "0" + Integer.toString(i)
     else
         "" + i
+}
+
+
+/**
+ * 初始化日期布局
+ */
+@SuppressLint("SimpleDateFormat", "SetTextI18n")
+fun String.getWeekData(): String {
+    val calendar = Calendar.getInstance()
+    val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
+    calendar.time = simpleDateFormat.parse(this)
+    val str1 = arrayOf("", "日", "一", "二", "三", "四", "五", "六")
+    return "星期" + str1[calendar.get(Calendar.DAY_OF_WEEK)]
 }

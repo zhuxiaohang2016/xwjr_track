@@ -63,6 +63,16 @@ class AttendManageListAdapter(private val context: Context, private var dataList
                         holder.groupSignTimeAfternoonOff.visibility = View.GONE
                         holder.tvSignTimeMorningOnDes.text = "上班"
                         holder.tvSignTimeAfternoonOnDes.text = "下班"
+                        if (!dataList[position].onWork.isNullOrEmpty()) {
+                            holder.tvSignTimeMorningOn.text = secondToTime(dataList[position].onWork!!.toInt())
+                        } else {
+                            holder.tvSignTimeMorningOn.text = ""
+                        }
+                        if (!dataList[position].offWork.isNullOrEmpty()) {
+                            holder.tvSignTimeAfternoonOn.text = secondToTime(dataList[position].offWork!!.toInt())
+                        } else {
+                            holder.tvSignTimeAfternoonOn.text = ""
+                        }
                     }
                     dataList[position].ruleType == "1" -> {
                         //4次签到
@@ -70,6 +80,29 @@ class AttendManageListAdapter(private val context: Context, private var dataList
                         holder.groupSignTimeAfternoonOff.visibility = View.VISIBLE
                         holder.tvSignTimeMorningOnDes.text = "上午上班"
                         holder.tvSignTimeAfternoonOnDes.text = "下午上班"
+                        if (!dataList[position].onWork.isNullOrEmpty()) {
+                            holder.tvSignTimeMorningOn.text = secondToTime(dataList[position].onWork!!.toInt())
+                        } else {
+                            holder.tvSignTimeMorningOn.text = ""
+                        }
+
+                        if (!dataList[position].offWork.isNullOrEmpty()) {
+                            holder.tvSignTimeMorningOff.text = secondToTime(dataList[position].offWork!!.toInt())
+                        } else {
+                            holder.tvSignTimeMorningOff.text = ""
+                        }
+
+                        if (!dataList[position].onWorkTwo.isNullOrEmpty()) {
+                            holder.tvSignTimeAfternoonOn.text = secondToTime(dataList[position].onWorkTwo!!.toInt())
+                        } else {
+                            holder.tvSignTimeAfternoonOn.text = ""
+                        }
+
+                        if (!dataList[position].offWorkTwo.isNullOrEmpty()) {
+                            holder.tvSignTimeAfternoonOff.text = secondToTime(dataList[position].offWorkTwo!!.toInt())
+                        } else {
+                            holder.tvSignTimeAfternoonOff.text = ""
+                        }
                     }
                     else -> {
                         showToast("未获取到打卡类型")
@@ -77,29 +110,6 @@ class AttendManageListAdapter(private val context: Context, private var dataList
                     }
                 }
 
-                if (!dataList[position].onWork.isNullOrEmpty()) {
-                    holder.tvSignTimeMorningOn.text = secondToTime(dataList[position].onWork!!.toInt())
-                } else {
-                    holder.tvSignTimeMorningOn.text = ""
-                }
-
-                if (!dataList[position].onWorkTwo.isNullOrEmpty()) {
-                    holder.tvSignTimeMorningOff.text = secondToTime(dataList[position].onWorkTwo!!.toInt())
-                } else {
-                    holder.tvSignTimeMorningOff.text = ""
-                }
-
-                if (!dataList[position].offWork.isNullOrEmpty()) {
-                    holder.tvSignTimeAfternoonOn.text = secondToTime(dataList[position].offWork!!.toInt())
-                } else {
-                    holder.tvSignTimeAfternoonOn.text = ""
-                }
-
-                if (!dataList[position].offWorkTwo.isNullOrEmpty()) {
-                    holder.tvSignTimeAfternoonOff.text = secondToTime(dataList[position].offWorkTwo!!.toInt())
-                } else {
-                    holder.tvSignTimeAfternoonOff.text = ""
-                }
 
                 if (!dataList[position].location.isNullOrEmpty()) {
                     holder.tvLocationDes.text = "签到地点:${dataList[position].location}"

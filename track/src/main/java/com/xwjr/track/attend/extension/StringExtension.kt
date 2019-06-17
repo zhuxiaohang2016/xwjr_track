@@ -2,6 +2,12 @@ package com.xwjr.track.attend.extension
 
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
+
+//字符串如果是null转成 ""
+fun String?.convertNull(): String {
+    return this ?: ""
+}
+
 /**
  * .err()
  */

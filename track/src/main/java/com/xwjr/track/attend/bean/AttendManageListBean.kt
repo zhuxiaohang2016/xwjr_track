@@ -24,7 +24,7 @@ class AttendManageListBean : BaseBean() {
         var createTime: String? = null
         var updateTime: String? = null
         var userId: String? = null
-        var checkinUserIdList: List<String>? = null
-        var queryUserIdList: List<String>? = null
+        var checkinUserIdList: MutableList<String>? = null
+        var queryUserIdList: MutableList<String>? = null
     }
 }

@@ -1,10 +1,15 @@
 package com.xwjr.track.attend.activity
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
+import android.location.LocationManager
 import android.os.Bundle
+import android.os.Handler
+import android.os.Message
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.google.gson.Gson
@@ -25,10 +30,15 @@ import kotlinx.android.synthetic.main.activity_sign.*
 import kotlinx.android.synthetic.main.attend_title.*
 import java.text.SimpleDateFormat
 import java.util.*
+import android.support.v4.content.ContextCompat
+import com.xwjr.track.TrackLocationData
+import com.xwjr.track.attend.util.PermissionPageUtils
+
 
 /**
  * 考勤签到页面
  */
+@SuppressLint("HandlerLeak")
 class SignActivity : AttendBaseActivity(), TrackHttpContract {
 
     private val signList: MutableList<SignListBean> = arrayListOf()
@@ -36,6 +46,16 @@ class SignActivity : AttendBaseActivity(), TrackHttpContract {
     private var trackHttpPresenter: TrackHttpPresenter? = null
     private var attendManageDetail: AttendManageListBean.DataBean? = null
     private var isInAttendRange = false
+    var myHandler: Handler = object : Handler() {
+        override fun handleMessage(msg: Message) {
+            when (msg.what) {
+                0 -> {
+                    updateAttendRange()
+                }
+            }
+            super.handleMessage(msg)
+        }
+    }
 
     companion object {
         const val ZJL = "ZGSZJL"
@@ -97,17 +117,20 @@ class SignActivity : AttendBaseActivity(), TrackHttpContract {
             sendBroadcast(intent)
         }
         cl_location.setOnClickListener {
-            showToast("刷新位置")
+            TrackLocationData.refreshLocation()
+            laterDeal(500) {
+                myHandler.sendEmptyMessage(0)
+            }
         }
         tv_check_out.setOnClickListener {
             showTip("请确认是否外勤签到？", "确定") {
-                attendSign("", "")
+                attendSign("outside", "")
             }
         }
     }
 
     private fun defaultData() {
-
+        intervalDeal()
     }
 
     /**
@@ -146,7 +169,13 @@ class SignActivity : AttendBaseActivity(), TrackHttpContract {
      * 考勤
      */
     private fun attendSign(type: String, checkInType: String) {
-        trackHttpPresenter?.attendSign(intent.getStringExtra("token"), type, getDeviceId(this), TrackConfig.getLongitude(), TrackConfig.getLatitude(), TrackConfig.getAddress(), checkInType)
+        if (isLocServiceEnable(this) && checkLocationPermission()) {
+            if (TrackConfig.getLongitude().isNullOrEmpty() || TrackConfig.getLatitude().isNullOrEmpty()) {
+                showToast("暂未获取到位置信息，请重试")
+                return
+            }
+            trackHttpPresenter?.attendSign(intent.getStringExtra("token"), type, getDeviceId(this), TrackConfig.getLongitude(), TrackConfig.getLatitude(), TrackConfig.getAddress(), checkInType)
+        }
     }
 
     /**
@@ -232,46 +261,46 @@ class SignActivity : AttendBaseActivity(), TrackHttpContract {
                         "上午签到" -> {
                             if (getSecond(getTimeData()).toInt() > attendManageDetail?.onWork!!.toInt()) {
                                 showTip("您已经迟到，是否继续打卡？", "继续") {
-                                    attendSign("checkin", "onWork")
+                                    attendSign("inside", "onWork")
                                 }
                             } else {
-                                attendSign("checkin", "onWork")
+                                attendSign("inside", "onWork")
                             }
                         }
                         "上午签退" -> {
                             if (getSecond(getTimeData()).toInt() < attendManageDetail?.offWork!!.toInt()) {
                                 showTip("还未到下班时间，是否继续打卡？", "继续") {
-                                    attendSign("checkout", "offWork")
+                                    attendSign("inside", "offWork")
                                 }
                             } else {
-                                attendSign("checkout", "offWork")
+                                attendSign("inside", "offWork")
                             }
                         }
                         "下午签到" -> {
                             if (getSecond(getTimeData()).toInt() > attendManageDetail?.onWorkTwo!!.toInt()) {
                                 showTip("您已经迟到，是否继续打卡？", "继续") {
-                                    attendSign("checkin", "onWorkTwo")
+                                    attendSign("inside", "onWorkTwo")
                                 }
                             } else {
-                                attendSign("checkin", "onWorkTwo")
+                                attendSign("inside", "onWorkTwo")
                             }
                         }
                         "下午签退" -> {
                             if (attendManageDetail?.ruleType == "0") {
                                 if (getSecond(getTimeData()).toInt() < attendManageDetail?.offWork!!.toInt()) {
                                     showTip("还未到下班时间，是否继续打卡？", "继续") {
-                                        attendSign("checkout", "offWork")
+                                        attendSign("inside", "offWork")
                                     }
                                 } else {
-                                    attendSign("checkout", "offWork")
+                                    attendSign("inside", "offWork")
                                 }
                             } else if (attendManageDetail?.ruleType == "1") {
                                 if (getSecond(getTimeData()).toInt() < attendManageDetail?.offWorkTwo!!.toInt()) {
                                     showTip("还未到下班时间，是否继续打卡？", "继续") {
-                                        attendSign("checkout", "offWorkTwo")
+                                        attendSign("inside", "offWorkTwo")
                                     }
                                 } else {
-                                    attendSign("checkout", "offWorkTwo")
+                                    attendSign("inside", "offWorkTwo")
                                 }
                             }
                         }
@@ -350,6 +379,64 @@ class SignActivity : AttendBaseActivity(), TrackHttpContract {
         return id
     }
 
+    /**
+     * 定位服务是否可用
+     */
+    private fun isLocServiceEnable(context: Context): Boolean {
+        return try {
+            val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+            val gps = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+            val network = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+
+            if (gps || network) {
+                true
+            } else {
+                showToast("请先开启定位服务")
+                false
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            true
+        }
+    }
+
+    /**
+     * 校验权限
+     */
+    private fun checkLocationPermission(): Boolean {
+        return try {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                    || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                true
+            } else {
+                showTip("您尚未开启定位权限，无法获取您的位置", "去开启") {
+                    PermissionPageUtils(this).jumpPermissionPage()
+                }
+                false
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            true
+        }
+
+    }
+
+    private fun intervalDeal() {
+        val timer = Timer()
+        timer.schedule(object : TimerTask() {
+            override fun run() {
+                myHandler.sendEmptyMessage(0)
+            }
+        }, 5000)
+    }
+
+    /**
+     * 更新打卡数据
+     */
+    private fun updateSignListData() {
+
+    }
+
 
     override fun statusBack(i: String, data: Any) {
         try {
@@ -364,17 +451,22 @@ class SignActivity : AttendBaseActivity(), TrackHttpContract {
                             //如果考勤计划人员里有当前登录人，则显示考勤列表，否则不处理
                             updateView()
                             queryAttendRecord()
+                            rv_sign_list.visibility = View.VISIBLE
                             tv_check_out.visibility = View.VISIBLE
-                        }else{
+                            cl_attend_null.visibility = View.GONE
+                        } else {
                             rv_sign_list.visibility = View.GONE
                             tv_check_out.visibility = View.GONE
+                            cl_attend_null.visibility = View.VISIBLE
                         }
                         if (intent.getStringExtra("loginName") in attendManageDetail!!.queryUserId.toString().split(",")) {
                             //如果有查看统计人员里有当前登录人，则显示统计按钮，否则不显示
                             iv_statistic.visibility = View.VISIBLE
-                        }else{
+                        } else {
                             iv_statistic.visibility = View.GONE
                         }
+                    } else {
+                        cl_attend_null.visibility = View.VISIBLE
                     }
                 }
                 AttendUrlConfig.attendSign -> {
@@ -394,42 +486,48 @@ class SignActivity : AttendBaseActivity(), TrackHttpContract {
                     if (attendRecordListBean != null && attendRecordListBean.checkCodeIfErrorShow() && attendRecordListBean.data != null && attendRecordListBean.data?.records != null && attendRecordListBean.data?.count != null) {
                         attendRecordListBean.data?.records?.forEach {
                             if (attendManageDetail?.ruleType == "0") {
+                                //考勤规则 2次打卡
                                 if (it.checkinType.isNotNullOrEmpty()) {
                                     when (it.checkinType) {
                                         "onWork" -> {
-                                            signList[0].signStatus = it.checkinResult.toString()
-                                            signList[0].location = it.locationDetail.toString()
+                                            signList[0].signStatus = it.checkinResultDisplay.convertNull()
+                                            signList[0].location = it.locationDetail.convertNull()
                                         }
                                         "offWork" -> {
-                                            signList[1].signStatus = it.checkinResult.toString()
-                                            signList[1].location = it.locationDetail.toString()
+                                            signList[1].signStatus = it.checkinResultDisplay.convertNull()
+                                            signList[1].location = it.locationDetail.convertNull()
                                         }
                                     }
                                 }
                             } else if (attendManageDetail?.ruleType == "1") {
+                                //考勤规则 4次打卡
                                 if (it.checkinType.isNotNullOrEmpty()) {
                                     when (it.checkinType) {
                                         "onWork" -> {
-                                            signList[0].signStatus = it.checkinResult.toString()
-                                            signList[0].location = it.locationDetail.toString()
+                                            signList[0].signStatus = it.checkinResultDisplay.convertNull()
+                                            signList[0].location = it.locationDetail.convertNull()
                                         }
                                         "offWork" -> {
-                                            signList[1].signStatus = it.checkinResult.toString()
-                                            signList[1].location = it.locationDetail.toString()
+                                            signList[1].signStatus = it.checkinResultDisplay.convertNull()
+                                            signList[1].location = it.locationDetail.convertNull()
                                         }
                                         "onWorkTwo" -> {
-                                            signList[2].signStatus = it.checkinResult.toString()
-                                            signList[2].location = it.locationDetail.toString()
+                                            signList[2].signStatus = it.checkinResultDisplay.convertNull()
+                                            signList[2].location = it.locationDetail.convertNull()
                                         }
                                         "offWorkTwo" -> {
-                                            signList[3].signStatus = it.checkinResult.toString()
-                                            signList[3].location = it.locationDetail.toString()
+                                            signList[3].signStatus = it.checkinResultDisplay.convertNull()
+                                            signList[3].location = it.locationDetail.convertNull()
                                         }
                                     }
                                 }
                             }
-
+                            if (it.checkinOutside=="outside"){
+                                //外勤
+                                signList.add(SignListBean("外勤签到", it.locationDetail.convertNull(),it.checkinTime.convertNull().substring(10,16), ""))
+                            }
                         }
+                        updateSignListData()
                         updateRecycleView()
                     }
                 }
@@ -450,4 +548,13 @@ class SignActivity : AttendBaseActivity(), TrackHttpContract {
     }
 
 
+    override fun onResume() {
+        super.onResume()
+        TrackLocationData.setLocationInterval(5000)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        TrackLocationData.recoverLocationInterval()
+    }
 }

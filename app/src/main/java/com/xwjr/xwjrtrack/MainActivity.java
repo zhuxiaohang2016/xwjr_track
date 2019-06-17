@@ -10,6 +10,8 @@ import android.view.View;
 
 import com.amap.api.maps.MapView;
 import com.xwjr.track.TrackConfig;
+import com.xwjr.track.TrackLocalData;
+import com.xwjr.track.TrackLocationData;
 import com.xwjr.track.attend.activity.SignActivity;
 
 import static java.lang.Thread.sleep;
@@ -47,6 +49,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, AMapActivity.class));
             }
         });
+        findViewById(R.id.tv_amap_refresh).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TrackLocationData.setLocationInterval(1000);
+            }
+        });
 
         findViewById(R.id.tv_attend).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, SignActivity.class);
                 intent.putExtra("userRole","ZGSZJL");
                 intent.putExtra("loginName","32");
-                intent.putExtra("token","8fb708fa9160b1c17929cf2e4fcbbd7a891dfba50485b4a5fb90de8a933f7e81");
+                intent.putExtra("token","9bba96f4440a130fe7c80b27919c0c62bf9ddb583d3cdd759c97bb76776f9cab");
                 intent.putExtra("bankId","91000");
                 startActivity(intent);
             }

@@ -45,8 +45,17 @@ class SignListAdapter(private val context: Context, private var dataList: Mutabl
                     "上午签到", "上午签退" -> {
                         holder.ivSignTime.setImageResource(R.mipmap.attend_icon_sign_time_day)
                     }
+                    "上午未签到", "上午未签退" -> {
+                        holder.ivSignTime.setImageResource(R.mipmap.attend_icon_sign_time_day_error)
+                    }
                     "下午签到", "下午签退" -> {
                         holder.ivSignTime.setImageResource(R.mipmap.attend_icon_sign_time_night)
+                    }
+                    "下午未签到", "下午未签退" -> {
+                        holder.ivSignTime.setImageResource(R.mipmap.attend_icon_sign_time_night_error)
+                    }
+                    "外勤签到" -> {
+                        holder.ivSignTime.setImageResource(R.mipmap.attend_icon_sign_out)
                     }
                     else -> {
                         holder.ivSignTime.setImageResource(R.mipmap.attend_icon_sign_time_error)
@@ -59,6 +68,13 @@ class SignListAdapter(private val context: Context, private var dataList: Mutabl
                 if (position == dataList.size - 1) {
                     holder.viewLineVertical.visibility = View.GONE
                 }
+
+                if (dataList[position].timeDes == "外勤签到") {
+                    holder.tvSign.visibility = View.GONE
+                } else {
+                    holder.tvSign.visibility = View.VISIBLE
+                }
+
                 if (dataList[position].signStatus.isNotNullOrEmpty()) {
                     holder.tvSign.setBackgroundResource(R.drawable.attend_shape_gray_solid)
                     holder.tvSign.text = "考勤结束"

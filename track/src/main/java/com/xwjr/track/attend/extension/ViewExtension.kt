@@ -466,7 +466,7 @@ fun Context.showAbnormalAttendRecord(abnormalAttendRecordListBean: AttendRecordL
             val tvStatus = outsideTitle.findViewById(R.id.tv_status) as TextView
             val tvTimes = outsideTitle.findViewById(R.id.tv_times) as TextView
             tvStatus.initDrawableLeftView(R.mipmap.attend_dot_blue_soft, 6f, 6f)
-            tvStatus.text = "迟到"
+            tvStatus.text = "外勤"
             tvTimes.text = "共" + outsideData.size + "次"
             llContent.addView(outsideTitle)
             outsideData.forEach {

@@ -494,6 +494,14 @@ class SignActivity : AttendBaseActivity(), TrackHttpContract {
                     data as String
                     val attendRecordListBean = (Gson().fromJson(data, AttendRecordListBean::class.java))
                     if (attendRecordListBean != null && attendRecordListBean.checkCodeIfErrorShow() && attendRecordListBean.data != null && attendRecordListBean.data?.records != null && attendRecordListBean.data?.count != null) {
+                        val anotherData: MutableList<SignListBean> = arrayListOf()
+                        anotherData.addAll(signList)
+                        signList.clear()
+                        if (attendManageDetail?.ruleType == "0") {
+                            signList.addAll(anotherData.subList(0, 2))
+                        }else if (attendManageDetail?.ruleType == "1") {
+                            signList.addAll(anotherData.subList(0, 4))
+                        }
                         attendRecordListBean.data?.records?.forEach {
                             if (attendManageDetail?.ruleType == "0") {
                                 //考勤规则 2次打卡

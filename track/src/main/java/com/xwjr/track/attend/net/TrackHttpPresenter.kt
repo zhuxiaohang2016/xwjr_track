@@ -260,12 +260,12 @@ class TrackHttpPresenter(private val context: Context, private val contract: Tra
         requestBody.addFormDataPart("longitude", longitude)
         requestBody.addFormDataPart("latitude", latitude)
         requestBody.addFormDataPart("locationDetail", locationDetail)
-        requestBody.addFormDataPart("checkInType", checkInType)
-        logI("请求参数：  type:" + checkinOutside +
+        requestBody.addFormDataPart("checkinType", checkInType)
+        logI("请求参数：  checkinOutside:" + checkinOutside +
                 "  equipmentId:" + equipmentId +
                 "  longitude:" + longitude +
                 "  latitude:" + latitude +
-                "  checkInType:" + checkInType +
+                "  checkinType:" + checkInType +
                 "  locationDetail:" + locationDetail)
         OkHttpClient().newCall(Request.Builder()
                 .addHeader("Cookie", "ccat=$token")

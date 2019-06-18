@@ -277,7 +277,7 @@ class AttendManageAddActivity : AttendBaseActivity(), TrackHttpContract {
                     showToast("请选择上班时间")
                     return false
                 }
-                if (getSecond(tv_sign_time_afternoon_on.text.toString()).toInt() <= getSecond(tv_sign_time_morning_on.text.toString()).toInt()) {
+                if (getSecond(tv_sign_time_morning_off.text.toString()).toInt() <= getSecond(tv_sign_time_morning_on.text.toString()).toInt()) {
                     showToast("下班时间必须晚于上班时间")
                     return false
                 }

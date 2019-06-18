@@ -46,6 +46,7 @@ class SignActivity : AttendBaseActivity(), TrackHttpContract {
     private var trackHttpPresenter: TrackHttpPresenter? = null
     private var attendManageDetail: AttendManageListBean.DataBean? = null
     private var isInAttendRange = false
+    private var timer :Timer?= Timer()
     var myHandler: Handler = object : Handler() {
         override fun handleMessage(msg: Message) {
             when (msg.what) {
@@ -219,9 +220,13 @@ class SignActivity : AttendBaseActivity(), TrackHttpContract {
      * 更新考勤范围
      */
     private fun updateAttendRange() {
-        val distance = getDistance(TrackConfig.getLatitude(), TrackConfig.getLongitude(), attendManageDetail?.latitude.toString(), attendManageDetail?.longitude.toString())
-        isInAttendRange = distance.toDouble() <= attendManageDetail?.distance.toString().toDouble()
-        updateLocationDesView()
+        try {
+            val distance = getDistance(TrackConfig.getLatitude(), TrackConfig.getLongitude(), attendManageDetail?.latitude.toString(), attendManageDetail?.longitude.toString())
+            isInAttendRange = distance.toDouble() <= attendManageDetail?.distance.toString().toDouble()
+            updateLocationDesView()
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
     }
 
 
@@ -432,12 +437,11 @@ class SignActivity : AttendBaseActivity(), TrackHttpContract {
     }
 
     private fun intervalDeal() {
-        val timer = Timer()
-        timer.schedule(object : TimerTask() {
+        timer?.schedule(object : TimerTask() {
             override fun run() {
                 myHandler.sendEmptyMessage(0)
             }
-        }, 5000)
+        }, 0,5000)
     }
 
     /**
@@ -574,5 +578,11 @@ class SignActivity : AttendBaseActivity(), TrackHttpContract {
     override fun onPause() {
         super.onPause()
         TrackLocationData.recoverLocationInterval()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        timer?.cancel()
+        timer = null
     }
 }

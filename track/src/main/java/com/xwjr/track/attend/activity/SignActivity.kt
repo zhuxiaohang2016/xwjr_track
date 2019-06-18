@@ -441,7 +441,7 @@ class SignActivity : AttendBaseActivity(), TrackHttpContract {
             override fun run() {
                 myHandler.sendEmptyMessage(0)
             }
-        }, 0,5000)
+        }, 0,10000)
     }
 
     /**

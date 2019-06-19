@@ -12,6 +12,7 @@ import com.xwjr.track.R
 import com.xwjr.track.attend.adapter.SignRecordListAdapter
 import com.xwjr.track.attend.bean.AttendRecordListBean
 import com.xwjr.track.attend.bean.SignListBean
+import com.xwjr.track.attend.extension.convertNull
 import com.xwjr.track.attend.extension.logI
 import com.xwjr.track.attend.extension.showAbnormalAttendRecord
 import com.xwjr.track.attend.net.AttendUrlConfig
@@ -85,7 +86,7 @@ class SignRecordActivity : AttendBaseActivity(), TrackHttpContract {
         }
 
         iv_attend_record.setOnClickListener {
-            queryAbnormalAttendRecord(tv_year_and_month.text.substring(0,4)+"-"+tv_year_and_month.text.substring(5,7))
+            queryAbnormalAttendRecord(tv_year_and_month.text.substring(0, 4) + "-" + tv_year_and_month.text.substring(5, 7))
         }
     }
 
@@ -114,7 +115,8 @@ class SignRecordActivity : AttendBaseActivity(), TrackHttpContract {
     private fun updateRecycleView() {
         signList.clear()
         attendRecordListBean!!.data!!.records!!.forEach {
-            signList.add(SignListBean("", it.locationDetail.toString(), it.checkinTime.toString().substring(11, 16), ""))
+            val signStatus = if (it.checkinOutside == "inside") it.checkinResultDisplay.convertNull() else "外勤"
+            signList.add(SignListBean(it.checkinResult.convertNull(), it.locationDetail.toString(), it.checkinTime.toString().substring(11, 16), signStatus))
         }
         rv_sign_record_list.layoutManager = LinearLayoutManager(this)
         rv_sign_record_list.adapter = SignRecordListAdapter(this, signList)

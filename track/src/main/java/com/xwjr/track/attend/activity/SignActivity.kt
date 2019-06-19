@@ -51,6 +51,7 @@ class SignActivity : AttendBaseActivity(), TrackHttpContract {
         override fun handleMessage(msg: Message) {
             when (msg.what) {
                 0 -> {
+                    logI("更新定位地址")
                     updateLocationView()
                     updateAttendRange()
                 }
@@ -60,6 +61,7 @@ class SignActivity : AttendBaseActivity(), TrackHttpContract {
     }
 
     companion object {
+        const val LOCATION_INTERVAL =10000L
         const val ZJL = "ZGSZJL"
         const val MANAGE_ATTEND = 1024
     }
@@ -441,7 +443,7 @@ class SignActivity : AttendBaseActivity(), TrackHttpContract {
             override fun run() {
                 myHandler.sendEmptyMessage(0)
             }
-        }, 0,10000)
+        }, 0,LOCATION_INTERVAL)
     }
 
     /**
@@ -572,7 +574,7 @@ class SignActivity : AttendBaseActivity(), TrackHttpContract {
 
     override fun onResume() {
         super.onResume()
-        TrackLocationData.setLocationInterval(5000)
+        TrackLocationData.setLocationInterval(LOCATION_INTERVAL.toInt())
     }
 
     override fun onPause() {

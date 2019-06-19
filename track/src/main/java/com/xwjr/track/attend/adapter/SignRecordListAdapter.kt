@@ -1,6 +1,8 @@
 package com.xwjr.track.attend.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import com.xwjr.track.attend.bean.SignListBean
@@ -8,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import com.xwjr.track.R
+import com.xwjr.track.attend.extension.convertNull
 
 
 class SignRecordListAdapter(private val context: Context, private var dataList: MutableList<SignListBean>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -33,10 +36,19 @@ class SignRecordListAdapter(private val context: Context, private var dataList: 
         return NORMAL_DATA
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
         try {
             if (holder is SignRecordListViewHolder) {
-                holder.tvSignTimeDetail.text = dataList[position].timeDetail
+                when(dataList[position].timeDes){
+                    "normal"->{
+                        holder.tvSignTimeDetail.setTextColor(Color.parseColor("#666666"))
+                    }
+                    else->{
+                        holder.tvSignTimeDetail.setTextColor(Color.parseColor("#ff5050"))
+                    }
+                }
+                holder.tvSignTimeDetail.text = dataList[position].timeDetail.convertNull() + "    " + dataList[position].signStatus.convertNull()
                 holder.tvLocationDes.text = dataList[position].location
             }
         } catch (e: Exception) {

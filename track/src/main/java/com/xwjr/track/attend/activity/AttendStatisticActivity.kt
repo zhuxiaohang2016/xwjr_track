@@ -6,7 +6,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.google.gson.Gson
 import com.xwjr.track.R
-import com.xwjr.track.attend.adapter.AttendManageListAdapter
 import com.xwjr.track.attend.adapter.AttendStatisticListAdapter
 import com.xwjr.track.attend.adapter.AttendStatisticListener
 import com.xwjr.track.attend.bean.AttendRecordListBean
@@ -139,7 +138,7 @@ class AttendStatisticActivity : AttendBaseActivity(), TrackHttpContract {
                     logI("获取考勤记录成功，开始解析")
                     data as String
                     val abnormalAttendRecordListBean = (Gson().fromJson(data, AttendRecordListBean::class.java))
-                    if (abnormalAttendRecordListBean != null && abnormalAttendRecordListBean!!.checkCodeIfErrorShow() && abnormalAttendRecordListBean.data != null && abnormalAttendRecordListBean.data?.records != null && abnormalAttendRecordListBean.data?.records!!.size > 0) {
+                    if (abnormalAttendRecordListBean != null && abnormalAttendRecordListBean.checkCodeIfErrorShow() && abnormalAttendRecordListBean.data != null && abnormalAttendRecordListBean.data?.records != null && abnormalAttendRecordListBean.data?.records!!.size > 0) {
                         //展示view
                         showAbnormalAttendRecord(abnormalAttendRecordListBean)
                     }

@@ -46,7 +46,7 @@ class SignActivity : AttendBaseActivity(), TrackHttpContract {
     private var trackHttpPresenter: TrackHttpPresenter? = null
     private var attendManageDetail: AttendManageListBean.DataBean? = null
     private var isInAttendRange = false
-    private var timer :Timer?= Timer()
+    private var timer: Timer? = Timer()
     var myHandler: Handler = object : Handler() {
         override fun handleMessage(msg: Message) {
             when (msg.what) {
@@ -61,7 +61,7 @@ class SignActivity : AttendBaseActivity(), TrackHttpContract {
     }
 
     companion object {
-        const val LOCATION_INTERVAL =10000L
+        const val LOCATION_INTERVAL = 10000L
         const val ZJL = "ZGSZJL"
         const val MANAGE_ATTEND = 1024
     }
@@ -226,7 +226,7 @@ class SignActivity : AttendBaseActivity(), TrackHttpContract {
             val distance = getDistance(TrackConfig.getLatitude(), TrackConfig.getLongitude(), attendManageDetail?.latitude.toString(), attendManageDetail?.longitude.toString())
             isInAttendRange = distance.toDouble() <= attendManageDetail?.distance.toString().toDouble()
             updateLocationDesView()
-        }catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }
@@ -333,23 +333,27 @@ class SignActivity : AttendBaseActivity(), TrackHttpContract {
      */
     private fun getDistance(lat1Str: String, lng1Str: String, lat2Str: String, lng2Str: String): String {
         try {
-            val lat1 = java.lang.Double.parseDouble(lat1Str)
-            val lng1 = java.lang.Double.parseDouble(lng1Str)
-            val lat2 = java.lang.Double.parseDouble(lat2Str)
-            val lng2 = java.lang.Double.parseDouble(lng2Str)
+            if (lat1Str.isNotNullOrEmpty() && lng1Str.isNotNullOrEmpty() && lat2Str.isNotNullOrEmpty() && lng2Str.isNotNullOrEmpty()) {
+                val lat1 = java.lang.Double.parseDouble(lat1Str)
+                val lng1 = java.lang.Double.parseDouble(lng1Str)
+                val lat2 = java.lang.Double.parseDouble(lat2Str)
+                val lng2 = java.lang.Double.parseDouble(lng2Str)
 
-            val radLat1 = rad(lat1)
-            val radLat2 = rad(lat2)
-            val difference = radLat1 - radLat2
-            val mDifference = rad(lng1) - rad(lng2)
-            var distance = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(difference / 2), 2.0) + (Math.cos(radLat1) * Math.cos(radLat2)
-                    * Math.pow(Math.sin(mDifference / 2), 2.0))))
-            distance *= 6371.392
-            distance = (Math.round(distance * 10000000) / 10000).toDouble()
-            var distanceStr = distance.toString() + ""
-            distanceStr = distanceStr.substring(0, distanceStr.indexOf("."))
+                val radLat1 = rad(lat1)
+                val radLat2 = rad(lat2)
+                val difference = radLat1 - radLat2
+                val mDifference = rad(lng1) - rad(lng2)
+                var distance = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(difference / 2), 2.0) + (Math.cos(radLat1) * Math.cos(radLat2)
+                        * Math.pow(Math.sin(mDifference / 2), 2.0))))
+                distance *= 6371.392
+                distance = (Math.round(distance * 10000000) / 10000).toDouble()
+                var distanceStr = distance.toString() + ""
+                distanceStr = distanceStr.substring(0, distanceStr.indexOf("."))
 
-            return distanceStr
+                return distanceStr
+            } else {
+                return "10000000"
+            }
         } catch (e: Exception) {
             e.printStackTrace()
             return "10000000"
@@ -443,7 +447,7 @@ class SignActivity : AttendBaseActivity(), TrackHttpContract {
             override fun run() {
                 myHandler.sendEmptyMessage(0)
             }
-        }, 0,LOCATION_INTERVAL)
+        }, 0, LOCATION_INTERVAL)
     }
 
     /**
@@ -505,7 +509,7 @@ class SignActivity : AttendBaseActivity(), TrackHttpContract {
                         signList.clear()
                         if (attendManageDetail?.ruleType == "0") {
                             signList.addAll(anotherData.subList(0, 2))
-                        }else if (attendManageDetail?.ruleType == "1") {
+                        } else if (attendManageDetail?.ruleType == "1") {
                             signList.addAll(anotherData.subList(0, 4))
                         }
                         attendRecordListBean.data?.records?.forEach {

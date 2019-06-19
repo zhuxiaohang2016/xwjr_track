@@ -37,7 +37,7 @@ class AttendStatisticListAdapter(private val context: Context, private var dataL
         try {
             if (holder is AttendStatisticListAdapterListViewHolder) {
                 holder.tvName.text = dataList[position].userName
-                holder.tvPost.text = dataList[position].roleNames
+                holder.tvPost.text = dataList[position].roleName
                 holder.tvAttendTimesValue.text = dataList[position].checkinDays.toString()
                 holder.tvLateValue.text = dataList[position].lateCount.toString()
                 holder.tvEarlyValue.text = dataList[position].leaveEarlyCount.toString()

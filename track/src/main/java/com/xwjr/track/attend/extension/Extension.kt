@@ -13,7 +13,7 @@ private const val TAG = "xwjrStaple"
  */
 fun Any?.logI(content: String) {
     try {
-        if (TrackConfig.isDebug) {
+        if (TrackConfig.isDebug()) {
             Log.i(TAG, content)
         }
     } catch (e: Exception) {
@@ -27,7 +27,7 @@ fun Any?.logI(content: String) {
  */
 fun Any?.logE(content: String) {
     try {
-        if (TrackConfig.isDebug) {
+        if (TrackConfig.isDebug()) {
             Log.e(TAG, content)
         }
     } catch (e: Exception) {

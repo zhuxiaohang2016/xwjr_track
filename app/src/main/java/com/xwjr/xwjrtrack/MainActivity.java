@@ -13,6 +13,7 @@ import com.xwjr.track.TrackConfig;
 import com.xwjr.track.TrackLocalData;
 import com.xwjr.track.TrackLocationData;
 import com.xwjr.track.attend.activity.SignActivity;
+import com.xwjr.track.attend.net.AttendUrlConfig;
 
 import static java.lang.Thread.sleep;
 
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         TrackConfig.setDebug(true);
         TrackConfig.init(this, "http://p2psp.kfxfd.cn:9080/apphub/tracking/", "49dd08f0-24e6-11e7-b026-6b0b8b32be51", "15e703beb1cc85b69ccba4f2ebb21a37");
         MapView mMapView = null;
-
+        TrackConfig.setAttendUrl("http://xiaodai.xwjr.com:13002/");
         requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 99);
 
 
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, SignActivity.class);
                 intent.putExtra("userRole","ZGSZJL");
                 intent.putExtra("loginName","32");
-                intent.putExtra("token","9bba96f4440a130fe7c80b27919c0c62bf9ddb583d3cdd759c97bb76776f9cab");
+                intent.putExtra("token","aab84a1e51026af18b1c038c02f9c8e5241fb6ce0ff21333c971a69f7483268c");
                 intent.putExtra("bankId","91000");
                 startActivity(intent);
             }

@@ -28,6 +28,9 @@ public class TrackConfig {
     static boolean debug = false;
     static String xwjrUserId = "";
     static String empId = "";
+    static String attendUrl = "";
+
+
 
     public static void init(Context context, String trackUrl, String trackApphubkey, String amapKey) {
         try {
@@ -180,5 +183,13 @@ public class TrackConfig {
 
     public static void setCity(String city) {
         TrackConfig.city = city;
+    }
+
+    public static String getAttendUrl() {
+        return attendUrl;
+    }
+
+    public static void setAttendUrl(String attendUrl) {
+        TrackConfig.attendUrl = attendUrl;
     }
 }

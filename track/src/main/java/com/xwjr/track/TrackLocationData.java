@@ -9,6 +9,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.amap.api.location.AMapLocation;
@@ -35,7 +36,7 @@ public class TrackLocationData {
     public static AMapLocationClientOption mLocationOption = null;
 
 
-    public static void initAMap() {
+    public static void initAMap(final Context context) {
 
         AMapLocationListener mAMapLocationListener = new AMapLocationListener() {
             @Override
@@ -47,6 +48,9 @@ public class TrackLocationData {
                         TrackConfig.longitude = String.valueOf(amapLocation.getLongitude());//获取经度
                         TrackConfig.address = amapLocation.getAddress();
                         TrackConfig.city = amapLocation.getCity();
+                        if (TextUtils.isEmpty(TrackConfig.address)) {
+                            getAMapAddress(context, amapLocation.getLatitude(), amapLocation.getLongitude(), null);
+                        }
                         LogUtils.i("高德地图定位地址：" + TrackConfig.latitude + "  " + TrackConfig.longitude + "  " + TrackConfig.address);
                     } else {
                         TrackConfig.latitude = "";
@@ -107,7 +111,7 @@ public class TrackLocationData {
         }
     }
 
-    public static void refreshLocation() {
+    public static void refreshLocation(final Context context) {
         AMapLocationListener mAMapLocationListener = new AMapLocationListener() {
             @Override
             public void onLocationChanged(AMapLocation amapLocation) {
@@ -118,6 +122,9 @@ public class TrackLocationData {
                         TrackConfig.longitude = String.valueOf(amapLocation.getLongitude());//获取经度
                         TrackConfig.address = amapLocation.getAddress();
                         TrackConfig.city = amapLocation.getCity();
+                        if (TextUtils.isEmpty(TrackConfig.address)) {
+                            getAMapAddress(context, amapLocation.getLatitude(), amapLocation.getLongitude(), null);
+                        }
                         LogUtils.i("高德地图定位地址：" + TrackConfig.latitude + "  " + TrackConfig.longitude + "  " + TrackConfig.address);
                     } else {
                         TrackConfig.latitude = "";
@@ -152,7 +159,7 @@ public class TrackLocationData {
         //设置定位回调监听
         mLocationClient.setLocationListener(mAMapLocationListener);
         //启动定位
-            mLocationClient.startLocation();
+        mLocationClient.startLocation();
     }
 
 
@@ -274,23 +281,37 @@ public class TrackLocationData {
     }
 
     public static void getAMapAddress(Context context, double latitude, double longitude, final LocationAddressCallBack callback) {
-        LatLonPoint latLng = new LatLonPoint(latitude, longitude);
-        GeocodeSearch geocoderSearch = new GeocodeSearch(context);
+        final LatLonPoint latLng = new LatLonPoint(latitude, longitude);
+        final GeocodeSearch geocoderSearch = new GeocodeSearch(context);
+        final int[] range = {1000};
+        final RegeocodeQuery[] query = {new RegeocodeQuery(latLng, range[0], GeocodeSearch.AMAP)};
         geocoderSearch.setOnGeocodeSearchListener(new GeocodeSearch.OnGeocodeSearchListener() {
             @Override
             public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
-                callback.getAddress(regeocodeResult.getRegeocodeAddress().getFormatAddress(), regeocodeResult.getRegeocodeAddress().getCity());
-                LogUtils.i("高德地图解析地址：" + regeocodeResult.getRegeocodeAddress().getFormatAddress());
+                if (i == 1000 && !TextUtils.isEmpty(regeocodeResult.getRegeocodeAddress().getFormatAddress())) {
+                    if (callback == null) {
+                        TrackConfig.address = regeocodeResult.getRegeocodeAddress().getFormatAddress();
+                        TrackConfig.city = regeocodeResult.getRegeocodeAddress().getCity();
+                    } else {
+                        callback.getAddress(regeocodeResult.getRegeocodeAddress().getFormatAddress(), regeocodeResult.getRegeocodeAddress().getCity());
+                    }
+                    LogUtils.i("高德地图解析地址：" + regeocodeResult.getRegeocodeAddress().getFormatAddress());
+                } else {
+                    if (range[0] > 10000) {
+                        return;
+                    }
+                    range[0] += 1000;
+//                    LogUtils.i("高德地图解析地址扩大范围：" + range[0]);
+                    query[0] = new RegeocodeQuery(latLng, range[0], GeocodeSearch.AMAP);
+                    geocoderSearch.getFromLocationAsyn(query[0]);
+                }
             }
 
             @Override
             public void onGeocodeSearched(GeocodeResult geocodeResult, int i) {
             }
         });
-
-        RegeocodeQuery query = new RegeocodeQuery(latLng, 200, GeocodeSearch.AMAP);
-
-        geocoderSearch.getFromLocationAsyn(query);
+        geocoderSearch.getFromLocationAsyn(query[0]);
     }
 
     public interface LocationAddressCallBack {

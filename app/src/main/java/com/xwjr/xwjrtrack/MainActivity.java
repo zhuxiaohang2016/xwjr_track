@@ -24,10 +24,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        TrackConfig.setDebug(false);
+        TrackConfig.setDebug(true);
         TrackConfig.init(this, "http://p2psp.kfxfd.cn:9080/apphub/tracking/", "49dd08f0-24e6-11e7-b026-6b0b8b32be51", "15e703beb1cc85b69ccba4f2ebb21a37");
         MapView mMapView = null;
-        TrackConfig.setAttendUrl("http://xiaodai.xwjr.com:13001/");
+        TrackConfig.setAttendUrl("http://p2psp.kfxfd.cn:9080/");
         requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 99);
 
 
@@ -63,11 +63,13 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, SignActivity.class);
                 intent.putExtra("userRole","ZGSZJL");
                 intent.putExtra("loginName","32");
-                intent.putExtra("token","aab84a1e51026af18b1c038c02f9c8e5241fb6ce0ff21333c971a69f7483268c");
+                intent.putExtra("token","4fbc008befdce2eaa239e274f9b98cfca7de9459bc5032f1cb1a7142a8135e36");
                 intent.putExtra("bankId","91000");
                 startActivity(intent);
             }
         });
+
+
     }
 
 }

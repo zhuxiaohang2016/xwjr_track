@@ -37,7 +37,7 @@ public class TrackConfig {
             TrackConfig.trackApphubkey = trackApphubkey;
             TrackConfig.context = context;
             AMapLocationClient.setApiKey(amapKey);
-           TrackLocationData.initAMap();
+           TrackLocationData.initAMap(context);
             IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
             context.registerReceiver(new BatteryReceiver(), filter);
         } catch (Exception e) {
@@ -52,7 +52,7 @@ public class TrackConfig {
             TrackConfig.context = context;
             TrackConfig.singleDataLimit = singleDataLimit;
             AMapLocationClient.setApiKey(amapKey);
-            TrackLocationData.initAMap();
+            TrackLocationData.initAMap(context);
             IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
             context.registerReceiver(new BatteryReceiver(), filter);
         } catch (Exception e) {

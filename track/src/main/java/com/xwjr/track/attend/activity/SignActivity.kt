@@ -124,7 +124,7 @@ class SignActivity : AttendBaseActivity(), TrackHttpContract {
             if (!isLocServiceEnable(this@SignActivity) || !checkLocationPermission()) {
                 return@setOnClickListener
             }
-            TrackLocationData.refreshLocation()
+            TrackLocationData.refreshLocation(this)
             laterDeal(500) {
                 myHandler.sendEmptyMessage(0)
             }

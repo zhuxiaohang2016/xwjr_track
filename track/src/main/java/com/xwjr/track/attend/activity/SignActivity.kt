@@ -467,7 +467,7 @@ class SignActivity : AttendBaseActivity(), TrackHttpContract {
                     val attendManageData = (Gson().fromJson(data, AttendManageListBean::class.java))
                     if (attendManageData != null && attendManageData.checkCodeIfErrorShow() && attendManageData.data != null) {
                         attendManageDetail = attendManageData.data
-                        if (intent.getStringExtra("loginName") in attendManageDetail!!.checkinUserId.toString().split(",")) {
+                        if (intent.getStringExtra("loginName").toUpperCase() in attendManageDetail!!.checkinUserId.toString().toUpperCase().split(",")) {
                             //如果考勤计划人员里有当前登录人，则显示考勤列表，否则不处理
                             updateView()
                             queryAttendRecord()

@@ -5,9 +5,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 
 import com.amap.api.location.AMapLocationClient;
-import com.amap.api.maps.AMap;
-import com.amap.api.maps.AMapOptions;
-import com.amap.api.maps.AMapUtils;
 
 
 public class TrackConfig {
@@ -28,6 +25,9 @@ public class TrackConfig {
     static String xwjrUserId = "";
     static String empId = "";
     static String attendUrl = "";
+
+    static String uploadUrl = "";//上传通讯录等地址
+    static String xwjrToken = "";//用户token
 
 
 
@@ -190,5 +190,21 @@ public class TrackConfig {
 
     public static void setAttendUrl(String attendUrl) {
         TrackConfig.attendUrl = attendUrl;
+    }
+
+    public static String getUploadUrl() {
+        return uploadUrl;
+    }
+
+    public static void setUploadUrl(String uploadUrl) {
+        TrackConfig.uploadUrl = uploadUrl;
+    }
+
+    public static String getXwjrToken() {
+        return xwjrToken;
+    }
+
+    public static void setXwjrToken(String xwjrToken) {
+        TrackConfig.xwjrToken = xwjrToken;
     }
 }

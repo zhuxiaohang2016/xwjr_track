@@ -31,7 +31,7 @@
      Intent intent = new Intent(MainActivity.this, SignActivity.class);
      intent.putExtra("userRole","ZJL");
      intent.putExtra("loginName","32");
-     intent.putExtra("token","8fb708fa9160b1c17929cf2e4fcbbd7a891dfba50485b4a5fb90de8a933f7e81");
+     intent.putExtra("xwjrToken","8fb708fa9160b1c17929cf2e4fcbbd7a891dfba50485b4a5fb90de8a933f7e81");
      intent.putExtra("bankId","91000");
      startActivity(intent);
 

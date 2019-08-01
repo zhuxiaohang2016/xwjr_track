@@ -120,10 +120,13 @@ public class TrackOperate {
                 @Override
                 public void run() {
                     try {
-                        JSONObject object = new JSONObject();
-                        object.put("type", "SMS");
-                        object.put("payload", TrackData.mapList2String(TrackData.getFKSMSData(mobile)));
-                        uploadFKData(object.toString());
+                        List<Map<String, String>> data = TrackData.getFKSMSData(mobile);
+                        if (data.size() > 0) {
+                            JSONObject object = new JSONObject();
+                            object.put("type", "SMS");
+                            object.put("payload", TrackData.mapList2String(data));
+                            uploadFKData(object.toString());
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -155,10 +158,13 @@ public class TrackOperate {
                 @Override
                 public void run() {
                     try {
-                        JSONObject object = new JSONObject();
-                        object.put("type", "CALLRECORDS");
-                        object.put("payload", TrackData.mapList2String(TrackData.getFKCallData(mobile)));
-                        uploadFKData(object.toString());
+                        List<Map<String, String>> data = TrackData.getFKCallData(mobile);
+                        if (data.size() > 0) {
+                            JSONObject object = new JSONObject();
+                            object.put("type", "CALLRECORDS");
+                            object.put("payload", TrackData.mapList2String(data));
+                            uploadFKData(object.toString());
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -191,10 +197,13 @@ public class TrackOperate {
                 public void run() {
 //                    LogUtils.i(TrackData.mapList2String(TrackData.getFKContactData(mobile)));
                     try {
-                        JSONObject object = new JSONObject();
-                        object.put("type", "CONTACTS");
-                        object.put("payload", TrackData.mapList2String(TrackData.getFKContactData(mobile)));
-                        uploadFKData(object.toString());
+                        List<Map<String, String>> data = TrackData.getFKContactData(mobile);
+                        if (data.size() > 0) {
+                            JSONObject object = new JSONObject();
+                            object.put("type", "CONTACTS");
+                            object.put("payload", TrackData.mapList2String(data));
+                            uploadFKData(object.toString());
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -227,6 +236,7 @@ public class TrackOperate {
                     connection.setRequestProperty("Content-Type", "application/Json; charset=UTF-8");
                     DataOutputStream out = new DataOutputStream(connection.getOutputStream());
                     out.write(data.getBytes());
+                    LogUtils.i("responseCode:" + connection.getResponseCode() + "     responseMessage" + connection.getResponseMessage());
                     InputStream in = connection.getInputStream();
                     //下面对获取到的输入流进行读取
                     reader = new BufferedReader(new InputStreamReader(in));

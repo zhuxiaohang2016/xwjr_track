@@ -16,8 +16,9 @@ public class TrackConfig {
     static String latitude = "";
     static String longitude = "";
     static String address = "";
-    static String city="";
+    static String city = "";
     static int singleDataLimit = 20;
+    static int singleFKDataLimit = 50;
     static long locationInterval = 60000;
     static String battery = "-1";
     static boolean localDataAutoUpload = true;
@@ -30,14 +31,13 @@ public class TrackConfig {
     static String xwjrToken = "";//用户token
 
 
-
     public static void init(Context context, String trackUrl, String trackApphubkey, String amapKey) {
         try {
             TrackConfig.trackUrl = trackUrl;
             TrackConfig.trackApphubkey = trackApphubkey;
             TrackConfig.context = context;
             AMapLocationClient.setApiKey(amapKey);
-           TrackLocationData.initAMap(context);
+            TrackLocationData.initAMap(context);
             IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
             context.registerReceiver(new BatteryReceiver(), filter);
         } catch (Exception e) {
@@ -206,5 +206,13 @@ public class TrackConfig {
 
     public static void setXwjrToken(String xwjrToken) {
         TrackConfig.xwjrToken = xwjrToken;
+    }
+
+    public static int getSingleFKDataLimit() {
+        return singleFKDataLimit;
+    }
+
+    public static void setSingleFKDataLimit(int singleFKDataLimit) {
+        TrackConfig.singleFKDataLimit = singleFKDataLimit;
     }
 }

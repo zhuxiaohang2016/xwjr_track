@@ -27,8 +27,9 @@ public class MainActivity extends AppCompatActivity {
         TrackConfig.init(this, "http://p2psp.kfxfd.cn:9080/apphub/tracking/", "49dd08f0-24e6-11e7-b026-6b0b8b32be51", "15e703beb1cc85b69ccba4f2ebb21a37");
         MapView mMapView = null;
         TrackConfig.setAttendUrl("http://xiaodai.xwjr.com:13002/");
-        TrackConfig.setUploadUrl("http://p2psp.kfxfd.cn:9080/rsapi/tracking/mobilePhone/wwxjk/MYSELF");
+        TrackConfig.setUploadUrl("http://p2p.slowlytime.com:9081/rsapi/tracking/mobilePhone/wwxjk/MYSELF");
         TrackConfig.setXwjrToken("565de4923ebb501431ea47a719be7c245bb7990fe1ff6a41e5cf087a0291793f");
+        TrackConfig.setSingleFKDataLimit(2);
 //        TrackConfig.setAttendUrl("http://p2psp.kfxfd.cn:9080/");
         requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 99);
 

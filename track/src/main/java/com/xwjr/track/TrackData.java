@@ -31,14 +31,14 @@ public class TrackData {
         Map<String, String> map = new HashMap<>();
         try {
             if (!TextUtils.isEmpty(TrackConfig.xwjrUserId)) {
-                map.put("xwjrUserId", TrackConfig.xwjrUserId);
+                map.put("uid", TrackConfig.xwjrUserId);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         try {
             if (!TextUtils.isEmpty(TrackConfig.empId)) {
-                map.put("empId", TrackConfig.empId);
+                map.put("uid", TrackConfig.empId);
             }
         } catch (Exception e) {
             e.printStackTrace();

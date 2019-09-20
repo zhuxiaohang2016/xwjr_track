@@ -19,8 +19,37 @@ public class TrackLocalData {
 
     private static String XWJRTrackTable = "XWJRTrackTable";
     private static String XWJRTrackData = "XWJRTrackData";
+    private static String USER_ID = "USER_ID";
     private static TimerTask timerTask;
     private static Timer timer;
+
+
+    /**
+     * 储存用户ID数据
+     */
+    public static void saveUserId(String data) {
+        try {
+            SharedPreferences sharedPreferences = TrackConfig.context.getSharedPreferences(XWJRTrackTable, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(USER_ID, data);
+            editor.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 获取用户ID数据
+     */
+    public static String getUserId() {
+        try {
+            SharedPreferences sharedPreferences = TrackConfig.context.getSharedPreferences(XWJRTrackTable, Context.MODE_PRIVATE);
+            return sharedPreferences.getString(USER_ID, "");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
 
     /**
      * 储存单次数据

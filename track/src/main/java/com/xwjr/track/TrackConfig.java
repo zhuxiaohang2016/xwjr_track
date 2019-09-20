@@ -23,8 +23,6 @@ public class TrackConfig {
     static String battery = "-1";
     static boolean localDataAutoUpload = true;
     static boolean debug = false;
-    static String xwjrUserId = "";
-    static String empId = "";
     static String attendUrl = "";
 
     static String uploadUrl = "";//上传通讯录等地址
@@ -158,22 +156,6 @@ public class TrackConfig {
 
     public static boolean isDebug() {
         return debug;
-    }
-
-    public static String getXwjrUserId() {
-        return xwjrUserId;
-    }
-
-    public static void setXwjrUserId(String xwjrUserId) {
-        TrackConfig.xwjrUserId = xwjrUserId;
-    }
-
-    public static String getEmpId() {
-        return empId;
-    }
-
-    public static void setEmpId(String empId) {
-        TrackConfig.empId = empId;
     }
 
     public static String getCity() {

@@ -30,15 +30,8 @@ public class TrackData {
     public static Map<String, String> getCommonMap() {
         Map<String, String> map = new HashMap<>();
         try {
-            if (!TextUtils.isEmpty(TrackConfig.xwjrUserId)) {
-                map.put("uid", TrackConfig.xwjrUserId);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
-            if (!TextUtils.isEmpty(TrackConfig.empId)) {
-                map.put("uid", TrackConfig.empId);
+            if (!TextUtils.isEmpty(TrackLocalData.getUserId())) {
+                map.put("uid", TrackLocalData.getUserId());
             }
         } catch (Exception e) {
             e.printStackTrace();

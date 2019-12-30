@@ -26,9 +26,9 @@ public class MainActivity extends AppCompatActivity {
         TrackConfig.setDebug(true);
         TrackConfig.init(this, "http://p2psp.kfxfd.cn:9080/apphub/tracking/", "49dd08f0-24e6-11e7-b026-6b0b8b32be51", "15e703beb1cc85b69ccba4f2ebb21a37");
         MapView mMapView = null;
-        TrackConfig.setAttendUrl("http://xiaodai.xwjr.com:13002/");
+        TrackConfig.setAttendUrl("http://p2psp.kfxfd.cn:9080/");
         TrackConfig.setUploadUrl("http://p2p.slowlytime.com:9081/rsapi/tracking/mobilePhone/wwxjk/MYSELF");
-        TrackConfig.setXwjrToken("565de4923ebb501431ea47a719be7c245bb7990fe1ff6a41e5cf087a0291793f");
+        TrackConfig.setXwjrToken("ae3a511c11f5d766156f9dda9e458bc7db1195e767d4f82d93fa95fc6f1d4032");
         TrackConfig.setSingleFKDataLimit(2);
 //        TrackConfig.setAttendUrl("http://p2psp.kfxfd.cn:9080/");
         requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 99);
@@ -64,10 +64,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, SignActivity.class);
-                intent.putExtra("userRole", "FXPS");
-                intent.putExtra("loginName", "JSXzpx003");
-                intent.putExtra("token", "74044cdf212ff1aeae2112984ec2fc1027142d55c14f164fdd0f83e7bd0f411b");
-                intent.putExtra("bankId", "90302");
+                intent.putExtra("userRole", "ZGSZJL");
+                intent.putExtra("loginName", "32");
+                intent.putExtra("token", "ae3a511c11f5d766156f9dda9e458bc7db1195e767d4f82d93fa95fc6f1d4032");
+                intent.putExtra("bankId", "91000");
                 startActivity(intent);
             }
         });

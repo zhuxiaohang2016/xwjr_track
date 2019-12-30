@@ -458,6 +458,7 @@ class SignActivity : AttendBaseActivity(), TrackHttpContract {
     }
 
 
+    @SuppressLint("DefaultLocale")
     override fun statusBack(i: String, data: Any) {
         try {
             when (i) {
@@ -479,7 +480,7 @@ class SignActivity : AttendBaseActivity(), TrackHttpContract {
                             tv_check_out.visibility = View.GONE
                             cl_attend_null.visibility = View.VISIBLE
                         }
-                        if (intent.getStringExtra("loginName") in attendManageDetail!!.queryUserId.toString().split(",")) {
+                        if (intent.getStringExtra("loginName").toUpperCase() in attendManageDetail!!.queryUserId.toString().toUpperCase().split(",")) {
                             //如果有查看统计人员里有当前登录人，则显示统计按钮，否则不显示
                             iv_statistic.visibility = View.VISIBLE
                         } else {

@@ -20,6 +20,8 @@ public class TrackLocalData {
     private static String XWJRTrackTable = "XWJRTrackTable";
     private static String XWJRTrackData = "XWJRTrackData";
     private static String USER_ID = "USER_ID";
+    private static String CONTACT_SIZE = "CONTACT_SIZE";
+    private static String READ_CONTACT_STATUS = "READ_CONTACT_STATUS";
     private static TimerTask timerTask;
     private static Timer timer;
 
@@ -50,6 +52,55 @@ public class TrackLocalData {
             return "";
         }
     }
+
+    /**
+     * 储存用户联系人数量与读取状态
+     */
+    public static void saveContactStatus(String data) {
+        try {
+            SharedPreferences sharedPreferences = TrackConfig.context.getSharedPreferences(XWJRTrackTable, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            if (data.equals("START")){
+                editor.putString(READ_CONTACT_STATUS, data);
+                editor.putString(CONTACT_SIZE, "0");
+            }else if (data.equals("END")){
+                editor.putString(READ_CONTACT_STATUS, data);
+            }else {
+                editor.putString(READ_CONTACT_STATUS, "READING");
+                editor.putString(CONTACT_SIZE, data);
+            }
+            editor.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 获取用户联系人读取状态
+     */
+    public static String getContactStatus() {
+        try {
+            SharedPreferences sharedPreferences = TrackConfig.context.getSharedPreferences(XWJRTrackTable, Context.MODE_PRIVATE);
+            return sharedPreferences.getString(READ_CONTACT_STATUS, "");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+    /**
+     * 获取通讯录总数
+     */
+    public static String getContactSize() {
+        try {
+            SharedPreferences sharedPreferences = TrackConfig.context.getSharedPreferences(XWJRTrackTable, Context.MODE_PRIVATE);
+            return sharedPreferences.getString(CONTACT_SIZE, "");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
 
     /**
      * 储存单次数据
@@ -141,6 +192,4 @@ public class TrackLocalData {
             e.printStackTrace();
         }
     }
-
-
 }

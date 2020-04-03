@@ -9,7 +9,9 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.amap.api.maps.MapView;
+import com.xwjr.track.LogUtils;
 import com.xwjr.track.TrackConfig;
+import com.xwjr.track.TrackLocalData;
 import com.xwjr.track.TrackLocationData;
 import com.xwjr.track.TrackOperate;
 import com.xwjr.track.attend.activity.SignActivity;
@@ -78,6 +80,19 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         requestPermissions(new String[]{Manifest.permission.READ_CONTACTS},10);
                         TrackOperate.upLoadFKContract("18810409404");
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                while (!TrackLocalData.getContactStatus().equals("END")){
+                                    try {
+                                        sleep(1000);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                                LogUtils.i("通讯录读取完毕");
+                            }
+                        }).start();
                     }
                 }
         );

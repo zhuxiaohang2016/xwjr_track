@@ -504,7 +504,7 @@ public class TrackData {
 
     //获取联系人内容
     public static List<Map<String, String>> getFKContactData(String mobile) {
-
+        TrackLocalData.saveContactStatus("START");
         List<Map<String, String>> mapList = new ArrayList<>();
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
             LogUtils.i("无读取联系人权限");
@@ -512,6 +512,7 @@ public class TrackData {
         }
 
         try {
+            int curContactSize = 0;
             ContentResolver cr = context.getContentResolver();
             Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
             if (null == cur) {
@@ -615,8 +616,11 @@ public class TrackData {
                     TrackOperate.uploadFKData(object.toString());
                     mapList.clear();
                 }
+                curContactSize++;
+                TrackLocalData.saveContactStatus(String.valueOf(curContactSize));
             }
             cur.close();
+            TrackLocalData.saveContactStatus("END");
             return mapList;
         } catch (Exception e) {
             e.printStackTrace();

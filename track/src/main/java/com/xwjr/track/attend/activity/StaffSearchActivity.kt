@@ -58,11 +58,11 @@ class StaffSearchActivity : AttendBaseActivity(), TrackHttpContract {
             var selectedStaffName = ""
             filterStaffList.forEachIndexed { index, item ->
                 if (index == 0) {
-                    selectedStaff = item.username.toString()
-                    selectedStaffName = item.realname.toString()
+                    selectedStaff = item.userName.toString()
+                    selectedStaffName = item.realName.toString()
                 } else {
-                    selectedStaff += "," + item.username.toString()
-                    selectedStaffName += "," + item.realname.toString()
+                    selectedStaff += "," + item.userName.toString()
+                    selectedStaffName += "," + item.realName.toString()
                 }
             }
             val intent = Intent()
@@ -92,7 +92,7 @@ class StaffSearchActivity : AttendBaseActivity(), TrackHttpContract {
                     searchList.addAll(staffList)
                 } else {
                     staffList.forEach {
-                        if (it.realname.toString().contains(s.toString())) {
+                        if (it.realName.toString().contains(s.toString())) {
                             searchList.add(it)
                         }
                     }
@@ -158,7 +158,7 @@ class StaffSearchActivity : AttendBaseActivity(), TrackHttpContract {
                         val selectedStaff = intent.getStringExtra("selectedStaff")
                         selectedStaff?.split(",")?.forEach {
                             staffList.forEach { item ->
-                                if (it == item.username) {
+                                if (it == item.userName) {
                                     item.isSelect = true
                                 }
                             }

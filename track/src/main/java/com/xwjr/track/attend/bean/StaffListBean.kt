@@ -5,8 +5,8 @@ class StaffListBean : BaseBean() {
     var data: MutableList<DataBean>? = null
 
     class DataBean {
-        var username: String? = null
-        var realname: String? = null
+        var userName: String? = null
+        var realName: String? = null
         var phone: String? = null
         var locked: String? = null
         var empId: String? = null

@@ -31,7 +31,7 @@ open class StaffSearchAdapter(private val context: Context, private var dataList
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
         try {
             if (holder is StaffSearchViewHolder) {
-                holder.cb.text = dataList[position].realname
+                holder.cb.text = dataList[position].realName
                 holder.cb.initDrawableRightView(R.drawable.attend_checkbox, 17f, 17f)
 
                 holder.cl.setOnClickListener {

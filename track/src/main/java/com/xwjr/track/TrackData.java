@@ -80,7 +80,7 @@ public class TrackData {
         }
         try {
             map.put("systemNetWork", AndroidUtil.getNetworkState(context));
-            map.put("systemBattery", TrackConfig.battery);
+//            map.put("systemBattery", TrackConfig.battery);
 //            map.put("systemInfoId", Build.ID);
             map.put("systemInfoBrand", Build.BRAND);
 //            map.put("systemInfoModel", Build.MODEL);

@@ -12,15 +12,16 @@ public class BatteryReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        try {
-            int current = intent.getExtras().getInt("level");// 获得当前电量
-            int total = intent.getExtras().getInt("scale");// 获得总电量
-            int percent = current * 100 / total;
-            TrackConfig.battery = String.valueOf(percent);
-        } catch (Exception e) {
-            TrackConfig.battery = "-1";
-            e.printStackTrace();
-        }
+//        try {
+//            int current = intent.getExtras().getInt("level");// 获得当前电量
+//            int total = intent.getExtras().getInt("scale");// 获得总电量
+//            int percent = current * 100 / total;
+//            TrackConfig.battery = String.valueOf(percent);
+//            context.unregisterReceiver(this);
+//        } catch (Exception e) {
+//            TrackConfig.battery = "-1";
+//            e.printStackTrace();
+//        }
 
 
     }

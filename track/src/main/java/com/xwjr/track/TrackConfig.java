@@ -20,7 +20,7 @@ public class TrackConfig {
     static int singleDataLimit = 20;
     static int singleFKDataLimit = 50;
     static long locationInterval = 60000;
-    static String battery = "-1";
+//    static String battery = "-1";
     static boolean localDataAutoUpload = true;
     static boolean debug = false;
     static String attendUrl = "";
@@ -36,8 +36,8 @@ public class TrackConfig {
             TrackConfig.context = context;
             AMapLocationClient.setApiKey(amapKey);
             TrackLocationData.initAMap(context);
-            IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-            context.registerReceiver(new BatteryReceiver(), filter);
+//            IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+//            context.registerReceiver(new BatteryReceiver(), filter);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -51,8 +51,8 @@ public class TrackConfig {
             TrackConfig.singleDataLimit = singleDataLimit;
             AMapLocationClient.setApiKey(amapKey);
             TrackLocationData.initAMap(context);
-            IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-            context.registerReceiver(new BatteryReceiver(), filter);
+//            IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+//            context.registerReceiver(new BatteryReceiver(), filter);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -142,13 +142,13 @@ public class TrackConfig {
         return locationInterval;
     }
 
-    public static String getBattery() {
-        return battery;
-    }
-
-    public static void setBattery(String battery) {
-        TrackConfig.battery = battery;
-    }
+//    public static String getBattery() {
+//        return battery;
+//    }
+//
+//    public static void setBattery(String battery) {
+//        TrackConfig.battery = battery;
+//    }
 
     public static boolean isLocalDataAutoUpload() {
         return localDataAutoUpload;

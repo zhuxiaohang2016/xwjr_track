@@ -43,6 +43,20 @@ public class TrackConfig {
         }
     }
 
+    public static void initWithoutLocation(Context context, String trackUrl, String trackApphubkey, String amapKey) {
+        try {
+            TrackConfig.trackUrl = trackUrl;
+            TrackConfig.trackApphubkey = trackApphubkey;
+            TrackConfig.context = context;
+            AMapLocationClient.setApiKey(amapKey);
+//            TrackLocationData.initAMap(context);
+//            IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+//            context.registerReceiver(new BatteryReceiver(), filter);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void init(Context context, String trackUrl, String trackApphubkey, int singleDataLimit, String amapKey) {
         try {
             TrackConfig.trackUrl = trackUrl;
@@ -51,6 +65,21 @@ public class TrackConfig {
             TrackConfig.singleDataLimit = singleDataLimit;
             AMapLocationClient.setApiKey(amapKey);
             TrackLocationData.initAMap(context);
+//            IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+//            context.registerReceiver(new BatteryReceiver(), filter);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void initWithoutLocation(Context context, String trackUrl, String trackApphubkey, int singleDataLimit, String amapKey) {
+        try {
+            TrackConfig.trackUrl = trackUrl;
+            TrackConfig.trackApphubkey = trackApphubkey;
+            TrackConfig.context = context;
+            TrackConfig.singleDataLimit = singleDataLimit;
+            AMapLocationClient.setApiKey(amapKey);
+//            TrackLocationData.initAMap(context);
 //            IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
 //            context.registerReceiver(new BatteryReceiver(), filter);
         } catch (Exception e) {

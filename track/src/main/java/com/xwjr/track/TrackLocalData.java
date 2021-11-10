@@ -148,6 +148,7 @@ public class TrackLocalData {
                     @Override
                     public void run() {
                         TrackOperate.upLoadLocalData();
+                        TrackLocationData.refreshLocation(TrackConfig.context);
                     }
                 };
                 if (timer != null) {

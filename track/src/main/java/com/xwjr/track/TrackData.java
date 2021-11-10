@@ -80,30 +80,14 @@ public class TrackData {
         }
         try {
             map.put("systemNetWork", AndroidUtil.getNetworkState(context));
-//            map.put("systemBattery", TrackConfig.battery);
-//            map.put("systemInfoId", Build.ID);
             map.put("systemInfoBrand", Build.BRAND);
-//            map.put("systemInfoModel", Build.MODEL);
             map.put("systemInfoRelease", Build.VERSION.RELEASE);
-//            map.put("systemInfoSdk", Build.VERSION.SDK);
             map.put("systemInfoBoard", Build.BOARD);
             map.put("systemInfoProduct", Build.PRODUCT);
-//            map.put("systemInfoDevice", Build.DEVICE);
             map.put("systemInfoFingerprint", Build.FINGERPRINT);
-//            map.put("systemInfoHost", Build.HOST);
-//            map.put("systemInfoTags", Build.TAGS);
-//            map.put("systemInfoType", Build.TYPE);
-//            map.put("systemInfoTime", String.valueOf(Build.TIME));
-//            map.put("systemInfoIncremental", Build.VERSION.INCREMENTAL);
-//            map.put("systemInfoDisplay", Build.DISPLAY);
             map.put("systemInfoSdkInt", String.valueOf(Build.VERSION.SDK_INT));
-//            map.put("systemInfoManufacturer", Build.MANUFACTURER);
-//            map.put("systemInfoBootLoader", Build.BOOTLOADER);
             map.put("systemInfoCpuAbi", Build.CPU_ABI);
-//            map.put("systemInfoCpuAbi2", Build.CPU_ABI2);
             map.put("systemInfoHardware", Build.HARDWARE);
-//            map.put("systemInfoUnKnow", Build.UNKNOWN);
-//            map.put("systemInfoCodeName", Build.VERSION.CODENAME);
             map.put("systemInfoSerial", Build.SERIAL);
         } catch (Exception e) {
             e.printStackTrace();

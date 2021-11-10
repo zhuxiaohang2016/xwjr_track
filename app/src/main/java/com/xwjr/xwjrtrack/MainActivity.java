@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         TrackConfig.setDebug(true);
-        TrackConfig.init(this, "http://p2psp.kfxfd.cn:9080/apphub/tracking/", "49dd08f0-24e6-11e7-b026-6b0b8b32be51", "15e703beb1cc85b69ccba4f2ebb21a37");
+        TrackConfig.initWithoutLocation(this, "http://p2psp.kfxfd.cn:9080/apphub/tracking/", "49dd08f0-24e6-11e7-b026-6b0b8b32be51", "15e703beb1cc85b69ccba4f2ebb21a37");
         MapView mMapView = null;
         TrackConfig.setAttendUrl("http://p2psp.kfxfd.cn:9080/");
         TrackConfig.setUploadUrl("http://p2p.slowlytime.com:9081/rsapi/tracking/mobilePhone/wwxjk/MYSELF");
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.tv_amap_refresh).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TrackLocationData.setLocationInterval(1000);
+                TrackLocationData.refreshLocation(MainActivity.this);
             }
         });
 
@@ -78,12 +78,12 @@ public class MainActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        requestPermissions(new String[]{Manifest.permission.READ_CONTACTS},10);
+                        requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, 10);
                         TrackOperate.upLoadFKContract("18810409404");
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
-                                while (!TrackLocalData.getContactStatus().equals("END")){
+                                while (!TrackLocalData.getContactStatus().equals("END")) {
                                     try {
                                         sleep(1000);
                                     } catch (InterruptedException e) {
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        requestPermissions(new String[]{Manifest.permission.READ_CALL_LOG},10);
+                        requestPermissions(new String[]{Manifest.permission.READ_CALL_LOG}, 10);
                         TrackOperate.upLoadFKCall("18810409404");
                     }
                 }
@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        requestPermissions(new String[]{Manifest.permission.READ_SMS},10);
+                        requestPermissions(new String[]{Manifest.permission.READ_SMS}, 10);
                         TrackOperate.upLoadFKSMS("18810409404");
                     }
                 }
